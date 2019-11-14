@@ -11,13 +11,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.Controller;
 
-public class Photos extends Application {t
+public class Photos extends Application {
 	@Override
 	public void start(Stage primaryStage) 
 	throws IOException {
 		FXMLLoader loader = new FXMLLoader();   
 		loader.setLocation(
-				getClass().getResource("/view/SongLib.fxml"));
+				getClass().getResource("/view/Photos.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
 
 
@@ -26,7 +26,7 @@ public class Photos extends Application {t
 
 		Scene scene = new Scene(root, 550, 586); //width, length
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Song Library");
+		primaryStage.setTitle("Photos Library");
 		primaryStage.setResizable(false);
 		primaryStage.show(); 
 	}
