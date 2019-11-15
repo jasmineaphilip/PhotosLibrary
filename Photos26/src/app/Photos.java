@@ -24,7 +24,7 @@ public class Photos extends Application {
 		Controller controller = loader.getController();
 		controller.start(primaryStage);
 
-		Scene scene = new Scene(root, 550, 586); //width, length
+		Scene scene = new Scene(root, 600, 600); //width, length
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Photos Library");
 		primaryStage.setResizable(false);
