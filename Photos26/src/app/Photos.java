@@ -2,15 +2,11 @@
 
 package app;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.Controller;
@@ -24,17 +20,16 @@ public class Photos extends Application {
 				getClass().getResource("/view/Photos.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
 
-
 		Controller controller = loader.getController();
 		controller.start(primaryStage);
 		
-		Image image = new Image(new FileInputStream("/Desktop/testImage.jpg"));
-		ImageView imageView = new ImageView(image);
-		imageView.setX(50);;
-		imageView.setY(25);
-		imageView.setFitHeight(455); 
-	    imageView.setFitWidth(500); 
-	    imageView.setPreserveRatio(true);
+		//Image image = new Image(new FileInputStream("/Desktop/testImage.jpg"));
+//		ImageView imageView = new ImageView(image);
+//		imageView.setX(50);;
+//		imageView.setY(25);
+//		imageView.setFitHeight(455); 
+//	    imageView.setFitWidth(500); 
+//	    imageView.setPreserveRatio(true);
 
 		Scene scene = new Scene(root, 600, 600); //width, length
 		primaryStage.setScene(scene);
