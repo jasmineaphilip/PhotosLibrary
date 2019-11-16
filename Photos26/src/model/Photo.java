@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import javafx.scene.image.Image;
 
-public class Photo {
+public class Photo implements Serializable {
 	
 	private Image image;
 	private String caption;
