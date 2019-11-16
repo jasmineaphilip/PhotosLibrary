@@ -26,7 +26,7 @@ public class AdminUserController {
 	@FXML Button createUserButton;
 	@FXML Button deleteUserButton;
 	
-	private ObservableList<User> users = FXCollections.observableArrayList();
+	ObservableList<User> users = FXCollections.observableArrayList();
 	
 	public void start(Stage mainStage) throws IOException{
 		
