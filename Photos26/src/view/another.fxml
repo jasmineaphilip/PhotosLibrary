@@ -2,12 +2,43 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AnotherController">
    <children>
       <Label layoutX="264.0" layoutY="45.0" text="Stock Photos" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Quit" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="87.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/IMG_7055.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="87.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/IMG_4402.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="250.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/thumb_DSC_0050_1024.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="250.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/Screen%20Shot%202019-05-25%20at%201.21.55%20AM.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="64.0" layoutY="414.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/Screen%20Shot%202019-03-03%20at%209.50.57%20AM.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="414.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../Desktop/Screen%20Shot%202019-03-03%20at%209.51.19%20AM.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
