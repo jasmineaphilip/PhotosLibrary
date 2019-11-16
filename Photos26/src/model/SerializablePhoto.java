@@ -6,7 +6,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
-public class SerializePhoto implements Serializable {
+public class SerializablePhoto implements Serializable {
 	
 	private int width;
 	private int height;
@@ -49,7 +49,7 @@ public class SerializePhoto implements Serializable {
 		return photo;
 	}
 	
-	public boolean samePhoto (SerializePhoto photo) {
+	public boolean samePhoto (SerializablePhoto photo) {
 		if (width != photo.getWidth() || height != photo.getHeight()) {
 			return false;
 		}

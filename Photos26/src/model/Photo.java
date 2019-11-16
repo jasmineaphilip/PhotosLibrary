@@ -14,7 +14,8 @@ public class Photo implements Serializable {
 	private Calendar cal;
 
 	public Photo() {
-		// TODO Auto-generated constructor stub
+		cal.set(Calendar.MILLISECOND,0);
+		//image = new SerializablePhoto();
 	}
 
 }
