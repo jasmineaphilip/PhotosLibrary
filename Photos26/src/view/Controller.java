@@ -19,6 +19,7 @@ public class Controller {
 	@FXML TextField usernameField;
 	@FXML Button quitButton;
 	@FXML Button logOutButton;
+	@FXML Parent root;
 	
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
@@ -44,11 +45,6 @@ public class Controller {
 	public void quitApp(ActionEvent event) throws IOException {
 		Stage stage = (Stage) quitButton.getScene().getWindow();
 		stage.close();
-	}
-	
-	public void logOut() throws IOException {
-		Stage stage = (Stage) logOutButton.getScene().getWindow();
-		//do the loggin out
 	}
 
 	public void start(Stage mainStage) {
