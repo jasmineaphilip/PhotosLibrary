@@ -1,6 +1,7 @@
 package view;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ public class Controller {
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
 		if(username.equals("stock")) {
-			Parent loginParent = FXMLLoader.load(getClass().getResource("another.fxml"));
+			Parent loginParent = FXMLLoader.load(getClass().getResource("stockUser.fxml"));
 			Scene stock = new Scene(loginParent);
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 			
