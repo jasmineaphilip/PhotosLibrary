@@ -21,7 +21,16 @@ public class Controller {
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
 		if(username.equals("stock")) {
-			Parent loginParent = FXMLLoader.load(getClass().getResource("stockUser.fxml"));
+			Parent loginParent = FXMLLoader.load(getClass().getResource("StockUser.fxml"));
+			Scene stock = new Scene(loginParent);
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+			
+			window.setScene(stock);
+			window.show();
+		}
+		
+		if(username.equals("admin")) {
+			Parent loginParent = FXMLLoader.load(getClass().getResource("AdminUser.fxml"));
 			Scene stock = new Scene(loginParent);
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 			
