@@ -16,7 +16,7 @@
       </Label>
       <TextField fx:id="usernameField" layoutX="215.0" layoutY="174.0" promptText="Username" />
       <Button fx:id="loginButton" layoutX="271.0" layoutY="258.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Button layoutY="1.0" mnemonicParsing="false" text="Quit" />
+      <Button fx:id="quitButton" layoutY="1.0" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
       <PasswordField layoutX="215.0" layoutY="213.0" promptText="Password" />
    </children>
 </AnchorPane>
