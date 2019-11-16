@@ -23,14 +23,14 @@
          </items>
       </MenuButton>
       <Label layoutX="70.0" layoutY="132.0" text="All Users" />
-      <ListView layoutX="70.0" layoutY="157.0" prefHeight="200.0" prefWidth="480.0" />
+      <ListView fx:id="listView" layoutX="70.0" layoutY="157.0" onMouseClicked="#displayDeleteInfo" prefHeight="200.0" prefWidth="480.0" />
       <Label layoutX="140.0" layoutY="402.0" text="Create New User" />
       <Label layoutX="416.0" layoutY="402.0" text="Delete User" />
-      <TextField fx:id="createUsernameField" layoutX="114.0" layoutY="468.0" promptText="Username" />
       <TextField fx:id="createFullnameField" layoutX="114.0" layoutY="426.0" promptText="Full name" />
-      <TextField fx:id="deleteUsernameField" layoutX="374.0" layoutY="468.0" promptText="Username" />
-      <TextField fx:id="deleteFullnameField" layoutX="374.0" layoutY="426.0" promptText="Full name" />
-      <Button fx:id="createUserButton" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" text="Create User" />
-      <Button fx:id="deleteUserButton" layoutX="407.0" layoutY="506.0" mnemonicParsing="false" text="Delete User" />
+      <TextField fx:id="createUsernameField" layoutX="114.0" layoutY="468.0" promptText="Username" />
+      <Button fx:id="createUserButton" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" onAction="#createUser" text="Create User" />
+      <TextField fx:id="deleteFullnameField" editable="false" layoutX="374.0" layoutY="426.0" promptText="Full name" />
+      <TextField fx:id="deleteUsernameField" editable="false" layoutX="374.0" layoutY="468.0" promptText="Username" />
+      <Button fx:id="deleteUserButton" layoutX="407.0" layoutY="506.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete User" />
    </children>
 </AnchorPane>
