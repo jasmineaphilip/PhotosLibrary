@@ -18,7 +18,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <ScrollBar layoutX="5.0" layoutY="329.0" prefHeight="17.0" prefWidth="717.0" />
-                  <MenuButton layoutX="5.0" layoutY="1.0" mnemonicParsing="false" text="Menu">
+                  <MenuButton layoutX="8.0" layoutY="7.0" mnemonicParsing="false" text="Menu">
                     <items>
                       <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
                       <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
