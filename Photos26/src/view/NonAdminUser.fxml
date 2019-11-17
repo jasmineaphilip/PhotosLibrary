@@ -15,26 +15,26 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <MenuButton layoutX="6.0" layoutY="4.0" mnemonicParsing="false" text="Menu">
+                  <MenuButton layoutX="8.0" layoutY="6.0" mnemonicParsing="false" text="Menu">
                     <items>
                       <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
                       <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
                     </items>
                   </MenuButton>
                   <TextField layoutX="85.0" layoutY="14.0" promptText="Search" />
-                  <Label layoutX="95.0" layoutY="79.0" text="Add Album" />
+                  <Label layoutX="79.0" layoutY="80.0" text="Create New Album" />
                   <TextField fx:id="addAlbumText" layoutX="46.0" layoutY="99.0" promptText="Album Name" />
-                  <Label layoutX="97.0" layoutY="200.0" text="Edit Album" />
+                  <Label layoutX="87.0" layoutY="200.0" text="Rename Album" />
                   <TextField fx:id="editAlbumText" layoutX="47.0" layoutY="219.0" promptText="Album Name" />
-                  <Button fx:id="deleteAlbumButton" layoutX="140.0" layoutY="255.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
                   <Button fx:id="addAlbumButton" layoutX="96.0" layoutY="133.0" mnemonicParsing="false" onAction="#addAlbum" prefHeight="27.0" prefWidth="68.0" text="Add" />
-                  <Button fx:id="renameAlbumButton" layoutX="61.0" layoutY="255.0" mnemonicParsing="false" onAction="#renameAlbum" text="Rename" />
+                  <Button fx:id="renameAlbumButton" layoutX="99.0" layoutY="253.0" mnemonicParsing="false" onAction="#renameAlbum" text="Rename" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="278.0">
                <children>
-                  <ListView fx:id="listView" layoutX="10.0" layoutY="29.0" onMouseClicked="#displayEditInfo" prefHeight="582.0" prefWidth="269.0" />
+                  <ListView fx:id="listView" layoutX="10.0" layoutY="29.0" onMouseClicked="#displayEditInfo" prefHeight="539.0" prefWidth="269.0" />
                   <Label layoutX="111.0" layoutY="11.0" text="My Albums" />
+                  <Button fx:id="deleteAlbumButton" layoutX="118.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
                </children>
             </AnchorPane>
         </items>

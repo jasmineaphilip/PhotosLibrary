@@ -36,10 +36,6 @@ public class AdminUserController {
 		listView.setItems(FXCollections.observableList(users));
 	}
 	
-	public void displayUsers(ActionEvent event) {
-		listView.setItems(FXCollections.observableList(users));
-	}
-	
 	public void displayDeleteInfo() {
 		if(users.isEmpty()) {emptyCreateAndDeleteInfo(); return;}
 		User user = listView.getSelectionModel().getSelectedItem();
