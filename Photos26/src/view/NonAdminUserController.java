@@ -43,17 +43,13 @@ public class NonAdminUserController {
 		listView.setItems(FXCollections.observableList(albums));
 	}
 	
-	public void displayAlbums(ActionEvent event) {
-		listView.setItems(FXCollections.observableList(albums));
-	}
-	
 	public void displayEditInfo() {
-		if(albums.isEmpty()) {emptyCreateAndDeleteInfo(); return;}
+		if(albums.isEmpty()) {emptyAddAndRenameInfo(); return;}
 		Album album = listView.getSelectionModel().getSelectedItem();
 		editAlbumText.setText(album.getName());
 	}
 	
-	public void emptyCreateAndDeleteInfo() {
+	public void emptyAddAndRenameInfo() {
 		addAlbumText.setText("");
 		editAlbumText.setText("");
 	}
@@ -91,7 +87,7 @@ public class NonAdminUserController {
 		alert.showAndWait();
 		
 		if (alert.getResult() == ButtonType.YES) {
-			addAlbumText.setText("");
+			emptyAddAndRenameInfo();
 			Album newAlbum = new Album(albumName);
 			albums.add(newAlbum);
 			
@@ -110,29 +106,23 @@ public class NonAdminUserController {
 			return;
 		}
 		Album album = listView.getSelectionModel().getSelectedItem();
-		Album album1 = new Album (editAlbumText.getText());
-		//String newAlbumName = editAlbumText.getText();
 		
-		Alert alert = new Alert(AlertType.CONFIRMATION, "Edit " + album.getName()  +"?", ButtonType.YES, ButtonType.NO);
+		Alert alert = new Alert(AlertType.CONFIRMATION, "Rename " + album.getName()  +"?", ButtonType.YES, ButtonType.NO);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.YES) {
-			if ((album1.getName()).equals("")) {
+			if (editAlbumText.getText().equals("")) {
 				Alert a = new Alert(AlertType.ERROR, "Enter Album Name", ButtonType.CANCEL);
 				a.show();	
 				return;
 			} 
 			for(Album a: albums) {
-				if(a.getName().equals(album1.getName())) {
+				if(a.getName().equals(editAlbumText.getText())) {
 					Alert alert1 = new Alert(AlertType.ERROR, "This album already exists. Please enter new album name.", ButtonType.OK);
 					alert1.show();
 					return;
 				}
 			}
-			//deleteAlbumInfoEdit(album1);
-			int index = albums.indexOf(album);
-			albums.remove(index);
-			albums.add(album1);
-			listView.getSelectionModel().select(albums.indexOf(album1));
+			album.setName(editAlbumText.getText());
 			listView.setItems(albums);
 		}
 	}
