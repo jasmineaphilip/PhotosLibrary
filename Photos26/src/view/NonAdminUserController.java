@@ -91,9 +91,9 @@ public class NonAdminUserController {
 			Album newAlbum = new Album(albumName);
 			albums.add(newAlbum);
 			
-			listView.getSelectionModel().select(albums.indexOf(newAlbum));
-			//displayEditInfo();
 			listView.setItems(albums);
+			listView.getSelectionModel().select(albums.indexOf(newAlbum));
+			displayEditInfo();
 		} else {
 			return;
 		}
@@ -105,25 +105,31 @@ public class NonAdminUserController {
 			a.show();	
 			return;
 		}
+		int index = albums.indexOf(listView.getSelectionModel().getSelectedItem());
 		Album album = listView.getSelectionModel().getSelectedItem();
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION, "Rename " + album.getName()  +"?", ButtonType.YES, ButtonType.NO);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.YES) {
 			if (editAlbumText.getText().equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Enter Album Name", ButtonType.CANCEL);
-				a.show();	
+				Alert a = new Alert(AlertType.ERROR, "Enter Album Name", ButtonType.OK);
+				a.show();
+				displayEditInfo();
 				return;
 			} 
 			for(Album a: albums) {
 				if(a.getName().equals(editAlbumText.getText())) {
 					Alert alert1 = new Alert(AlertType.ERROR, "This album already exists. Please enter new album name.", ButtonType.OK);
 					alert1.show();
+					displayEditInfo();
 					return;
 				}
 			}
 			album.setName(editAlbumText.getText());
+			albums.set(index, album);
 			listView.setItems(albums);
+			listView.getSelectionModel().select(albums.indexOf(album));
+			displayEditInfo();
 		}
 	}
 	
