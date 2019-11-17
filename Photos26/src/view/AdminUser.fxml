@@ -16,21 +16,28 @@
             <Font size="39.0" />
          </font>
       </Label>
-      <MenuButton layoutX="11.0" layoutY="11.0" mnemonicParsing="false" text="Menu">
+      <MenuButton layoutX="3.0" layoutY="3.0" mnemonicParsing="false" text="Menu">
          <items>
             <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
             <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
          </items>
       </MenuButton>
-      <Label layoutX="70.0" layoutY="132.0" text="All Users" />
-      <ListView fx:id="listView" layoutX="70.0" layoutY="157.0" onMouseClicked="#displayDeleteInfo" prefHeight="200.0" prefWidth="480.0" />
-      <Label layoutX="140.0" layoutY="402.0" text="Create New User" />
-      <Label layoutX="416.0" layoutY="402.0" text="Delete User" />
-      <TextField fx:id="createFullnameField" layoutX="114.0" layoutY="426.0" promptText="Full name" />
-      <TextField fx:id="createUsernameField" layoutX="114.0" layoutY="468.0" promptText="Username" />
-      <Button fx:id="createUserButton" layoutX="147.0" layoutY="506.0" mnemonicParsing="false" onAction="#createUser" text="Create User" />
-      <TextField fx:id="deleteFullnameField" editable="false" layoutX="374.0" layoutY="426.0" promptText="Full name" />
-      <TextField fx:id="deleteUsernameField" editable="false" layoutX="374.0" layoutY="468.0" promptText="Username" />
-      <Button fx:id="deleteUserButton" layoutX="407.0" layoutY="506.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete User" />
+      <Label layoutX="70.0" layoutY="132.0" text="All Users:">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <ListView fx:id="listView" layoutX="70.0" layoutY="157.0" onMouseClicked="#displayDeleteInfo" prefHeight="251.0" prefWidth="480.0" />
+      <Label layoutX="113.0" layoutY="431.0" text="Create New User">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label layoutX="391.0" layoutY="431.0" text="Delete User">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <TextField fx:id="createUsernameField" layoutX="94.0" layoutY="470.0" promptText="Username" />
+      <Button fx:id="createUserButton" layoutX="127.0" layoutY="508.0" mnemonicParsing="false" onAction="#createUser" text="Create User" />
+      <TextField fx:id="deleteUsernameField" editable="false" layoutX="354.0" layoutY="470.0" promptText="Username" />
+      <Button fx:id="deleteUserButton" layoutX="387.0" layoutY="508.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete User" />
    </children>
 </AnchorPane>

@@ -3,24 +3,14 @@ package model;
 import java.io.Serializable;
 
 public class User implements Serializable{
-	private String fullname;
 	private String username;
 	
-	public User(String fullname, String username) {
-		this.setFullname(fullname);
+	public User(String username) {
 		this.setUsername(username);
 	}
 	
 	public String toString() {
-		return getFullname() + " - " + getUsername();
-	}
-
-	public String getFullname() {
-		return fullname;
-	}
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+		return getUsername();
 	}
 
 	public String getUsername() {
