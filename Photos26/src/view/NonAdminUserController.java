@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

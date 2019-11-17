@@ -20,6 +20,20 @@ public class Photo implements Serializable {
 		
 	}
 	
+	public void editTag() {
+		
+	}
+	
+	public void deleteTag() {
+		
+	}
+	
+	public void editCaption() {
+		
+	}
+	
+	
+	
 	
 
 }
