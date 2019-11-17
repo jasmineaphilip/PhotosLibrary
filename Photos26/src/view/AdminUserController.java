@@ -23,9 +23,7 @@ public class AdminUserController {
 	
 	@FXML ListView<User> listView;
 	@FXML TextField createUsernameField;
-	@FXML TextField createFullnameField;
 	@FXML TextField deleteUsernameField;
-	@FXML TextField deleteFullnameField;
 	@FXML Button createUserButton;
 	@FXML Button deleteUserButton;
 	@FXML Parent root;
@@ -45,28 +43,24 @@ public class AdminUserController {
 	public void displayDeleteInfo() {
 		if(users.isEmpty()) {emptyCreateAndDeleteInfo(); return;}
 		User user = listView.getSelectionModel().getSelectedItem();
-		deleteFullnameField.setText(user.getFullname());
 		deleteUsernameField.setText(user.getUsername());
 	}
 	
 	public void emptyCreateAndDeleteInfo() {
-		createFullnameField.setText("");
 		createUsernameField.setText("");
-		deleteFullnameField.setText("");
 		deleteUsernameField.setText("");
 	}
 	
 	public void createUser(ActionEvent event) {
-		String fullname = createFullnameField.getText();
 		String username = createUsernameField.getText();
 		
-		if (fullname.equals("") || username.equals("")) {
+		if (username.equals("")) {
 			Alert a = new Alert(AlertType.ERROR, "Please fill out both fields", ButtonType.OK);
 			a.show();	
 			return;
 		}
 		
-		User user = new User(fullname, username);
+		User user = new User(username);
 		for(User u: users) {
 			if(u.getUsername().equals(user.getUsername())) {
 				Alert a = new Alert(AlertType.ERROR, "This user already exists. Please enter new user information.", ButtonType.OK);

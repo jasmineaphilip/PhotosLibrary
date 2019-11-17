@@ -8,13 +8,13 @@
 
 <AnchorPane fx:id="root" prefHeight="317.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
    <children>
-      <Label layoutX="116.0" layoutY="83.0" text="Welcome to Photos!">
+      <Label layoutX="76.0" layoutY="76.0" text="Welcome to Photos!">
          <font>
             <Font name="Apple LiGothic Medium" size="52.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameField" layoutX="215.0" layoutY="174.0" promptText="Username" />
-      <Button fx:id="loginButton" layoutX="273.0" layoutY="215.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <Button fx:id="quitButton" layoutY="1.0" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
+      <TextField fx:id="usernameField" layoutX="215.0" layoutY="165.0" promptText="Username" />
+      <Button fx:id="loginButton" layoutX="271.0" layoutY="202.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="quitButton" layoutX="2.0" layoutY="2.0" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
    </children>
 </AnchorPane>
