@@ -6,10 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -17,16 +21,18 @@ import model.User;
 
 public class AdminUserController {
 	
-	@FXML         
-	ListView<User> listView;
+	@FXML ListView<User> listView;
 	@FXML TextField createUsernameField;
 	@FXML TextField createFullnameField;
 	@FXML TextField deleteUsernameField;
 	@FXML TextField deleteFullnameField;
 	@FXML Button createUserButton;
 	@FXML Button deleteUserButton;
+	@FXML Parent root;
+	@FXML MenuItem logOutButton;
+	@FXML MenuItem quitButton;
 	
-	ObservableList<User> users = FXCollections.observableArrayList();
+	static ObservableList<User> users = FXCollections.observableArrayList();
 	
 	public void start(Stage mainStage) throws IOException{
 		
@@ -82,6 +88,21 @@ public class AdminUserController {
 		emptyCreateAndDeleteInfo();
 		listView.setItems(users);
 		
+	}
+	
+	public void logOut() throws IOException {
+		//Stage stage = (Stage) logOutButton.getScene().getWindow();
+		Stage stage = (Stage) root.getScene().getWindow();
+		Parent loginParent = FXMLLoader.load(getClass().getResource("Photos.fxml"));
+		Scene home = new Scene(loginParent);
+		//Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		stage.setScene(home);
+		stage.show();
+	}
+	
+	public void quitApp(ActionEvent event) throws IOException {
+		Stage stage = (Stage) root.getScene().getWindow();
+		stage.close();
 	}
 
 }

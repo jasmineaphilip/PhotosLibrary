@@ -11,8 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.5377503852080123" layoutX="-6.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="651.0" prefWidth="719.0">
         <items>
@@ -21,8 +20,8 @@
                   <ScrollBar layoutX="5.0" layoutY="329.0" prefHeight="17.0" prefWidth="717.0" />
                   <MenuButton layoutX="5.0" layoutY="1.0" mnemonicParsing="false" text="Menu">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Log Out" />
-                      <MenuItem mnemonicParsing="false" text="Quit" />
+                      <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+                      <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
                     </items>
                   </MenuButton>
                </children>

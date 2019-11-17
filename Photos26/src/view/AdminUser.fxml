@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminUserController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AdminUserController">
    <children>
       <Label layoutX="170.0" layoutY="30.0" text="Welcome Admin!">
          <font>
@@ -18,8 +18,8 @@
       </Label>
       <MenuButton layoutX="11.0" layoutY="11.0" mnemonicParsing="false" text="Menu">
          <items>
-            <MenuItem mnemonicParsing="false" text="Log Out" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+            <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
          </items>
       </MenuButton>
       <Label layoutX="70.0" layoutY="132.0" text="All Users" />
