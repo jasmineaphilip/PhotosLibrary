@@ -24,8 +24,8 @@ public class Photo implements Serializable {
 		return cal;
 	}
 	
-	public void editCaption() {
-		
+	public void editCaption(String newCaption) {
+		caption = newCaption;
 	}
 
 	

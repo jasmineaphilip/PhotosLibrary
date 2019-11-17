@@ -41,12 +41,13 @@ public class Album implements Serializable {
 		
 	}
 	
-	public void movePhoto(Album destination) {
-		//photos.remove(index)
+	public void movePhoto(Photo photo, Album destination) {
+		photos.remove(photo);
+		destination.photos.add(photo);
 	}
 	
-	public void copyPhoto(Album destination) {
-		
+	public void copyPhoto(Photo photo, Album destination) {
+		destination.photos.add(photo);
 	}
 	
 	public Photo getOldestPhoto() {
