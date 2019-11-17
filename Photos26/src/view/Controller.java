@@ -29,20 +29,32 @@ public class Controller {
 		String username = usernameField.getText();
 		boolean userExists = false;
 		if(username.equals("stock")) {
-			Parent loginParent = FXMLLoader.load(getClass().getResource("StockUser.fxml"));
-			Scene stock = new Scene(loginParent);
+			FXMLLoader loader = new FXMLLoader (getClass().getResource("StockUser.fxml"));
+			Parent parent = (Parent) loader.load();
+			
+			AdminUserController ctrl = loader.getController();
+			Scene scene = new Scene(parent);
+			
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 			
-			window.setScene(stock);
+			ctrl.start(window);
+			
+			window.setScene(scene);
 			window.show();
 		}
 		
 		else if(username.equals("admin")) {
-			Parent loginParent = FXMLLoader.load(getClass().getResource("AdminUser.fxml"));
-			Scene admin = new Scene(loginParent);
+			FXMLLoader loader = new FXMLLoader (getClass().getResource("AdminUser.fxml"));
+			Parent parent = (Parent) loader.load();
+			
+			AdminUserController ctrl = loader.getController();
+			Scene scene = new Scene(parent);
+			
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 			
-			window.setScene(admin);
+			ctrl.start(window);
+			
+			window.setScene(scene);
 			window.show();
 		}
 		
@@ -54,11 +66,17 @@ public class Controller {
 				}
 			}
 			if(userExists) {
-				Parent loginParent = FXMLLoader.load(getClass().getResource("NonAdminUser.fxml"));
-				Scene nonadmin = new Scene(loginParent);
+				FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminUser.fxml"));
+				Parent parent = (Parent) loader.load();
+				
+				AdminUserController ctrl = loader.getController();
+				Scene scene = new Scene(parent);
+				
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 				
-				window.setScene(nonadmin);
+				ctrl.start(window);
+				
+				window.setScene(scene);
 				window.show();
 			}
 			else {

@@ -35,8 +35,11 @@ public class AdminUserController {
 	static ObservableList<User> users = FXCollections.observableArrayList();
 	
 	public void start(Stage mainStage) throws IOException{
-		
-		
+		listView.setItems(FXCollections.observableList(users));
+	}
+	
+	public void displayUsers(ActionEvent event) {
+		listView.setItems(FXCollections.observableList(users));
 	}
 	
 	public void displayDeleteInfo() {
