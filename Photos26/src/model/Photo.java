@@ -20,17 +20,17 @@ public class Photo implements Serializable {
 		
 	}
 	
-	public void editTag() {
-		
-	}
-	
-	public void deleteTag() {
-		
+	public Calendar getCalendar() {
+		return cal;
 	}
 	
 	public void editCaption() {
 		
 	}
+
+	
+
+	
 	
 	
 	

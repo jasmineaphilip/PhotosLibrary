@@ -42,24 +42,31 @@ public class Album implements Serializable {
 	}
 	
 	public void movePhoto(Album destination) {
-		
+		//photos.remove(index)
 	}
 	
-	public void copyPhoto() {
+	public void copyPhoto(Album destination) {
 		
 	}
 	
 	public Photo getOldestPhoto() {
 		oldestPhoto = photos.get(0);
 		for (Photo photo : photos) {
-			//if (photo.get())
+			if (photo.getCalendar().compareTo(oldestPhoto.getCalendar()) < 0) {
+				oldestPhoto = photo;
+			}
 		}
 		return oldestPhoto;
 	}
 	
 	public Photo getNewestPhoto() {
-		// TODO Auto-generated method stub
-		return null;
+		newestPhoto = photos.get(0);
+		for (Photo photo : photos) {
+			if (photo.getCalendar().compareTo(oldestPhoto.getCalendar()) > 0) {
+				newestPhoto = photo;
+			}
+		}
+		return newestPhoto;
 	}
 
 }
