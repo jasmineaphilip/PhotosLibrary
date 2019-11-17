@@ -22,7 +22,7 @@ public class Album implements Serializable {
 		return name;
 	}
 	public void setName(String name) {
-		name = this.name;
+		this.name = name;
 	}
 	
 	public String toString() {
