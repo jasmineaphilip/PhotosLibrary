@@ -29,17 +29,11 @@ public class Controller {
 		String username = usernameField.getText();
 		boolean userExists = false;
 		if(username.equals("stock")) {
-			FXMLLoader loader = new FXMLLoader (getClass().getResource("StockUser.fxml"));
-			Parent parent = (Parent) loader.load();
-			
-			AdminUserController ctrl = loader.getController();
-			Scene scene = new Scene(parent);
-			
+			Parent loginParent = FXMLLoader.load(getClass().getResource("StockUser.fxml"));
+			Scene stock = new Scene(loginParent);
 			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 			
-			ctrl.start(window);
-			
-			window.setScene(scene);
+			window.setScene(stock);
 			window.show();
 		}
 		
@@ -66,17 +60,11 @@ public class Controller {
 				}
 			}
 			if(userExists) {
-				FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminUser.fxml"));
-				Parent parent = (Parent) loader.load();
-				
-				AdminUserController ctrl = loader.getController();
-				Scene scene = new Scene(parent);
-				
+				Parent loginParent = FXMLLoader.load(getClass().getResource("NonAdminUser.fxml"));
+				Scene nonadmin = new Scene(loginParent);
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 				
-				ctrl.start(window);
-				
-				window.setScene(scene);
+				window.setScene(nonadmin);
 				window.show();
 			}
 			else {
