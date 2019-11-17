@@ -12,7 +12,7 @@ public class Album implements Serializable {
 	
 	
 	public Album(String name) {
-		name = this.name;
+		this.name = name;
 		photos = new ArrayList<Photo>();
 		oldestPhoto = null;
 		newestPhoto = null;
@@ -23,6 +23,10 @@ public class Album implements Serializable {
 	}
 	public void setName(String name) {
 		name = this.name;
+	}
+	
+	public String toString() {
+		return getName();
 	}
 	
 	public void addPhoto(Photo photo) {
