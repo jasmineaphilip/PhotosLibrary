@@ -3,6 +3,9 @@ package view;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
@@ -79,17 +82,81 @@ public class NonAdminUserController {
 				return;
 			}
 		}
-		Album album = new Album(albumName);
-		albums.add(album);
-		listView.setItems(albums);
+		if (albumName.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Enter Album Name", ButtonType.CANCEL);
+			a.show();
+			return;
+		}
+		Alert alert = new Alert(AlertType.CONFIRMATION, "Add " + albumName +"?", ButtonType.YES, ButtonType.NO);
+		alert.showAndWait();
+		
+		if (alert.getResult() == ButtonType.YES) {
+			addAlbumText.setText("");
+			Album newAlbum = new Album(albumName);
+			albums.add(newAlbum);
+			
+			listView.getSelectionModel().select(albums.indexOf(newAlbum));
+			//displayEditInfo();
+			listView.setItems(albums);
+		} else {
+			return;
+		}
 	}
 	
 	public void renameAlbum() throws IOException {
+		while (albums.isEmpty()) {
+			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
+			a.show();	
+			return;
+		}
+		Album album = listView.getSelectionModel().getSelectedItem();
+		Album album1 = new Album (editAlbumText.getText());
+		//String newAlbumName = editAlbumText.getText();
 		
+		Alert alert = new Alert(AlertType.CONFIRMATION, "Edit " + album.getName()  +"?", ButtonType.YES, ButtonType.NO);
+		alert.showAndWait();
+		if (alert.getResult() == ButtonType.YES) {
+			if ((album1.getName()).equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Enter Album Name", ButtonType.CANCEL);
+				a.show();	
+				return;
+			} 
+			for(Album a: albums) {
+				if(a.getName().equals(album1.getName())) {
+					Alert alert1 = new Alert(AlertType.ERROR, "This album already exists. Please enter new album name.", ButtonType.OK);
+					alert1.show();
+					return;
+				}
+			}
+			//deleteAlbumInfoEdit(album1);
+			int index = albums.indexOf(album);
+			albums.remove(index);
+			albums.add(album1);
+			listView.getSelectionModel().select(albums.indexOf(album1));
+			listView.setItems(albums);
+		}
 	}
 	
+	
+	
 	public void deleteAlbum() throws IOException {
-		
+		while (albums.isEmpty()) {
+			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
+			a.show();	
+			return;
+		}
+		Album album = listView.getSelectionModel().getSelectedItem();
+		Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + album.getName() + "?", ButtonType.YES, ButtonType.NO);
+		alert.showAndWait();
+		if (alert.getResult() == ButtonType.YES) {
+			//if(albums.isEmpty()) {emptySongInfo(); return;}
+			int index = albums.indexOf(album);
+			albums.remove(index);
+			listView.getSelectionModel().select(index);
+			displayEditInfo();
+		} else {
+			return;
+		}
 	}
 	
 	
