@@ -46,10 +46,12 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField layoutX="14.0" layoutY="54.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag " />
-                                    <TextField layoutX="14.0" layoutY="103.0" prefHeight="27.0" prefWidth="207.0" promptText="Autofilled Caption" />
-                                    <Button layoutX="247.0" layoutY="54.0" mnemonicParsing="false" text="Edit Tag" />
-                                    <Button layoutX="247.0" layoutY="103.0" mnemonicParsing="false" text="Edit Caption" />
+                                    <TextField layoutX="14.0" layoutY="54.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Name" />
+                                    <TextField layoutX="15.0" layoutY="142.0" prefHeight="27.0" prefWidth="207.0" promptText="Autofilled Caption" />
+                                    <Button layoutX="233.0" layoutY="54.0" mnemonicParsing="false" text="Edit Tag Name" />
+                                    <Button layoutX="247.0" layoutY="142.0" mnemonicParsing="false" text="Edit Caption" />
+                                    <Button layoutX="234.0" layoutY="97.0" mnemonicParsing="false" text="Edit Tag Value" />
+                                    <TextField layoutX="14.0" layoutY="97.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Value" />
                                  </children>
                               </AnchorPane>
                         </content>

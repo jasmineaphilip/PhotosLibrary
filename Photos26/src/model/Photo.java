@@ -14,6 +14,7 @@ public class Photo implements Serializable {
 	private Calendar cal;
 
 	public Photo() {
+		cal = Calendar.getInstance();
 		cal.set(Calendar.MILLISECOND,0);
 		photo = new SerializablePhoto();
 		caption = "";
@@ -22,6 +23,11 @@ public class Photo implements Serializable {
 	
 	public Calendar getCalendar() {
 		return cal;
+	}
+	
+	public String getDate() {
+		String [] str = cal.getTime().toString().split("\\s+");
+		return str[0] + " " + str[1] + " " + str[2] + ", " + str[5];
 	}
 	
 	public void editCaption(String newCaption) {
