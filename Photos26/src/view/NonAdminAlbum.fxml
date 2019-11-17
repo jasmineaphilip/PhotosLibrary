@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,10 +36,10 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="350.0">
                                  <children>
-                                    <Button layoutX="51.0" layoutY="51.0" mnemonicParsing="false" text="Browse" />
-                                    <TextField layoutX="132.0" layoutY="51.0" promptText="Selected Photo Path" />
-                                    <Button layoutX="83.0" layoutY="110.0" mnemonicParsing="false" text="Add Photo" />
-                                    <Button layoutX="185.0" layoutY="110.0" mnemonicParsing="false" text="Cancel" />
+                                    <Button fx:id="browseButton" layoutX="51.0" layoutY="51.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
+                                    <TextField fx:id="photoPathText" layoutX="132.0" layoutY="51.0" promptText="Selected Photo Path" />
+                                    <Button fx:id="addPhotoButton" layoutX="83.0" layoutY="110.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
+                                    <Button fx:id="cancelAddButton" layoutX="185.0" layoutY="110.0" mnemonicParsing="false" onAction="#cancelAdd" text="Cancel" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -46,12 +48,12 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField layoutX="14.0" layoutY="54.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Name" />
-                                    <TextField layoutX="15.0" layoutY="142.0" prefHeight="27.0" prefWidth="207.0" promptText="Autofilled Caption" />
-                                    <Button layoutX="233.0" layoutY="54.0" mnemonicParsing="false" text="Edit Tag Name" />
-                                    <Button layoutX="247.0" layoutY="142.0" mnemonicParsing="false" text="Edit Caption" />
-                                    <Button layoutX="234.0" layoutY="97.0" mnemonicParsing="false" text="Edit Tag Value" />
-                                    <TextField layoutX="14.0" layoutY="97.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Value" />
+                                    <TextField fx:id="editTagNameText" layoutX="14.0" layoutY="54.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Name" />
+                                    <TextField fx:id="editCaptionText" layoutX="15.0" layoutY="142.0" prefHeight="27.0" prefWidth="207.0" promptText="Autofilled Caption" />
+                                    <Button fx:id="editTagNameButton" layoutX="233.0" layoutY="54.0" mnemonicParsing="false" onAction="#editTagName" text="Edit Tag Name" />
+                                    <Button fx:id="editCaptionButton" layoutX="247.0" layoutY="142.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
+                                    <Button fx:id="editTagValueButton" layoutX="234.0" layoutY="97.0" mnemonicParsing="false" onAction="#editTagValue" text="Edit Tag Value" />
+                                    <TextField fx:id="editTagValueText" layoutX="14.0" layoutY="97.0" prefHeight="27.0" prefWidth="208.0" promptText="Autofilled Tag Value" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -60,20 +62,23 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField layoutX="72.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
-                                    <Button layoutX="83.0" layoutY="117.0" mnemonicParsing="false" text="Move to..." />
-                                    <Button layoutX="190.0" layoutY="117.0" mnemonicParsing="false" text="Copy to..." />
+                                    <TextField fx:id="destinationAlbumText" layoutX="72.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
+                                    <Button fx:id="movePhotoButton" layoutX="83.0" layoutY="117.0" mnemonicParsing="false" onAction="#movePhoto" text="Move to..." />
+                                    <Button fx:id="copyPhotoButton" layoutX="190.0" layoutY="117.0" mnemonicParsing="false" onAction="#copyPhoto" text="Copy to..." />
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
                     </tabs>
                   </TabPane>
-                  <ImageView fitHeight="154.0" fitWidth="306.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <TextField layoutX="32.0" layoutY="178.0" promptText="Autofilled Caption" />
-                  <TextField layoutX="32.0" layoutY="214.0" promptText="Autofilled Tags" />
-                  <TextField layoutX="32.0" layoutY="249.0" promptText="Autofilled Date/Time" />
-                  <Button layoutX="236.0" layoutY="214.0" mnemonicParsing="false" text="Delete Photo" />
+                  <ImageView fitHeight="147.0" fitWidth="167.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField fx:id="displayCaptionText" layoutX="23.0" layoutY="187.0" promptText="Caption" />
+                  <TextField fx:id="displayTimeText" layoutX="23.0" layoutY="244.0" promptText="Autofilled Date/Time" />
+                  <Button fx:id="deletePhotoButton" layoutX="218.0" layoutY="215.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete Photo" />
+                  <TextArea fx:id="tagsDisplayText" layoutX="221.0" layoutY="39.0" prefHeight="109.0" prefWidth="91.0" promptText="Tags" />
+                  <Label layoutX="23.0" layoutY="168.0" text="Caption" />
+                  <Label layoutX="23.0" layoutY="228.0" text="Time of Capture" />
+                  <Label layoutX="218.0" layoutY="20.0" text="Tags" />
                </children>
             </AnchorPane>
         </items>

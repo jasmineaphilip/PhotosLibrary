@@ -7,15 +7,39 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NonAdminAlbumController {
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
-	@FXML Parent root ;
+	@FXML Parent root;
+	@FXML TextField displayCaptionText;
+	@FXML TextField displayTimeText;
+	@FXML TextField displayTagsText;
+	@FXML Button browseButton;
+	@FXML TextField photoPathText;
+	@FXML Button addPhotoButton;
+	@FXML Button cancelAddButton;
+	@FXML Button deletePhotoButton;
+	@FXML Button editTagNameText;
+	@FXML Button editTagNameButton;
+	@FXML TextField editTagValueText;
+	@FXML Button editTagValueButton;
+	@FXML TextField editCaptionText;
+	@FXML Button editCaptionButton;
+	@FXML TextField destinationAlbumText;
+	@FXML Button movePhotoButton;
+	@FXML Button copyPhotoButton;
 
 
+	public void start(Stage mainStage) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public void quitApp(ActionEvent event) throws IOException {
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
@@ -31,10 +55,33 @@ public class NonAdminAlbumController {
 		stage.show();
 	}
 	
-	
-	public void start(Stage mainStage) {
-		// TODO Auto-generated method stub
+	public void deletePhoto() {
 		
 	}
+	public void browse() {
+		
+	}
+	public void addPhoto() {
+		
+	}
+	public void cancelAdd() {
+		
+	}
+	public void editTagName(String tagName) {
+		
+	}
+	public void editTagValue(String tagValue) {
+		
+	}
+	public void editCaption(String caption) {
+		
+	}
+	public void movePhoto(String album) {
+		
+	}
+	public void copyPhoto(String album) {
+		
+	}
+	
 }
 

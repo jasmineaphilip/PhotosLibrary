@@ -64,6 +64,11 @@ public class Album implements Serializable {
 		return oldestPhoto;
 	}
 	
+	public String getOldestPhotoDate() {
+		if (oldestPhoto == null) return "NA";
+		return oldestPhoto.getDate();
+	}
+	
 	public Photo getNewestPhoto() {
 		newestPhoto = photos.get(0);
 		for (Photo photo : photos) {

@@ -34,7 +34,8 @@
                <children>
                   <ListView fx:id="listView" layoutX="10.0" layoutY="29.0" onMouseClicked="#displayEditInfo" prefHeight="539.0" prefWidth="269.0" />
                   <Label layoutX="111.0" layoutY="11.0" text="My Albums" />
-                  <Button fx:id="deleteAlbumButton" layoutX="118.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
+                  <Button fx:id="deleteAlbumButton" layoutX="82.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
+                  <Button fx:id="viewAlbumButton" layoutX="150.0" layoutY="579.0" mnemonicParsing="false" text="View" />
                </children>
             </AnchorPane>
         </items>
