@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
+import model.SerializablePhoto;
 import model.User;
 
 public class NonAdminAlbumController {
@@ -89,48 +91,69 @@ public class NonAdminAlbumController {
 	public void browse() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
+		
 		if (selectedFile != null && isImage(selectedFile)) {
-		    photoPathText.setText(selectedFile.getAbsolutePath());
-		}
-		else {
+			photoPathText.setText(selectedFile.getAbsolutePath());
+		} else {
 			Alert alert = new Alert(AlertType.ERROR, "This file is not an image. Please select an image file.", ButtonType.OK);
 			alert.show();
 			return;
 		}
+		
+		
+		
+		
+//		BufferedImage bufferedImage = ImageIO.read(selectedFile);
+//		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+//		SerializablePhoto tempImage = new SerializablePhoto();
+//		tempImage.setPhoto(image);
+//		for (Photo p: album.getPhotos()) {
+//        	if (tempImage.equals(p.getSerializableImage())) {
+//        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
+//    			alert.show();
+//    			return;
+//        	}
+//        }
+//		Photo tempPhoto = null;
+//		boolean photoFound = false;
+		
+		 
 	}
 	
 	public void cancelAdd() {
 		photoPathText.setText("");
 	}
 	public void addPhoto() {
-//		if (photoPathText.equals("")) {
-//			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
-//			alert.show();
-//			return;
-//		}
- 		Stage stage = (Stage) root.getScene().getWindow();
-//		StackPane sp = new StackPane();
-//        Image img = new Image(photoPathText.getText());
-//        ImageView imgView = new ImageView(img);
-//        sp.getChildren().add(imgView);
-// 
-//        //Adding HBox to the scene
-//        Scene scene = new Scene(sp);
-//        stage.setScene(scene);
-//        stage.show();
+		if (photoPathText.getText().contentEquals("")) {
+			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
+			alert.show();
+			return;
+		}
+		Stage stage = (Stage) root.getScene().getWindow();
 		
 		String imagePath = photoPathText.getText();
-	    Image image = new Image(imagePath);
+		//System.out.println(imagePath);
+		Image image = new Image(new File(imagePath).toURI().toString());
+	    //Image image = new Image(imagePath);
 
 	    ImageView imageView = new ImageView(image);
-
-	    //Button saveBtn = new Button("Save Image");
-
+	    SerializablePhoto tempImage = new SerializablePhoto();
+	    tempImage.setPhoto(image);
+	    for (Photo p: album.getPhotos()) {
+        	if (tempImage.equals(p.getSerializableImage())) {
+        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
+    			alert.show();
+    			return;
+        	}
+        }
+	    //photos.add(tempImage);
+	    
 	    VBox root = new VBox(10, imageView, addPhotoButton);
 	    Scene scene = new Scene(root);
 	    stage.setScene(scene);
 	    stage.setTitle("");
 	    stage.show();
+ 		
 	}
 	
 	
