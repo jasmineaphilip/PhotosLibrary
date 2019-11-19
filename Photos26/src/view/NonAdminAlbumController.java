@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +13,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,6 +32,7 @@ import model.Photo;
 import model.User;
 
 public class NonAdminAlbumController {
+	@FXML ListView<Photo> photoListView;
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
 	@FXML Parent root;
@@ -68,27 +80,61 @@ public class NonAdminAlbumController {
 	}
 	
 	public void deletePhoto() {
-		
+		Photo photo = photoListView.getSelectionModel().getSelectedItem();
+		photos.remove(photo);
+		album.removePhoto(photo);
+		//photoListView.getSelectionModel().select(index);
+		displayInfo();
 	}
 	public void browse() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
-		 
-		if (selectedFile != null) {
-		 
-		    photoPathText.setText("File selected: " + selectedFile.getName());
+		if (selectedFile != null && isImage(selectedFile)) {
+		    photoPathText.setText(selectedFile.getName());
 		}
 		else {
-			photoPathText.setText("File selection cancelled.");
+			Alert alert = new Alert(AlertType.ERROR, "This file is not an image. Please select an image file.", ButtonType.OK);
+			alert.show();
+			return;
 		}
-
+	}
+	
+	public void cancelAdd() {
+		photoPathText.setText("");
 	}
 	public void addPhoto() {
+//		if (photoPathText.equals("")) {
+//			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
+//			alert.show();
+//			return;
+//		}
+ 		Stage stage = (Stage) root.getScene().getWindow();
+//		StackPane sp = new StackPane();
+//        Image img = new Image(photoPathText.getText());
+//        ImageView imgView = new ImageView(img);
+//        sp.getChildren().add(imgView);
+// 
+//        //Adding HBox to the scene
+//        Scene scene = new Scene(sp);
+//        stage.setScene(scene);
+//        stage.show();
 		
+		String imagePath = photoPathText.getText();
+	    Image image = new Image(imagePath);
+
+	    ImageView imageView = new ImageView(image);
+
+	    //Button saveBtn = new Button("Save Image");
+
+	    VBox root = new VBox(10, imageView, addPhotoButton);
+	    Scene scene = new Scene(root);
+	    stage.setScene(scene);
+	    stage.setTitle("");
+	    stage.show();
 	}
-	public void cancelAdd() {
-		
-	}
+	
+	
+	
 	public void editTagName() {
 		
 	}
@@ -103,6 +149,38 @@ public class NonAdminAlbumController {
 	}
 	public void copyPhoto() {
 		
+	}
+	public boolean isImage(File file) {
+		try {
+		    BufferedImage image = ImageIO.read(file);
+		    if (image == null) {
+		        return false;
+		        //System.out.println("The file"+file+"could not be opened, it is not an image");
+		    }
+		} catch(IOException ex) {
+		    //System.out.println("The file"+file+"could not be opened , an error occurred.");
+		    return false;
+		}
+		return true;
+	}
+	
+	public void displayInfo() {
+		if(photos.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
+		Photo photo = photoListView.getSelectionModel().getSelectedItem();
+		displayCaptionText.setText(photo.getCaption());
+		editCaptionText.setText(photo.getCaption());
+		editTagNameText.setText(photo.getTagName());
+		editTagValueText.setText(photo.getTagValue());
+		//displayTimeText.setText(getPicTime());
+		//displayTagsText.setText(photo.getTags());
+	}
+	public void emptyAddEditAndInitialInfo() {
+		editTagNameText.setText("");
+		editTagValueText.setText("");
+		editCaptionText.setText("");
+		displayCaptionText.setText("");
+		displayTimeText.setText("");
+		displayTagsText.setText("");
 	}
 
 	

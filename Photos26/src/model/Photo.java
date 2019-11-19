@@ -51,7 +51,11 @@ public class Photo implements Serializable {
 		return photo;
 	}
 	
-	public Tag getTag() {
+	public String getTagName() {
+		return null;
+	}
+	
+	public String getTagValue() {
 		return null;
 	}
 	
@@ -64,5 +68,8 @@ public class Photo implements Serializable {
 	}
 	public void removeTag() {
 		
+	}
+	public List<Tag> getTags() {
+		return tags;
 	}
 }
