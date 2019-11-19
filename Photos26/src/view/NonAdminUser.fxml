@@ -39,7 +39,7 @@
                <children>
                   <ListView fx:id="listView" layoutX="10.0" layoutY="29.0" onMouseClicked="#displayEditInfo" prefHeight="539.0" prefWidth="269.0" />
                   <Button fx:id="deleteAlbumButton" layoutX="82.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteAlbum" text="Delete" />
-                  <Button fx:id="viewAlbumButton" layoutX="150.0" layoutY="579.0" mnemonicParsing="false" text="View" />
+                  <Button fx:id="openAlbumButton" layoutX="150.0" layoutY="579.0" mnemonicParsing="false" onAction="#openAlbum" text="Open" />
                   <Label layoutX="110.0" layoutY="8.0" text="My Albums" />
                </children>
             </AnchorPane>

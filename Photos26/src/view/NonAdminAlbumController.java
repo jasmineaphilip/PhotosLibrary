@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
 
 public class NonAdminAlbumController {
 	@FXML MenuItem quitButton;
@@ -24,7 +25,7 @@ public class NonAdminAlbumController {
 	@FXML Button addPhotoButton;
 	@FXML Button cancelAddButton;
 	@FXML Button deletePhotoButton;
-	@FXML Button editTagNameText;
+	@FXML TextField editTagNameText;
 	@FXML Button editTagNameButton;
 	@FXML TextField editTagValueText;
 	@FXML Button editTagValueButton;
@@ -35,8 +36,8 @@ public class NonAdminAlbumController {
 	@FXML Button copyPhotoButton;
 
 
-	public void start(Stage mainStage) {
-		// TODO Auto-generated method stub
+	public void start(Stage mainStage, User user) {
+		
 		
 	}
 	
@@ -68,19 +69,19 @@ public class NonAdminAlbumController {
 	public void cancelAdd() {
 		
 	}
-	public void editTagName(String tagName) {
+	public void editTagName() {
 		
 	}
-	public void editTagValue(String tagValue) {
+	public void editTagValue() {
 		
 	}
-	public void editCaption(String caption) {
+	public void editCaption() {
 		
 	}
-	public void movePhoto(String album) {
+	public void movePhoto() {
 		
 	}
-	public void copyPhoto(String album) {
+	public void copyPhoto() {
 		
 	}
 	

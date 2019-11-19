@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -21,6 +22,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -37,22 +39,21 @@ public class NonAdminUserController {
 	@FXML TextField editAlbumText;
 	@FXML Button renameAlbumButton;
 	@FXML Button deleteAlbumButton;
+	@FXML Button openAlbumButton;
 	@FXML Text welcomeText;
 	
-	static ObservableList<Album> albums = FXCollections.observableArrayList();
+	ObservableList<Album> albums = FXCollections.observableArrayList();
 	private User user;
 	
 
 	public void start(Stage mainStage, User user) {
-		welcomeText.setText("Welcome, "  + "!");
+		welcomeText.setText("Welcome, "  + user.getUsername() + "!");
 		this.user = user;
-		System.out.println(user.getAlbums());
+		//System.out.println(user.getAlbums());
 		for(int i=0;i<user.getAlbums().size();i++) {
 			albums.add(user.getAlbums().get(i));
 		}
-		listView.setItems(FXCollections.observableList(albums));
-		
-		
+		listView.setItems(albums);
 	}
 	
 	public void displayEditInfo() {
@@ -146,13 +147,14 @@ public class NonAdminUserController {
 				}
 			}
 			album.setName(editAlbumText.getText());
+			int index1 = user.getAlbums().indexOf(album);
+			user.getAlbums().get(index1).setName(editAlbumText.getText());
 			albums.set(index, album);
 			listView.setItems(albums);
 			listView.getSelectionModel().select(albums.indexOf(album));
 			displayEditInfo();
 		}
 	}
-	
 	
 	
 	public void deleteAlbum() throws IOException {
@@ -168,11 +170,39 @@ public class NonAdminUserController {
 			//if(albums.isEmpty()) {emptySongInfo(); return;}
 			int index = albums.indexOf(album);
 			albums.remove(index);
+			user.getAlbums().remove(index);
 			listView.getSelectionModel().select(index);
 			displayEditInfo();
 		} else {
 			return;
 		}
+	}
+	
+	public void openAlbum(ActionEvent event) throws IOException {
+		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
+		AnchorPane root = (AnchorPane) loader.load();
+		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
+//		AlbumDisplayController controller = loader.getController();
+//		controller.start(stage);
+
+		Scene scene = new Scene(root, 719, 651);
+		stage.setScene(scene);
+		stage.show();
+		
+//		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
+//		Parent parent = (Parent) loader.load();
+//		
+//		NonAdminAlbumController ctrl = loader.getController();
+//		Scene scene = new Scene(parent);
+//		
+//		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+//		
+//		ctrl.start(window, user);
+//		
+//		window.setScene(scene);
+//		window.show();
 	}
 	
 	

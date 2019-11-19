@@ -35,7 +35,7 @@ public class Photos extends Application implements Serializable {
 		Scene scene = new Scene(root, 600, 600); //width, length
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Photos Library");
-		primaryStage.setResizable(false);
+		//primaryStage.setResizable(false);
 		primaryStage.show(); 
 	}
 
