@@ -90,7 +90,7 @@ public class NonAdminAlbumController {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
 		if (selectedFile != null && isImage(selectedFile)) {
-		    photoPathText.setText(selectedFile.getName());
+		    photoPathText.setText(selectedFile.getAbsolutePath());
 		}
 		else {
 			Alert alert = new Alert(AlertType.ERROR, "This file is not an image. Please select an image file.", ButtonType.OK);

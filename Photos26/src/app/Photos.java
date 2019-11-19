@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 import view.Controller;
 
 public class Photos extends Application implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7201791085130963483L;
+
 	@Override
 	public void start(Stage primaryStage) 
 	throws IOException {
@@ -35,7 +40,7 @@ public class Photos extends Application implements Serializable {
 		Scene scene = new Scene(root, 600, 600); //width, length
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Photos Library");
-		//primaryStage.setResizable(false);
+		primaryStage.setResizable(false);
 		primaryStage.show(); 
 	}
 
