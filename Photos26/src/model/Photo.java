@@ -55,22 +55,14 @@ public class Photo implements Serializable {
 		return null;
 	}
 	
+	public void addTag() {
+		
+	}
+	
 	public void editTag() {
 		
 	}
 	public void removeTag() {
 		
 	}
-	
-	
-	
-
-	
-
-	
-	
-	
-	
-	
-
 }

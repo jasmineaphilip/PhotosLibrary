@@ -179,30 +179,30 @@ public class NonAdminUserController {
 	}
 	
 	public void openAlbum(ActionEvent event) throws IOException {
-		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
-		AnchorPane root = (AnchorPane) loader.load();
-		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
-//		AlbumDisplayController controller = loader.getController();
-//		controller.start(stage);
-
-		Scene scene = new Scene(root, 719, 651);
-		stage.setScene(scene);
-		stage.show();
+//		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
+//		AnchorPane root = (AnchorPane) loader.load();
+//		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
+////		AlbumDisplayController controller = loader.getController();
+////		controller.start(stage);
+//
+//		Scene scene = new Scene(root, 719, 651);
+//		stage.setScene(scene);
+//		stage.show();
 		
-//		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
-//		Parent parent = (Parent) loader.load();
-//		
-//		NonAdminAlbumController ctrl = loader.getController();
-//		Scene scene = new Scene(parent);
-//		
-//		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		
-//		ctrl.start(window, user);
-//		
-//		window.setScene(scene);
-//		window.show();
+		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
+		Parent parent = (Parent) loader.load();
+		
+		NonAdminAlbumController ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+		
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Album album = listView.getSelectionModel().getSelectedItem();
+		ctrl.start(window, album);
+		
+		window.setScene(scene);
+		window.show();
 	}
 	
 	
