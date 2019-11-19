@@ -159,11 +159,16 @@ public class NonAdminUserController {
 	
 	public void deleteAlbum() throws IOException {
 		while (albums.isEmpty()) {
-			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
+			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.OK);
 			a.show();	
 			return;
 		}
 		Album album = listView.getSelectionModel().getSelectedItem();
+		if(album == null) {
+			Alert a = new Alert(AlertType.ERROR, "Please select an album.", ButtonType.OK);
+			a.show();	
+			return;
+		}
 		Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + album.getName() + "?", ButtonType.YES, ButtonType.NO);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.YES) {
@@ -190,7 +195,12 @@ public class NonAdminUserController {
 //		Scene scene = new Scene(root, 719, 651);
 //		stage.setScene(scene);
 //		stage.show();
-		
+		Album album = listView.getSelectionModel().getSelectedItem();
+		if(album == null) {
+			Alert a = new Alert(AlertType.ERROR, "Please select an album.", ButtonType.OK);
+			a.show();	
+			return;
+		}
 		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
 		Parent parent = (Parent) loader.load();
 		
@@ -198,7 +208,6 @@ public class NonAdminUserController {
 		Scene scene = new Scene(parent);
 		
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Album album = listView.getSelectionModel().getSelectedItem();
 		ctrl.start(window, album);
 		
 		window.setScene(scene);

@@ -10,6 +10,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 2818796451511130119L;
 	private String username;
 	private ArrayList<Album> albums;
+	private ArrayList<Photo> allPhotos;
 	 
 	
 	public User(String username) {
