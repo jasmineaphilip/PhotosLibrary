@@ -44,6 +44,10 @@ public class Album implements Serializable {
 		return photos.get(index);
 	}
 	
+	public List<Photo> getPhotos() {
+		return photos;
+	}
+	
 	public int getPhotoIndex(Photo photo) {
 		for (int i = 0; i < photos.size(); i++) {
 			if (photos.get(i).equals(photo)) {
