@@ -8,6 +8,10 @@ import javafx.scene.image.Image;
 
 public class Photo implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8379223698967757L;
 	private SerializablePhoto photo;
 	private String caption;
 	private List<Tag> tags;
@@ -18,6 +22,7 @@ public class Photo implements Serializable {
 		cal.set(Calendar.MILLISECOND,0);
 		photo = new SerializablePhoto();
 		caption = "";
+		tags = new ArrayList<Tag>();
 		
 	}
 	
@@ -30,9 +35,35 @@ public class Photo implements Serializable {
 		return str[0] + " " + str[1] + " " + str[2] + ", " + str[5];
 	}
 	
+	public String getCaption() {
+		return caption;
+	}
+	
 	public void editCaption(String newCaption) {
 		caption = newCaption;
 	}
+
+	public Image getImage() {
+		return photo.getPhoto();
+	}
+	
+	public SerializablePhoto getSerializableImage() {
+		return photo;
+	}
+	
+	public Tag getTag() {
+		return null;
+	}
+	
+	public void editTag() {
+		
+	}
+	public void removeTag() {
+		
+	}
+	
+	
+	
 
 	
 

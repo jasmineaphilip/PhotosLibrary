@@ -3,8 +3,14 @@ package model;
 import java.io.*;
 import java.util.*;
 
+import javafx.scene.image.Image;
+
 public class Album implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6258723435304989168L;
 	private String name;
 	private List<Photo> photos;
 	private Photo oldestPhoto;
@@ -29,6 +35,23 @@ public class Album implements Serializable {
 		return getName();
 	}
 	
+	public Image getAlbumThumnail() {
+		if (photos.isEmpty()) return null;
+		return photos.get(0).getImage();
+	}
+	
+	public Photo getPhoto(int index) {
+		return photos.get(index);
+	}
+	
+	public int getPhotoIndex(Photo photo) {
+		for (int i = 0; i < photos.size(); i++) {
+			if (photos.get(i).equals(photo)) {
+				return i;
+			}
+		} return -1;
+	}
+	
 	public void addPhoto(Photo photo) {
 		photos.add(photo);
 		oldestPhoto = getOldestPhoto();
@@ -40,10 +63,10 @@ public class Album implements Serializable {
 		oldestPhoto = getOldestPhoto();
 		newestPhoto = getNewestPhoto();
 	}
-	
-	public void displayPhoto() {
-		
-	}
+//	
+//	public void displayPhoto() {
+//		
+//	}
 	
 	public void movePhoto(Photo photo, Album destination) {
 		photos.remove(photo);
@@ -65,7 +88,7 @@ public class Album implements Serializable {
 	}
 	
 	public String getOldestPhotoDate() {
-		if (oldestPhoto == null) return "NA";
+		if (oldestPhoto == null) return "N/A";
 		return oldestPhoto.getDate();
 	}
 	
@@ -78,5 +101,13 @@ public class Album implements Serializable {
 		}
 		return newestPhoto;
 	}
-
+	
+	public String getNewestPhotoDate() {
+		if (newestPhoto == null) return "N/A";
+		return newestPhoto.getDate();
+	}
+	
+	public String getDateRange() {
+		return getOldestPhotoDate() + " - " + getNewestPhotoDate();
+	}
 }

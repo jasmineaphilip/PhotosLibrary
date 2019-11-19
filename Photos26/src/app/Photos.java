@@ -42,5 +42,10 @@ public class Photos extends Application implements Serializable {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	@Override
+	public void stop() {
+		Controller.serializeUsers();
+	}
 
 }

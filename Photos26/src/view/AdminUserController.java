@@ -30,9 +30,12 @@ public class AdminUserController {
 	@FXML MenuItem logOutButton;
 	@FXML MenuItem quitButton;
 	
-	static ObservableList<User> users = FXCollections.observableArrayList();
+	ObservableList<User> users = FXCollections.observableArrayList();
 	
 	public void start(Stage mainStage) throws IOException{
+		for (User u: Controller.allUsers) {
+			users.add(u);
+		}
 		listView.setItems(FXCollections.observableList(users));
 	}
 	
@@ -66,6 +69,7 @@ public class AdminUserController {
 		}
 		
 		users.add(user);
+		Controller.allUsers.add(user);
 		emptyCreateAndDeleteInfo();
 		listView.setItems(users);
 	}
@@ -78,6 +82,7 @@ public class AdminUserController {
 		}
 		User user = listView.getSelectionModel().getSelectedItem();
 		users.remove(users.indexOf(user));
+		Controller.allUsers.remove(user);
 		emptyCreateAndDeleteInfo();
 		listView.setItems(users);
 		
@@ -94,6 +99,7 @@ public class AdminUserController {
 	}
 	
 	public void quitApp(ActionEvent event) throws IOException {
+		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}

@@ -21,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Album;
@@ -36,11 +37,22 @@ public class NonAdminUserController {
 	@FXML TextField editAlbumText;
 	@FXML Button renameAlbumButton;
 	@FXML Button deleteAlbumButton;
+	@FXML Text welcomeText;
 	
 	static ObservableList<Album> albums = FXCollections.observableArrayList();
+	private User user;
+	
 
-	public void start(Stage mainStage) {
+	public void start(Stage mainStage, User user) {
+		welcomeText.setText("Welcome, "  + "!");
+		this.user = user;
+		System.out.println(user.getAlbums());
+		for(int i=0;i<user.getAlbums().size();i++) {
+			albums.add(user.getAlbums().get(i));
+		}
 		listView.setItems(FXCollections.observableList(albums));
+		
+		
 	}
 	
 	public void displayEditInfo() {
@@ -55,6 +67,7 @@ public class NonAdminUserController {
 	}
 	
 	public void quitApp(ActionEvent event) throws IOException {
+		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}
@@ -89,10 +102,17 @@ public class NonAdminUserController {
 		if (alert.getResult() == ButtonType.YES) {
 			emptyAddAndRenameInfo();
 			Album newAlbum = new Album(albumName);
+			user.getAlbums().add(newAlbum);
 			albums.add(newAlbum);
-			
+			//if (user.getAlbum(); == null) System.out.println("why null");
+			//int index = Controller.allUsers.indexOf(user);
+			//System.out.println(index);
+			//Controller.allUsers.get(index).albums.add(newAlbum);
 			listView.setItems(albums);
 			listView.getSelectionModel().select(albums.indexOf(newAlbum));
+			
+			
+			
 			displayEditInfo();
 		} else {
 			return;
@@ -100,12 +120,12 @@ public class NonAdminUserController {
 	}
 	
 	public void renameAlbum() throws IOException {
-		while (albums.isEmpty()) {
+		while (user.getAlbums().isEmpty()) {
 			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
 			a.show();	
 			return;
 		}
-		int index = albums.indexOf(listView.getSelectionModel().getSelectedItem());
+		int index = user.getAlbums().indexOf(listView.getSelectionModel().getSelectedItem());
 		Album album = listView.getSelectionModel().getSelectedItem();
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION, "Rename " + album.getName()  +"?", ButtonType.YES, ButtonType.NO);
@@ -117,7 +137,7 @@ public class NonAdminUserController {
 				displayEditInfo();
 				return;
 			} 
-			for(Album a: albums) {
+			for(Album a: user.getAlbums()) {
 				if(a.getName().equals(editAlbumText.getText())) {
 					Alert alert1 = new Alert(AlertType.ERROR, "This album already exists. Please enter new album name.", ButtonType.OK);
 					alert1.show();

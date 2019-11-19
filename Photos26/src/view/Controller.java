@@ -24,6 +24,7 @@ public class Controller {
 	@FXML Button quitButton;
 	@FXML Button logOutButton;
 	@FXML Parent root;
+	public User user;
 	
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
@@ -59,8 +60,9 @@ public class Controller {
 		}
 		
 		else {
-			for(User u: AdminUserController.users) {
+			for(User u: allUsers) {
 				if(u.getUsername().equals(username)) {
+					user = u;
 					userExists = true;
 					break;
 				}
@@ -74,7 +76,7 @@ public class Controller {
 				
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 				
-				ctrl.start(window);
+				ctrl.start(window, user);
 				
 				window.setScene(scene);
 				window.show();
@@ -92,8 +94,45 @@ public class Controller {
 	}
 
 	public void start(Stage mainStage) {
-		// TODO Auto-generated method stub
-		
+		deserializeUsers();
 	}
-
+	
+	public static ArrayList<User> allUsers = new ArrayList<User>();
+	/**
+	 * Stores the location of the file in which the user data is stored in.
+	 */
+	public static String filename = "data.dat";
+	
+	public static void serializeUsers() {
+		try {
+			FileOutputStream file = new FileOutputStream(filename);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			
+			out.writeObject(allUsers);
+			file.close();
+		}
+		catch(IOException ex) {
+			System.out.println("IO Exception Caught");
+		}
+	}
+	/**
+	 * Deserializes all the users from the user.dat file into the users ArrayList. It is secure I swear.
+	 */
+	@SuppressWarnings("unchecked")
+	public static void deserializeUsers() {
+		try {
+			  FileInputStream file = new FileInputStream(filename); 
+	          ObjectInputStream in = new ObjectInputStream(file);
+	          allUsers = (ArrayList<User>)in.readObject();
+	          in.close();
+	          file.close();
+		}
+		catch(IOException ex){
+			System.out.println("IO Exception Caught");
+		}
+		catch(ClassNotFoundException ex) 
+        { 
+            System.out.println("ClassNotFoundException is caught"); 
+        } 
+	}
 }

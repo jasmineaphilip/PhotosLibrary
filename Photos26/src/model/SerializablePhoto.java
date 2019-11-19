@@ -8,6 +8,10 @@ import javafx.scene.image.WritableImage;
 
 public class SerializablePhoto implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8945006776771720903L;
 	private int width;
 	private int height;
 	private int[][] pixels;
@@ -37,7 +41,7 @@ public class SerializablePhoto implements Serializable {
 		}
 	}
 	
-	public Image getPhoto(Image image) {
+	public Image getPhoto() {
 		WritableImage photo = new WritableImage(width, height);
 		PixelWriter writer = photo.getPixelWriter();
 		

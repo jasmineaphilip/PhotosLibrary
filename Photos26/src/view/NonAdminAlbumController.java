@@ -41,6 +41,7 @@ public class NonAdminAlbumController {
 	}
 	
 	public void quitApp(ActionEvent event) throws IOException {
+		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}
