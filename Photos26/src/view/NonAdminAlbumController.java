@@ -59,12 +59,13 @@ public class NonAdminAlbumController {
 	@FXML TextField destinationAlbumText;
 	@FXML Button movePhotoButton;
 	@FXML Button copyPhotoButton;
+	@FXML ImageView enlargeDisplay;
 	
 	ObservableList<HBox> photosObs = FXCollections.observableArrayList();
 	Album currentAlbum;
 	ObservableList<Tag> tagsObs = FXCollections.observableArrayList();
 
-	public void start(Stage mainStage, Album album) {
+	public void start(Stage mainStage, Album album, User user) {
 		currentAlbum = album;
 		albumNameText.setText(album.getName());
 		for(Photo p:currentAlbum.getPhotos()) {
@@ -75,9 +76,12 @@ public class NonAdminAlbumController {
 		    imageView.setFitHeight(50.0);
 		    imageView.setFitWidth(50.0);
 		    HBox hbox = new HBox(3);
-		    Label l = new Label("gibberish");
+		    Label l = new Label(p.getCaption());
 		    Label path = new Label(p.getPath());
 		    hbox.getChildren().addAll(imageView, l, path);
+		    ((Label)(hbox.getChildren().get(2))).setVisible(false);
+//		    ((Label)(hbox.getChildren().get(2))).setPrefHeight(0);
+//		    ((Label)(hbox.getChildren().get(2))).setPrefWidth(0);
 		    photosObs.add(hbox);
 		    photoListView.setItems(photosObs);
 		}
@@ -134,6 +138,7 @@ public class NonAdminAlbumController {
 	public void cancelAdd() {
 		photoPathText.setText("");
 	}
+	
 	public void addPhoto() {
 		if (photoPathText.getText().contentEquals("")) {
 			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
@@ -159,12 +164,21 @@ public class NonAdminAlbumController {
 	    imageView.setFitHeight(50.0);
 	    imageView.setFitWidth(50.0);
 	    HBox hbox = new HBox(5);
-	    Label l = new Label("gibber");
+	    Label l = new Label(photo.getCaption());
 	    Label path = new Label(imagePath);
 	    hbox.getChildren().addAll(imageView, l, path);
+	    ((Label)(hbox.getChildren().get(2))).setVisible(false);
+//	    ((Label)(hbox.getChildren().get(2))).setPrefHeight(0);
+//	    ((Label)(hbox.getChildren().get(2))).setPrefWidth(0);
 	    photosObs.add(hbox);
-	    photoListView.setItems(photosObs);	    
+	    
+	    photoListView.setItems(photosObs);
+	    photoPathText.setText("");
 
+	}
+	
+	public void deleteTag() {
+		
 	}
 	
 	public void addTag() {
@@ -176,6 +190,11 @@ public class NonAdminAlbumController {
 			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
 			addTagNameText.setText("");
 			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		if(name.equals("") || value.equals("")) {
+			Alert alert = new Alert(AlertType.ERROR, "Please complete tag information.", ButtonType.OK);
 			alert.show();
 			return;
 		}
@@ -197,16 +216,26 @@ public class NonAdminAlbumController {
 				return;
 					}
 		}
+		
 		tagToBeAdded.getTags().add(t);
 		tagsObs.add(t);
 		tagsListView.setItems(tagsObs);
 		displayInfo();
+		addTagNameText.setText("");
+		addTagValueText.setText("");
 	}
 	
 	
 	public void editTag() {
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		Photo tagToBeChanged = null;
+		if(photo == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
 		if(!photosObs.isEmpty()) {
 			for(Photo p: currentAlbum.getPhotos()) {
 				if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
@@ -217,8 +246,13 @@ public class NonAdminAlbumController {
 		Tag selectedTag = tagsListView.getSelectionModel().getSelectedItem();
 		if (selectedTag == null){
 			Alert alert = new Alert(AlertType.ERROR, "Please select a tag to edit.", ButtonType.OK);
-			addTagNameText.setText("");
-			addTagValueText.setText("");
+			editTagNameText.setText("");
+			editTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		if(editTagNameText.getText().equals("") || editTagValueText.getText().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR, "Please complete tag information.", ButtonType.OK);
 			alert.show();
 			return;
 		}
@@ -226,8 +260,8 @@ public class NonAdminAlbumController {
 			if(r.getName().equals(editTagNameText.getText())
 					&& r.getValue().equals(editTagValueText.getText())){
 				Alert alert = new Alert(AlertType.ERROR, "This is a duplicate tag.", ButtonType.OK);
-				addTagNameText.setText("");
-				addTagValueText.setText("");
+				editTagNameText.setText("");
+				editTagValueText.setText("");
 				alert.show();
 				return;
 			}
@@ -235,21 +269,39 @@ public class NonAdminAlbumController {
 		for(Tag r: tagToBeChanged.getTags()) {
 			if(r.getName().equals(selectedTag.getName())
 					&& r.getValue().equals(selectedTag.getValue())){
-				r.setName(addTagNameText.getText());
-				r.setValue(addTagValueText.getText());
+				r.setName(editTagNameText.getText());
+				r.setValue(editTagValueText.getText());
 				editTagNameText.setText("");;
 				editTagValueText.setText("");
-				return;
 			}
 		}
+		
 		tagsListView.setItems(tagsObs);
 		displayInfo();
 		
-		//replace child in Hbox. hbox.getchildren.set(i,label)
+		
 	}
 	
 	public void editCaption() {
-		
+		//replace child in Hbox. hbox.getchildren.set(i,label)
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		Photo captionToBeChanged = null;
+		if(photo == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		for(Photo p: currentAlbum.getPhotos()) {
+			if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+				captionToBeChanged = p;
+			}
+		}
+		Label label = new Label(editCaptionText.getText());
+		photo.getChildren().set(1, label);
+		captionToBeChanged.setCaption(editCaptionText.getText());
+		editCaptionText.setText("");
 	}
 	public void movePhoto() {
 		
@@ -262,10 +314,8 @@ public class NonAdminAlbumController {
 		    BufferedImage image = ImageIO.read(file);
 		    if (image == null) {
 		        return false;
-		        //System.out.println("The file"+file+"could not be opened, it is not an image");
 		    }
 		} catch(IOException ex) {
-		    //System.out.println("The file"+file+"could not be opened , an error occurred.");
 		    return false;
 		}
 		return true;
@@ -288,6 +338,11 @@ public class NonAdminAlbumController {
 			tagsObs.add(t);
 		}
 		tagsListView.setItems(tagsObs);
+		
+		String imagePath = (((Label) photo.getChildren().get(2)).getText());
+		Image image = new Image(new File(imagePath).toURI().toString());
+		enlargeDisplay.setImage(image);
+		
 		//displayTimeText.setText(getPicTime());
 		//displayTagsText.setText(photo.getTags());
 	}
