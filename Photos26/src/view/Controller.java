@@ -40,22 +40,22 @@ public class Controller {
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
 		boolean userExists = false;
-		if(username.equals("stock")) {
-			FXMLLoader loader = new FXMLLoader (getClass().getResource("StockUser.fxml"));
-			Parent parent = (Parent) loader.load();
-			
-			StockUserController ctrl = loader.getController();
-			Scene scene = new Scene(parent);
-			
-			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-			
-			ctrl.start(window);
-			
-			window.setScene(scene);
-			window.show();
-		}
+//		if(username.equals("stock")) {
+//			FXMLLoader loader = new FXMLLoader (getClass().getResource("StockUser.fxml"));
+//			Parent parent = (Parent) loader.load();
+//			
+//			StockUserController ctrl = loader.getController();
+//			Scene scene = new Scene(parent);
+//			
+//			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+//			
+//			ctrl.start(window);
+//			
+//			window.setScene(scene);
+//			window.show();
+//		}
 		
-		else if(username.equals("admin")) {
+		 if(username.equals("admin")) {
 			FXMLLoader loader = new FXMLLoader (getClass().getResource("AdminUser.fxml"));
 			Parent parent = (Parent) loader.load();
 			

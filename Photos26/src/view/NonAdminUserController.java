@@ -60,6 +60,9 @@ public class NonAdminUserController {
 	@FXML TextField tagValue2Text;
 	@FXML RadioButton tagAnd;
 	@FXML RadioButton tagOr;
+	@FXML Text albumDetailsName;
+	@FXML Text albumDetailsNumPhotos;
+	@FXML Text albumDetailsDateRange;
 	
 	ObservableList<Album> albums = FXCollections.observableArrayList();
 	ArrayList<Photo> searchResults = new ArrayList<Photo>();
@@ -91,6 +94,10 @@ public class NonAdminUserController {
 			if(albums.isEmpty()) {emptyAddAndRenameInfo(); return;}
 			Album album = listView.getSelectionModel().getSelectedItem();
 			editAlbumText.setText(album.getName());
+			albumDetailsName.setText(album.getName());
+			albumDetailsNumPhotos.setText(Integer.toString(album.getPhotos().size()));
+			albumDetailsDateRange.setText(album.getDateRange());
+			
 		}
 	}
 	
@@ -435,6 +442,7 @@ public class NonAdminUserController {
 		
 		
 		if (fromDate.getValue() != null && toDate.getValue() != null) {
+			
 			if (toDate.getValue().getYear() < fromDate.getValue().getYear()) {
 				Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
 				a.show();	
@@ -451,6 +459,61 @@ public class NonAdminUserController {
 			fromDateYear = fromDate.getValue().getYear();
 			fromDateDay = fromDate.getValue().getDayOfYear();
 			
+			//if neither tag1 nor tag2, just search on date
+			if (tagName1.equals("") && tagName2.equals("")) {
+				System.out.println(user.getAllPhotos().size());
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					year = user.getAllPhotos().get(i).getYear(); 
+					day = user.getAllPhotos().get(i).getDay();
+					if (year >= fromDateYear && year<= toDateYear) {
+						if (day >= fromDateDay && day<= toDateDay) {
+							searchResults.add(user.getAllPhotos().get(i));
+							for (int j = 0; j < user.getAllPhotos().size(); j++) {
+								System.out.println(user.getAllPhotos().get(i).getPath());
+							}
+						}
+					}
+				}
+			}
+			
+			//if just tag1, do search on tag1 + date
+			if (!tagName1.equals("") && tagName2.equals("")) {
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+						if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
+								year = user.getAllPhotos().get(i).getYear(); 
+								day = user.getAllPhotos().get(i).getDay();
+								if (year >= fromDateYear && year<= toDateYear) {
+									if (day >= fromDateDay && day<= toDateDay) {
+										searchResults.add(user.getAllPhotos().get(i));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			//if just tag2, do search on tag2 + date
+			if (tagName1.equals("") && !tagName2.equals("")) {
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+						if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+								year = user.getAllPhotos().get(i).getYear(); 
+								day = user.getAllPhotos().get(i).getDay();
+								if (year >= fromDateYear && year<= toDateYear) {
+									if (day >= fromDateDay && day<= toDateDay) {
+										searchResults.add(user.getAllPhotos().get(i));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
 			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) { //no toggle selected
 				//if tag1 && tag2, ERROR
 				if (!tagName1.equals("") && !tagName2.equals("")) {
@@ -459,60 +522,6 @@ public class NonAdminUserController {
 					return;
 				}
 				
-				//if neither tag1 nor tag2, just search on date
-				if (tagName1.equals("") && tagName2.equals("")) {
-					System.out.println(user.getAllPhotos().size());
-					for (int i = 0; i < user.getAllPhotos().size(); i++) {
-						year = user.getAllPhotos().get(i).getYear(); 
-						day = user.getAllPhotos().get(i).getDay();
-						if (year >= fromDateYear && year<= toDateYear) {
-							if (day >= fromDateDay && day<= toDateDay) {
-								searchResults.add(user.getAllPhotos().get(i));
-								for (int j = 0; j < user.getAllPhotos().size(); j++) {
-									System.out.println(user.getAllPhotos().get(i).getPath());
-								}
-							}
-						}
-					}
-				}
-				
-				//if just tag1, do search on tag1 + date
-				if (!tagName1.equals("") && tagName2.equals("")) {
-					for (int i = 0; i < user.getAllPhotos().size(); i++) {
-						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
-									year = user.getAllPhotos().get(i).getYear(); 
-									day = user.getAllPhotos().get(i).getDay();
-									if (year >= fromDateYear && year<= toDateYear) {
-										if (day >= fromDateDay && day<= toDateDay) {
-											searchResults.add(user.getAllPhotos().get(i));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				
-				//if just tag2, do search on tag2 + date
-				if (tagName1.equals("") && !tagName2.equals("")) {
-					for (int i = 0; i < user.getAllPhotos().size(); i++) {
-						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
-									year = user.getAllPhotos().get(i).getYear(); 
-									day = user.getAllPhotos().get(i).getDay();
-									if (year >= fromDateYear && year<= toDateYear) {
-										if (day >= fromDateDay && day<= toDateDay) {
-											searchResults.add(user.getAllPhotos().get(i));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
 			} else if (group.getSelectedToggle() == tagAnd) {
 				//if tag1 but no tag2, ERROR
 				if (!tagName1.equals("") && tagName2.equals("")) {
