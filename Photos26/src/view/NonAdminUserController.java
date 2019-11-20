@@ -249,7 +249,7 @@ public class NonAdminUserController {
 		Scene scene = new Scene(parent);
 		
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		ctrl.start(window, album);
+		ctrl.start(window, album, user);
 		
 		window.setScene(scene);
 		window.show();
@@ -282,10 +282,180 @@ public class NonAdminUserController {
 		int toDateDay = toDate.getValue().getDayOfYear();
 		int fromDateYear = fromDate.getValue().getYear();
 		int fromDateDay = fromDate.getValue().getDayOfYear();
+		
 		String tagName1 = tagName1Text.getText();
 		String tagValue1 = tagValue1Text.getText();
 		String tagName2 = tagName2Text.getText();
 		String tagValue2 = tagValue2Text.getText();
+		
+		if (fromDate.getValue() == null && toDate.getValue() != null) {
+			Alert a = new Alert(AlertType.ERROR, "Please enter a From Date.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		if (toDate.getValue() == null && fromDate.getValue() != null) {
+			Alert a = new Alert(AlertType.ERROR, "Please enter a To Date.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		if (toDate.getValue().getYear() < fromDate.getValue().getYear()) {
+			Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		if (toDate.getValue().getYear() == fromDate.getValue().getYear() && toDate.getValue().getDayOfYear() < fromDate.getValue().getDayOfYear()) {
+			Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		
+		if (fromDate.getValue() == null && toDate.getValue() == null) {
+			//just search on tags
+			
+			//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
+			if (!tagName1.equals("") && tagValue1.equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 1 field.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+			if (!tagName2.equals("") && tagValue2.equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 2 field.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+
+			//if tagval1 but not tagname1 or tagval2 but not tag name 2, ERROR
+			if (!tagValue1.equals("") && tagName1.equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 1 field.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+			if (!tagValue2.equals("") && tagName2.equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 2 field.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+			
+			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) { //neither toggle
+				//if tag1 && tag2, ERROR 
+				if (!tagName1.equals("") && !tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please select 'And' or 'Or' Tag toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if neither tag1 nor tag2, ERROR
+				if (tagName1.equals("") && tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please enter Tag field(s) or select a date range for search.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if just tag1, do search on tag1
+				if (!tagName1.equals("") && tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
+									searchResults.add(user.getAllPhotos().get(i));
+								}
+							}
+						}
+					}
+				}
+				
+				//if just tag2, do search on tag2
+				if (tagName1.equals("") && !tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+									searchResults.add(user.getAllPhotos().get(i));
+								}
+							}
+						}
+					}
+				}
+				
+			} else if (group.getSelectedToggle() == tagAnd) {
+				//if tag1 but no tag2, ERROR
+				if (!tagName1.equals("") && tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please enter Tag 2 fields or select 'Or' toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if tag2 but no tag1, ERROR
+				if (tagName1.equals("") && !tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please enter Tag 1 fields or select 'Or' toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if tag1 and tag2, search on them
+				if (!tagName1.equals("") && !tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagValue1)) {
+									if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+										if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+											searchResults.add(user.getAllPhotos().get(i));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} else { //tagOr
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
+							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+								searchResults.add(user.getAllPhotos().get(i));	
+						}
+					}
+				}
+			}
+		}
+		
+		if (fromDate.getValue() != null && toDate.getValue() != null) {
+			//search on tags and date
+			
+			//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
+			if (!tagName1.equals("") && tagValue1.equals("")) {
+				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 1 field.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+			
+			//if tagval1 but not tagname1 or tagval2 but not tag name 2, ERROR
+			
+			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) {
+				//if tag1 && tag2, ERROR
+				//if neither tag1 nor tag2, ERROR
+				//if just tag1, do search on tag1 + date
+				//if just tag2, do search on tag2 + date
+			} else if (group.getSelectedToggle() == tagAnd) {
+				
+			} else { //tagOr
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
+							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+								searchResults.add(user.getAllPhotos().get(i));
+						}
+					}
+				}
+			}
+		}
+		
+		
 		if (group.getSelectedToggle() == tagAnd) {
 			for (int i = 0; i < user.getAllPhotos().size(); i++) {
 				for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
@@ -293,6 +463,10 @@ public class NonAdminUserController {
 						if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
 							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
 								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+									if (fromDateYear == -1 && toDateYear == -1) {
+										searchResults.add(user.getAllPhotos().get(i));
+									}
+									
 									int year = user.getAllPhotos().get(i).getYear(); 
 									int day = user.getAllPhotos().get(i).getDay();
 									if (year >= fromDateYear && year<= toDateYear) {
@@ -338,9 +512,4 @@ public class NonAdminUserController {
 		window.setScene(scene);
 		window.show();
 	}
-	
-	
-
-	
-
 }
