@@ -36,6 +36,7 @@
                   <Button fx:id="deleteTagButton" layoutX="617.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
                   <Button fx:id="previousButton" layoutX="147.0" layoutY="311.0" mnemonicParsing="false" onAction="#previousPhoto" text="&lt;&lt;" />
                   <Button fx:id="nextButton" layoutX="274.0" layoutY="311.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
+                  <Button fx:id="backButton" layoutX="85.0" layoutY="7.0" mnemonicParsing="false" onAction="#back" text="Back" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">
