@@ -562,7 +562,7 @@ public class NonAdminUserController {
 		}
 		
 		if (searchResults.size() == 0) {
-			Alert a = new Alert(AlertType.INFORMATION, "No photos matched your seach.", ButtonType.OK);
+			Alert a = new Alert(AlertType.INFORMATION, "No photos matched your search.", ButtonType.OK);
 			a.show();	
 			return;
 		} else {
