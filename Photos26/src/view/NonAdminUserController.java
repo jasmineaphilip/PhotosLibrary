@@ -291,10 +291,11 @@ public class NonAdminUserController {
 		int year = 0;
 		int day = 0;
 		
-		if (user.getAllPhotos() == null) {
-			System.out.println("bleh");
+		if (fromDate.getValue() == null && toDate.getValue() == null && tagName1.equals("") && tagValue1.equals("") && tagName2.equals("") && tagValue2.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Select a date range and/or fill in tag fields in order to search.", ButtonType.OK);
+			a.show();	
+			return;
 		}
-		
 		if (user.getAllPhotos().size() == 0) {
 			Alert a = new Alert(AlertType.ERROR, "Add photos in order to search.", ButtonType.OK);
 			a.show();	
@@ -311,16 +312,7 @@ public class NonAdminUserController {
 			a.show();	
 			return;
 		}
-		if (toDate.getValue().getYear() < fromDate.getValue().getYear()) {
-			Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
-			a.show();	
-			return;
-		}
-		if (toDate.getValue().getYear() == fromDate.getValue().getYear() && toDate.getValue().getDayOfYear() < fromDate.getValue().getDayOfYear()) {
-			Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
-			a.show();	
-			return;
-		}
+		
 		
 		//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
 		if (!tagName1.equals("") && tagValue1.equals("")) {
@@ -437,6 +429,16 @@ public class NonAdminUserController {
 		
 		
 		if (fromDate.getValue() != null && toDate.getValue() != null) {
+			if (toDate.getValue().getYear() < fromDate.getValue().getYear()) {
+				Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
+				a.show();	
+				return;
+			}
+			if (toDate.getValue().getYear() == fromDate.getValue().getYear() && toDate.getValue().getDayOfYear() < fromDate.getValue().getDayOfYear()) {
+				Alert a = new Alert(AlertType.ERROR, "Please enter a valid date range.", ButtonType.OK);
+				a.show();	
+				return;
+			}
 			//search on tags and date
 			toDateYear = toDate.getValue().getYear();
 			toDateDay = toDate.getValue().getDayOfYear();
@@ -453,12 +455,16 @@ public class NonAdminUserController {
 				
 				//if neither tag1 nor tag2, just search on date
 				if (tagName1.equals("") && tagName2.equals("")) {
+					System.out.println(user.getAllPhotos().size());
 					for (int i = 0; i < user.getAllPhotos().size(); i++) {
 						year = user.getAllPhotos().get(i).getYear(); 
 						day = user.getAllPhotos().get(i).getDay();
 						if (year >= fromDateYear && year<= toDateYear) {
 							if (day >= fromDateDay && day<= toDateDay) {
 								searchResults.add(user.getAllPhotos().get(i));
+								for (int j = 0; j < user.getAllPhotos().size(); j++) {
+									System.out.println(user.getAllPhotos().get(i).getPath());
+								}
 							}
 						}
 					}

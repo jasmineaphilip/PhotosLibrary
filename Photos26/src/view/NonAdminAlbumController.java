@@ -119,6 +119,7 @@ public class NonAdminAlbumController {
 		if(!photosObs.isEmpty()) {
 			displayInfo();
 		}
+		currentUser.getAllPhotos().remove(toBeDeleted);
 		
 	}
 	
