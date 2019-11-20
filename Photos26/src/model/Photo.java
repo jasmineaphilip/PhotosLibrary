@@ -36,6 +36,13 @@ public class Photo implements Serializable {
 		return str[0] + " " + str[1] + " " + str[2] + ", " + str[5];
 	}
 	
+	public int getYear() {
+		return cal.get(Calendar.YEAR);
+	}
+	public int getDay() {
+		return cal.get(Calendar.DAY_OF_YEAR);
+	}
+	
 	public String getCaption() {
 		return caption;
 	}
