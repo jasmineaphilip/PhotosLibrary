@@ -63,10 +63,12 @@ public class NonAdminAlbumController {
 	
 	ObservableList<HBox> photosObs = FXCollections.observableArrayList();
 	Album currentAlbum;
+	User currentUser;
 	ObservableList<Tag> tagsObs = FXCollections.observableArrayList();
 
 	public void start(Stage mainStage, Album album, User user) {
 		currentAlbum = album;
+		currentUser = user;
 		albumNameText.setText(album.getName());
 		for(Photo p:currentAlbum.getPhotos()) {
 			String imagePath = p.getPath();
@@ -139,6 +141,26 @@ public class NonAdminAlbumController {
 		photoPathText.setText("");
 	}
 	
+	public void previousPhoto() {
+		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
+		int index = photosObs.indexOf(currentPhoto);
+		if(index == 0) {
+			return;
+		}
+		photoListView.getSelectionModel().select(index-1);
+		displayInfo();
+	}
+	
+	public void nextPhoto() {
+		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
+		int index = photosObs.indexOf(currentPhoto);
+		if(index == photosObs.size()-1){
+			index = -1;
+		}
+		photoListView.getSelectionModel().select(index+1);
+		displayInfo();
+	}
+	
 	public void addPhoto() {
 		if (photoPathText.getText().contentEquals("")) {
 			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
@@ -174,10 +196,34 @@ public class NonAdminAlbumController {
 	    
 	    photoListView.setItems(photosObs);
 	    photoPathText.setText("");
+	    currentUser.getAllPhotos().add(photo);
 
 	}
 	
 	public void deleteTag() {
+		Tag selectedTag = tagsListView.getSelectionModel().getSelectedItem();
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		if (selectedTag == null){
+			Alert alert = new Alert(AlertType.ERROR, "Please select a tag to delete.", ButtonType.OK);
+			editTagNameText.setText("");
+			editTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		Photo tagToBeDeleted = null;
+		if(!photosObs.isEmpty()) {
+			for(Photo p: currentAlbum.getPhotos()) {
+				if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+					tagToBeDeleted = p;
+				}
+			}
+		}
+		for(Tag r: tagToBeDeleted.getTags()) {
+			if(r.equals(selectedTag)){
+				tagsObs.remove(selectedTag);
+			}
+		}
+		tagToBeDeleted.getTags().remove(selectedTag);
 		
 	}
 	
