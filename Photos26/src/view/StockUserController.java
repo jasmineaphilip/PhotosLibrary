@@ -11,16 +11,30 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Jasmine Philip
+ * @author Radhe Bangad
+ *
+ */
 public class StockUserController {
 	@FXML MenuItem quitButton;
 	@FXML Parent root ;
 
-
+	/**
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	public void quitApp(ActionEvent event) throws IOException {
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}
 	
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	public void logOut() throws IOException {
 		//Stage stage = (Stage) logOutButton.getScene().getWindow();
 		Stage stage = (Stage) root.getScene().getWindow();
@@ -31,7 +45,10 @@ public class StockUserController {
 		stage.show();
 	}
 	
-	
+	/**
+	 * 
+	 * @param mainStage
+	 */
 	public void start(Stage mainStage) {
 		// TODO Auto-generated method stub
 		

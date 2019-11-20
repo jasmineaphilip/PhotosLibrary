@@ -24,13 +24,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.Album;
+import model.Photo;
 import model.User;
-
+/**
+ * 
+ * Provides implementation of functionality seen on the Non-Admin user scene, including editing/adding/deleting albums, and searching for photos based on certain filters
+ * @author Jasmine Philip
+ * @author Radhe Bangad
+ *
+ */
 public class NonAdminUserController {
 	@FXML ListView<Album> listView;
 	@FXML MenuItem quitButton;
@@ -54,34 +62,61 @@ public class NonAdminUserController {
 	@FXML RadioButton tagOr;
 	
 	ObservableList<Album> albums = FXCollections.observableArrayList();
-	private User user;
+	ArrayList<Photo> searchResults = new ArrayList<Photo>();
 	
+	private User user;
+	ToggleGroup group = new ToggleGroup();
+	
+	/**
+	 * Populates the listview with the specific user's albums
+	 * @param mainStage
+	 * @param user
+	 */
 	public void start(Stage mainStage, User user) {
 		welcomeText.setText("Welcome, "  + user.getUsername() + "!");
 		this.user = user;
 		for(int i=0;i<user.getAlbums().size();i++) {
 			albums.add(user.getAlbums().get(i));
 		}
+		tagAnd.setToggleGroup(group);
+		tagOr.setToggleGroup(group);
 		listView.setItems(albums);
 	}
 	
+	/**
+	 * Autofills the Edit Album field the selected album's name
+	 */
 	public void displayEditInfo() {
-		if(albums.isEmpty()) {emptyAddAndRenameInfo(); return;}
-		Album album = listView.getSelectionModel().getSelectedItem();
-		editAlbumText.setText(album.getName());
+		if(!(listView.getSelectionModel().getSelectedIndex()==-1)) {
+			if(albums.isEmpty()) {emptyAddAndRenameInfo(); return;}
+			Album album = listView.getSelectionModel().getSelectedItem();
+			editAlbumText.setText(album.getName());
+		}
 	}
 	
+	/**
+	 * Clears the add album and edit album fields 
+	 */
 	public void emptyAddAndRenameInfo() {
 		addAlbumText.setText("");
 		editAlbumText.setText("");
 	}
 	
+	/**
+	 * Exits the program while saving the user's updates, due to serialization
+	 * @param event
+	 * @throws IOException
+	 */
 	public void quitApp(ActionEvent event) throws IOException {
 		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}
 	
+	/**
+	 * Logsout of the current user's home page, bringing user back to the main sign-in page
+	 * @throws IOException
+	 */
 	public void logOut() throws IOException {
 		Stage stage = (Stage) root.getScene().getWindow();
 		Parent loginParent = FXMLLoader.load(getClass().getResource("Photos.fxml"));
@@ -90,6 +125,10 @@ public class NonAdminUserController {
 		stage.show();
 	}
 	
+	/**
+	 * Adds an album to the current user's list of albums and observeable list
+	 * @throws IOException
+	 */
 	public void addAlbum() throws IOException {
 		String albumName = addAlbumText.getText();
 		for(Album a: albums) {
@@ -114,13 +153,16 @@ public class NonAdminUserController {
 			albums.add(newAlbum);
 			listView.setItems(albums);
 			listView.getSelectionModel().select(albums.indexOf(newAlbum));
-			
 			displayEditInfo();
 		} else {
 			return;
 		}
 	}
 	
+	/**
+	 * Renames an album base don user input and updates user's list of albums and observeable list with new name
+	 * @throws IOException
+	 */
 	public void renameAlbum() throws IOException {
 		while (user.getAlbums().isEmpty()) {
 			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
@@ -157,7 +199,10 @@ public class NonAdminUserController {
 		}
 	}
 	
-	
+	/**
+	 * Deletes an album from the current user's list of albums and observeable list
+	 * @throws IOException
+	 */
 	public void deleteAlbum() throws IOException {
 		while (albums.isEmpty()) {
 			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.OK);
@@ -184,6 +229,11 @@ public class NonAdminUserController {
 		}
 	}
 	
+	/**
+	 * Opens the selected album to show the composite photos
+	 * @param event button press that triggers this method
+	 * @throws IOException
+	 */
 	public void openAlbum(ActionEvent event) throws IOException {
 
 		Album album = listView.getSelectionModel().getSelectedItem();
@@ -222,7 +272,59 @@ public class NonAdminUserController {
 //		window.show();
 //	}
 	
+	/**
+	 * Searches for photos in the user's specific library based on the inputted tag names/value pairs and range of dates
+	 * @param event 
+	 * @throws IOException
+	 */
 	public void search(ActionEvent event) throws IOException {
+		int toDateYear = toDate.getValue().getYear();
+		int toDateDay = toDate.getValue().getDayOfYear();
+		int fromDateYear = fromDate.getValue().getYear();
+		int fromDateDay = fromDate.getValue().getDayOfYear();
+		String tagName1 = tagName1Text.getText();
+		String tagValue1 = tagValue1Text.getText();
+		String tagName2 = tagName2Text.getText();
+		String tagValue2 = tagValue2Text.getText();
+		if (group.getSelectedToggle() == tagAnd) {
+			for (int i = 0; i < user.getAllPhotos().size(); i++) {
+				for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+					if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+						if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+									int year = user.getAllPhotos().get(i).getYear(); 
+									int day = user.getAllPhotos().get(i).getDay();
+									if (year >= fromDateYear && year<= toDateYear) {
+										if (day >= fromDateDay && day<= toDateDay) {
+											searchResults.add(user.getAllPhotos().get(i));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} else if (group.getSelectedToggle() == tagOr) {
+			for (int i = 0; i < user.getAllPhotos().size(); i++) {
+				for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+					if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+						user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
+						(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+						user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+							int year = user.getAllPhotos().get(i).getYear(); 
+							int day = user.getAllPhotos().get(i).getDay();
+							if (year >= fromDateYear && year<= toDateYear) {
+								if (day >= fromDateDay && day<= toDateDay) {
+									searchResults.add(user.getAllPhotos().get(i));
+								}
+							}	
+					}
+				}
+			}
+		}
+		
 		FXMLLoader loader = new FXMLLoader (getClass().getResource("SearchResults.fxml"));
 		Parent parent = (Parent) loader.load();
 		
@@ -231,14 +333,14 @@ public class NonAdminUserController {
 		
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 		
-		ctrl.start(window, user);
+		ctrl.start(window, user, searchResults);
 		
 		window.setScene(scene);
 		window.show();
 	}
 	
 	
-	
+
 	
 
 }

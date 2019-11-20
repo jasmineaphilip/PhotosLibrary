@@ -17,6 +17,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.User;
 
+/**
+ * Main controller for the first scene, involving signing in to a certain account.
+ * @author Jasmine Philip
+ * @author Radhe Bangad
+ *
+ */
 public class Controller {
 	
 	@FXML Button loginButton;
@@ -26,6 +32,11 @@ public class Controller {
 	@FXML Parent root;
 	public User user;
 	
+	/**
+	 * Based on inputted username, logs a user into their specific photo library.
+	 * @param event button press on the login button
+	 * @throws IOException
+	 */
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
 		boolean userExists = false;
@@ -88,21 +99,36 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Exits the application.
+	 * @param event button press on the quit button
+	 * @throws IOException
+	 */
 	public void quitApp(ActionEvent event) throws IOException {
 		Stage stage = (Stage) quitButton.getScene().getWindow();
 		stage.close();
 	}
 
+	/**
+	 * On start, deserializers the users. 
+	 * @param mainStage
+	 */
 	public void start(Stage mainStage) {
 		deserializeUsers();
 	}
 	
+	/**
+	 * 
+	 */
 	public static ArrayList<User> allUsers = new ArrayList<User>();
 	/**
 	 * Stores the location of the file in which the user data is stored in.
 	 */
 	public static String filename = "data.dat";
 	
+	/**
+	 * Serializes all users to the data.dat file in order to preserve user data between sessions.
+	 */
 	public static void serializeUsers() {
 		try {
 			FileOutputStream file = new FileOutputStream(filename);
@@ -116,7 +142,7 @@ public class Controller {
 		}
 	}
 	/**
-	 * Deserializes all the users from the user.dat file into the users ArrayList. It is secure I swear.
+	 * Deserializes all the users from the data.dat file into the users ArrayList.
 	 */
 	@SuppressWarnings("unchecked")
 	public static void deserializeUsers() {

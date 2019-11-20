@@ -106,6 +106,13 @@ public class Album implements Serializable {
 		return newestPhoto;
 	}
 	
+	public void setOldestPhoto(Photo oldestPhoto) {
+		this.oldestPhoto = oldestPhoto;
+	}
+	public void setNewestPhoto(Photo newestPhoto) {
+		this.newestPhoto = newestPhoto;
+	}
+	
 	public String getNewestPhotoDate() {
 		if (newestPhoto == null) return "N/A";
 		return newestPhoto.getDate();
