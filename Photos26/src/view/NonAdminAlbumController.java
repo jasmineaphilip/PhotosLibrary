@@ -30,10 +30,12 @@ import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
 import model.SerializablePhoto;
+import model.Tag;
 import model.User;
 
 public class NonAdminAlbumController {
 	@FXML ListView<HBox> photoListView;
+	@FXML ListView<Tag> tagsListView;
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
 	@FXML Parent root;
@@ -50,6 +52,8 @@ public class NonAdminAlbumController {
 	@FXML Button editTagNameButton;
 	@FXML TextField editTagValueText;
 	@FXML Button editTagValueButton;
+	@FXML TextField addTagValueText;
+	@FXML TextField addTagNameText;
 	@FXML TextField editCaptionText;
 	@FXML Button editCaptionButton;
 	@FXML TextField destinationAlbumText;
@@ -58,6 +62,7 @@ public class NonAdminAlbumController {
 	
 	ObservableList<HBox> photosObs = FXCollections.observableArrayList();
 	Album currentAlbum;
+	ObservableList<Tag> tagsObs = FXCollections.observableArrayList();
 
 	public void start(Stage mainStage, Album album) {
 		currentAlbum = album;
@@ -105,6 +110,10 @@ public class NonAdminAlbumController {
 			}
 		}
 		currentAlbum.getPhotos().remove(toBeDeleted);
+		if(!photosObs.isEmpty()) {
+			displayInfo();
+		}
+		
 	}
 	
 	public void browse() {
@@ -115,6 +124,7 @@ public class NonAdminAlbumController {
 			photoPathText.setText(selectedFile.getAbsolutePath());
 		} else {
 			Alert alert = new Alert(AlertType.ERROR, "This file is not an image. Please select an image file.", ButtonType.OK);
+			photoPathText.setText("");
 			alert.show();
 			return;
 		}
@@ -132,6 +142,14 @@ public class NonAdminAlbumController {
 		}
 		
 		String imagePath = photoPathText.getText();
+		for(Photo p: currentAlbum.getPhotos()) {
+			if(p.getPath().equals(imagePath)) {
+				Alert alert = new Alert(AlertType.ERROR, "This photo already exists in the album.", ButtonType.OK);
+				photoPathText.setText("");
+				alert.show();
+				return;
+			}
+		}
 		Photo photo = new Photo();
 		photo.setPath(imagePath);
 		currentAlbum.getPhotos().add(photo);
@@ -145,19 +163,91 @@ public class NonAdminAlbumController {
 	    Label path = new Label(imagePath);
 	    hbox.getChildren().addAll(imageView, l, path);
 	    photosObs.add(hbox);
-	    photoListView.setItems(photosObs);
-	    
+	    photoListView.setItems(photosObs);	    
 
 	}
 	
+	public void addTag() {
+		String name = addTagNameText.getText();
+		String value = addTagValueText.getText();
+		Tag t = new Tag(name, value);
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		if(photo == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		Photo tagToBeAdded = null;
+		if(!photosObs.isEmpty()) {
+			for(Photo p: currentAlbum.getPhotos()) {
+				if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+					tagToBeAdded = p;
+				}
+			}
+		}
+		for(Tag r: tagToBeAdded.getTags()) {
+			if(r.getName().contentEquals(t.getName())
+					&& r.getValue().equals(t.getValue())){
+				Alert alert = new Alert(AlertType.ERROR, "This is a duplicate tag.", ButtonType.OK);
+				addTagNameText.setText("");
+				addTagValueText.setText("");
+				alert.show();
+				return;
+					}
+		}
+		tagToBeAdded.getTags().add(t);
+		tagsObs.add(t);
+		tagsListView.setItems(tagsObs);
+		displayInfo();
+	}
 	
 	
-	public void editTagName() {
+	public void editTag() {
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		Photo tagToBeChanged = null;
+		if(!photosObs.isEmpty()) {
+			for(Photo p: currentAlbum.getPhotos()) {
+				if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+					tagToBeChanged = p;
+				}
+			}
+		}
+		Tag selectedTag = tagsListView.getSelectionModel().getSelectedItem();
+		if (selectedTag == null){
+			Alert alert = new Alert(AlertType.ERROR, "Please select a tag to edit.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		for(Tag r: tagToBeChanged.getTags()) {
+			if(r.getName().equals(editTagNameText.getText())
+					&& r.getValue().equals(editTagValueText.getText())){
+				Alert alert = new Alert(AlertType.ERROR, "This is a duplicate tag.", ButtonType.OK);
+				addTagNameText.setText("");
+				addTagValueText.setText("");
+				alert.show();
+				return;
+			}
+		}
+		for(Tag r: tagToBeChanged.getTags()) {
+			if(r.getName().equals(selectedTag.getName())
+					&& r.getValue().equals(selectedTag.getValue())){
+				r.setName(addTagNameText.getText());
+				r.setValue(addTagValueText.getText());
+				editTagNameText.setText("");;
+				editTagValueText.setText("");
+				return;
+			}
+		}
+		tagsListView.setItems(tagsObs);
+		displayInfo();
+		
 		//replace child in Hbox. hbox.getchildren.set(i,label)
 	}
-	public void editTagValue() {
-		
-	}
+	
 	public void editCaption() {
 		
 	}
@@ -182,14 +272,24 @@ public class NonAdminAlbumController {
 	}
 	
 	public void displayInfo() {
-		if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
-//		Photo photo = photoListView.getSelectionModel().getSelectedItem();
-//		displayCaptionText.setText(photo.getCaption());
-//		editCaptionText.setText(photo.getCaption());
-//		editTagNameText.setText(photo.getTagName());
-//		editTagValueText.setText(photo.getTagValue());
-//		//displayTimeText.setText(getPicTime());
-//		//displayTagsText.setText(photo.getTags());
+		//if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		Photo toBeDisplayed = null;
+		if(!photosObs.isEmpty()) {	
+			for(Photo p: currentAlbum.getPhotos()) {
+				if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+					toBeDisplayed = p;
+				}
+			}
+		}
+		displayCaptionText.setText(toBeDisplayed.getCaption());
+		tagsObs.clear();
+		for(Tag t:toBeDisplayed.getTags()) {
+			tagsObs.add(t);
+		}
+		tagsListView.setItems(tagsObs);
+		//displayTimeText.setText(getPicTime());
+		//displayTagsText.setText(photo.getTags());
 	}
 	public void emptyAddEditAndInitialInfo() {
 		editTagNameText.setText("");

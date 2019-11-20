@@ -17,7 +17,7 @@ public class Tag implements Serializable{
 	}
 	
 	public String toString() {
-		return name + ":" + value;
+		return name + ": " + value;
 	}
 	
 	public String getName() {

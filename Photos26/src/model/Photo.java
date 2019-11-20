@@ -60,11 +60,13 @@ public class Photo implements Serializable {
 		return null;
 	}
 	
-	public void addTag() {
-		
+	public void addTag(String name, String value) {
+		tags.add(new Tag(name, value));
 	}
 	
-	public void editTag() {
+	public void editTag(Tag t, String newName, String newValue) {
+		t.setName(newName);
+		t.setValue(newValue);
 		
 	}
 	public void removeTag() {
