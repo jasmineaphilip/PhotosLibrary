@@ -36,7 +36,7 @@ import model.SerializablePhoto;
 import model.User;
 
 public class NonAdminAlbumController {
-	@FXML ListView<Photo> photoListView;
+	@FXML ListView<VBox> photoListView;
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
 	@FXML Parent root;
@@ -59,11 +59,23 @@ public class NonAdminAlbumController {
 	@FXML Button movePhotoButton;
 	@FXML Button copyPhotoButton;
 	
-	ObservableList<Photo> photos = FXCollections.observableArrayList();
-	private Album album;
+	ObservableList<VBox> photos = FXCollections.observableArrayList();
+	Album currentAlbum;
 
 	public void start(Stage mainStage, Album album) {
+		currentAlbum = album;
 		albumNameText.setText(album.getName());
+		for(Photo p:currentAlbum.getPhotos()) {
+			String imagePath = p.getPath();
+			Image image = new Image(new File(imagePath).toURI().toString());
+
+		    ImageView imageView = new ImageView(image);
+		    imageView.setFitHeight(30.0);
+		    imageView.setFitWidth(30.0);
+		    VBox bro = new VBox(imageView);
+		    photos.add(bro);
+		    photoListView.setItems(photos);
+		}
 		
 	}
 	
@@ -84,11 +96,11 @@ public class NonAdminAlbumController {
 	}
 	
 	public void deletePhoto() {
-		Photo photo = photoListView.getSelectionModel().getSelectedItem();
-		photos.remove(photo);
-		album.removePhoto(photo);
-		//photoListView.getSelectionModel().select(index);
-		displayInfo();
+//		Photo photo = photoListView.getSelectionModel().getSelectedItem();
+//		photos.remove(photo);
+//		album.removePhoto(photo);
+//		//photoListView.getSelectionModel().select(index);
+//		displayInfo();
 	}
 	public void browse() {
 		FileChooser fileChooser = new FileChooser();
@@ -131,40 +143,21 @@ public class NonAdminAlbumController {
 			alert.show();
 			return;
 		}
-		Stage stage = (Stage) root.getScene().getWindow();
 		
 		String imagePath = photoPathText.getText();
-		//System.out.println(imagePath);
+		Photo photo = new Photo();
+		photo.setPath(imagePath);
+		currentAlbum.getPhotos().add(photo);
 		Image image = new Image(new File(imagePath).toURI().toString());
-	    //Image image = new Image(imagePath);
 
-		photoListView.setCellFactory(param -> new ListCell<Photo>());
 	    ImageView imageView = new ImageView(image);
-	    VBox bro = new VBox(imageView);
-	    //photos.add(bro);
-	    photoListView.setItems(photos);
 	    imageView.setFitHeight(30.0);
 	    imageView.setFitWidth(30.0);
+	    VBox bro = new VBox(imageView);
+	    photos.add(bro);
+	    photoListView.setItems(photos);
 	    
-//	    photos.add(bro);
-	    SerializablePhoto tempImage = new SerializablePhoto();
-	    tempImage.setPhoto(image);
-//	    for (Photo p: album.getPhotos()) {
-//        	if (tempImage.equals(p.getSerializableImage())) {
-//        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
-//    			alert.show();
-//    			return;
-//        	}
-//        }
-//	    photos.add(tempImage);
-	    
-	    VBox root = new VBox(10, imageView, addPhotoButton, browseButton);
-	    //photos.add(root);
-	    Scene scene = new Scene(root);
-	    stage.setScene(scene);
-	    stage.setTitle("");
-	    stage.show();
- 		
+
 	}
 	
 	
@@ -200,13 +193,13 @@ public class NonAdminAlbumController {
 	
 	public void displayInfo() {
 		if(photos.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
-		Photo photo = photoListView.getSelectionModel().getSelectedItem();
-		displayCaptionText.setText(photo.getCaption());
-		editCaptionText.setText(photo.getCaption());
-		editTagNameText.setText(photo.getTagName());
-		editTagValueText.setText(photo.getTagValue());
-		//displayTimeText.setText(getPicTime());
-		//displayTagsText.setText(photo.getTags());
+//		Photo photo = photoListView.getSelectionModel().getSelectedItem();
+//		displayCaptionText.setText(photo.getCaption());
+//		editCaptionText.setText(photo.getCaption());
+//		editTagNameText.setText(photo.getTagName());
+//		editTagValueText.setText(photo.getTagValue());
+//		//displayTimeText.setText(getPicTime());
+//		//displayTagsText.setText(photo.getTags());
 	}
 	public void emptyAddEditAndInitialInfo() {
 		editTagNameText.setText("");
