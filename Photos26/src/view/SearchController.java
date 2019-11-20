@@ -81,7 +81,17 @@ public class SearchController {
 		searchAlbum.setName(searchAlbumNameText.getText());
 		searchAlbum.setOldestPhoto(searchAlbum.getOldestPhoto());
 		searchAlbum.setNewestPhoto(searchAlbum.getNewestPhoto());
+		for(Album a:user1.getAlbums()) {
+			if(a.getName().equals(searchAlbumNameText.getText())) {
+				Alert alert = new Alert(AlertType.ERROR, "Album name already exists.", ButtonType.OK);
+				alert.show();
+				return;
+			}
+		}
 		user1.getAlbums().add(searchAlbum);
+		Alert alert = new Alert(AlertType.INFORMATION, "Album Created.", ButtonType.OK);
+		alert.show();
+		return;
 	}
 	
 	/**

@@ -120,12 +120,40 @@ public class NonAdminAlbumController {
 		if(!photosObs.isEmpty()) {
 			displayInfo();
 		}
-		currentUser.getAllPhotos().remove(toBeDeleted);
+		boolean repeat = false;
+		for(Album a:currentUser.getAlbums()) {
+			for(Photo p:a.getPhotos()) {
+				if (p.getPath().equals(toBeDeleted.getPath())){
+					repeat = true;
+//					Alert alert = new Alert(AlertType.CONFIRMATION, "Would you like to delete all instances of this photo?", ButtonType.YES, ButtonType.NO);
+//					alert.showAndWait();
+//					
+//					if (alert.getResult() == ButtonType.YES) {
+//						deleteAllInstances(toBeDeleted.getPath());
+//						currentUser.getAllPhotos().remove(toBeDeleted);
+//					}
+					break;
+				}
+			}
+			if(repeat) {break;}
+		}
+		if(!repeat) {
+			currentUser.getAllPhotos().remove(toBeDeleted);
+		}
 		if(photosObs.isEmpty()) {
 			clearInfo();
 		}
-
-		
+	}
+	
+	public void deleteAllInstances(String path) {
+		for(Album a:currentUser.getAlbums()) {
+			for(Photo p:a.getPhotos()) {
+				if (p.getPath().equals(path)){
+					a.getPhotos().remove(p);
+				}
+				continue;
+			}
+		}
 	}
 	
 	public void browse() {
@@ -429,6 +457,9 @@ public class NonAdminAlbumController {
 		}
 		int i = currentUser.getAlbums().indexOf(albumToBeMovedIn);
 		currentUser.getAlbums().get(i).getPhotos().add(photoToBeMoved);
+		Alert alert = new Alert(AlertType.INFORMATION, "Copy Complete.", ButtonType.OK);
+		alert.show();
+		return;
 	}
 	
 	public boolean isImage(File file) {
