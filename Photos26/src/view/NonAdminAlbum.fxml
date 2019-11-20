@@ -29,12 +29,13 @@
                   </MenuButton>
                   <Text fx:id="albumNameText" layoutX="345.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                   <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="296.0" prefWidth="447.0" />
-                  <TextField fx:id="displayCaptionText" editable="false" layoutX="502.0" layoutY="202.0" promptText="Caption" />
-                  <TextField fx:id="displayTimeText" editable="false" layoutX="502.0" layoutY="259.0" promptText="Autofilled Date/Time" />
-                  <Label layoutX="502.0" layoutY="183.0" text="Caption" />
+                  <TextField fx:id="displayCaptionText" editable="false" layoutX="502.0" layoutY="238.0" promptText="Caption" />
+                  <TextField fx:id="displayTimeText" editable="false" layoutX="502.0" layoutY="295.0" promptText="Autofilled Date/Time" />
+                  <Label layoutX="502.0" layoutY="219.0" text="Caption" />
                   <Label layoutX="502.0" layoutY="37.0" text="Tags" />
                   <ListView fx:id="tagsListView" layoutX="502.0" layoutY="56.0" prefHeight="105.0" prefWidth="154.0" />
-                  <Label layoutX="502.0" layoutY="240.0" text="Time of Capture" />
+                  <Label layoutX="502.0" layoutY="276.0" text="Time of Capture" />
+                  <Button fx:id="deleteTagButton" layoutX="580.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">
@@ -89,7 +90,7 @@
                         </Tab>
                     </tabs>
                   </TabPane>
-                  <ImageView fitHeight="218.0" fitWidth="328.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="enlargeDisplay" fitHeight="218.0" fitWidth="328.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="deletePhotoButton" layoutX="133.0" layoutY="241.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete Photo" />
                </children>
             </AnchorPane>
