@@ -57,14 +57,16 @@ public class SearchController {
 		for (int i = 0; i < searchResults.size(); i++) {
 			Photo photo = searchResults.get(i);
 			String imagePath = photo.getPath();
+			
 			Image image = new Image(new File(imagePath).toURI().toString());
-			ImageView imageView = new ImageView(image);
-			imageView.setFitHeight(50.0);
-			imageView.setFitWidth(50.0);
-			HBox hbox = new HBox(5);
-			Label l = new Label("gibber");
-			Label path = new Label(imagePath);
-			hbox.getChildren().addAll(imageView, l, path);
+		    ImageView imageView = new ImageView(image);
+		    imageView.setFitHeight(50.0);
+		    imageView.setFitWidth(50.0);
+		    HBox hbox = new HBox(3);
+		    Label l = new Label(photo.getCaption());
+		    Label path = new Label(photo.getPath());
+		    hbox.getChildren().addAll(imageView, l, path);
+		    ((Label)(hbox.getChildren().get(2))).setVisible(false);
 			photosBox.add(hbox);
 			searchResultsListView.setItems(photosBox);
 			searchAlbum.addPhoto(searchResults.get(i));
