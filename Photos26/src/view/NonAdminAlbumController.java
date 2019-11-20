@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,26 +16,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Album;
 import model.Photo;
 import model.SerializablePhoto;
 import model.User;
 
 public class NonAdminAlbumController {
-	@FXML ListView<VBox> photoListView;
+	@FXML ListView<HBox> photoListView;
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
 	@FXML Parent root;
@@ -59,7 +56,7 @@ public class NonAdminAlbumController {
 	@FXML Button movePhotoButton;
 	@FXML Button copyPhotoButton;
 	
-	ObservableList<VBox> photos = FXCollections.observableArrayList();
+	ObservableList<HBox> photosObs = FXCollections.observableArrayList();
 	Album currentAlbum;
 
 	public void start(Stage mainStage, Album album) {
@@ -67,19 +64,22 @@ public class NonAdminAlbumController {
 		albumNameText.setText(album.getName());
 		for(Photo p:currentAlbum.getPhotos()) {
 			String imagePath = p.getPath();
+			
 			Image image = new Image(new File(imagePath).toURI().toString());
-
 		    ImageView imageView = new ImageView(image);
-		    imageView.setFitHeight(30.0);
-		    imageView.setFitWidth(30.0);
-		    VBox bro = new VBox(imageView);
-		    photos.add(bro);
-		    photoListView.setItems(photos);
+		    imageView.setFitHeight(50.0);
+		    imageView.setFitWidth(50.0);
+		    HBox hbox = new HBox(3);
+		    Label l = new Label("gibberish");
+		    Label path = new Label(p.getPath());
+		    hbox.getChildren().addAll(imageView, l, path);
+		    photosObs.add(hbox);
+		    photoListView.setItems(photosObs);
 		}
 		
 	}
 	
-	public void quitApp(ActionEvent event) throws IOException {
+	public void quitApp(ActionEvent event){
 		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
@@ -96,12 +96,17 @@ public class NonAdminAlbumController {
 	}
 	
 	public void deletePhoto() {
-//		Photo photo = photoListView.getSelectionModel().getSelectedItem();
-//		photos.remove(photo);
-//		album.removePhoto(photo);
-//		//photoListView.getSelectionModel().select(index);
-//		displayInfo();
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		photosObs.remove(photo);
+		Photo toBeDeleted = null;
+		for(Photo p: currentAlbum.getPhotos()) {
+			if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+				toBeDeleted = p;
+			}
+		}
+		currentAlbum.getPhotos().remove(toBeDeleted);
 	}
+	
 	public void browse() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
@@ -113,24 +118,6 @@ public class NonAdminAlbumController {
 			alert.show();
 			return;
 		}
-		
-		
-		
-		
-//		BufferedImage bufferedImage = ImageIO.read(selectedFile);
-//		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-//		SerializablePhoto tempImage = new SerializablePhoto();
-//		tempImage.setPhoto(image);
-//		for (Photo p: album.getPhotos()) {
-//        	if (tempImage.equals(p.getSerializableImage())) {
-//        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
-//    			alert.show();
-//    			return;
-//        	}
-//        }
-//		Photo tempPhoto = null;
-//		boolean photoFound = false;
-		
 		 
 	}
 	
@@ -151,11 +138,14 @@ public class NonAdminAlbumController {
 		Image image = new Image(new File(imagePath).toURI().toString());
 
 	    ImageView imageView = new ImageView(image);
-	    imageView.setFitHeight(30.0);
-	    imageView.setFitWidth(30.0);
-	    VBox bro = new VBox(imageView);
-	    photos.add(bro);
-	    photoListView.setItems(photos);
+	    imageView.setFitHeight(50.0);
+	    imageView.setFitWidth(50.0);
+	    HBox hbox = new HBox(5);
+	    Label l = new Label("gibber");
+	    Label path = new Label(imagePath);
+	    hbox.getChildren().addAll(imageView, l, path);
+	    photosObs.add(hbox);
+	    photoListView.setItems(photosObs);
 	    
 
 	}
@@ -163,7 +153,7 @@ public class NonAdminAlbumController {
 	
 	
 	public void editTagName() {
-		
+		//replace child in Hbox. hbox.getchildren.set(i,label)
 	}
 	public void editTagValue() {
 		
@@ -192,7 +182,7 @@ public class NonAdminAlbumController {
 	}
 	
 	public void displayInfo() {
-		if(photos.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
+		if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
 //		Photo photo = photoListView.getSelectionModel().getSelectedItem();
 //		displayCaptionText.setText(photo.getCaption());
 //		editCaptionText.setText(photo.getCaption());
