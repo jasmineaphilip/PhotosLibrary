@@ -26,16 +26,16 @@
                     </items>
                   </MenuButton>
                   <Text fx:id="albumNameText" layoutX="345.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="265.0" prefWidth="471.0" />
-                  <TextField fx:id="displayCaptionText" editable="false" layoutX="502.0" layoutY="238.0" promptText="Caption" />
-                  <TextField fx:id="displayTimeText" editable="false" layoutX="502.0" layoutY="295.0" promptText="Autofilled Date/Time" />
-                  <Label layoutX="502.0" layoutY="219.0" text="Caption" />
-                  <Label layoutX="502.0" layoutY="37.0" text="Tags" />
-                  <ListView fx:id="tagsListView" layoutX="502.0" layoutY="56.0" prefHeight="105.0" prefWidth="154.0" />
-                  <Label layoutX="502.0" layoutY="276.0" text="Time of Capture" />
-                  <Button fx:id="deleteTagButton" layoutX="580.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
-                  <Button fx:id="previousButton" layoutX="157.0" layoutY="313.0" mnemonicParsing="false" onAction="#previousPhoto" text="&lt;&lt;" />
-                  <Button fx:id="nextButton" layoutX="284.0" layoutY="313.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
+                  <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="265.0" prefWidth="427.0" />
+                  <TextField fx:id="displayCaptionText" editable="false" layoutX="455.0" layoutY="238.0" prefHeight="27.0" prefWidth="240.0" promptText="Caption" />
+                  <TextField fx:id="displayTimeText" editable="false" layoutX="455.0" layoutY="295.0" prefHeight="27.0" prefWidth="240.0" promptText="Autofilled Date/Time" />
+                  <Label layoutX="454.0" layoutY="219.0" text="Caption" />
+                  <Label layoutX="454.0" layoutY="36.0" text="Tags" />
+                  <ListView fx:id="tagsListView" layoutX="455.0" layoutY="56.0" prefHeight="105.0" prefWidth="240.0" />
+                  <Label layoutX="454.0" layoutY="276.0" text="Time of Capture" />
+                  <Button fx:id="deleteTagButton" layoutX="617.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
+                  <Button fx:id="previousButton" layoutX="147.0" layoutY="311.0" mnemonicParsing="false" onAction="#previousPhoto" text="&lt;&lt;" />
+                  <Button fx:id="nextButton" layoutX="274.0" layoutY="311.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">

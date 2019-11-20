@@ -3,6 +3,7 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
@@ -42,7 +43,6 @@ public class NonAdminAlbumController {
 	@FXML Text albumNameText;
 	@FXML TextField displayCaptionText;
 	@FXML TextField displayTimeText;
-	@FXML TextField displayTagsText;
 	@FXML Button browseButton;
 	@FXML TextField photoPathText;
 	@FXML Button addPhotoButton;
@@ -119,6 +119,9 @@ public class NonAdminAlbumController {
 		if(!photosObs.isEmpty()) {
 			displayInfo();
 		}
+		if(photosObs.isEmpty()) {
+			clearInfo();
+		}
 		
 	}
 	
@@ -143,6 +146,9 @@ public class NonAdminAlbumController {
 	
 	public void previousPhoto() {
 		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
+		if(currentPhoto == null) {
+			return;
+		}
 		int index = photosObs.indexOf(currentPhoto);
 		if(index == 0) {
 			return;
@@ -153,6 +159,9 @@ public class NonAdminAlbumController {
 	
 	public void nextPhoto() {
 		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
+		if(currentPhoto == null) {
+			return;
+		}
 		int index = photosObs.indexOf(currentPhoto);
 		if(index == photosObs.size()-1){
 			index = -1;
@@ -347,6 +356,7 @@ public class NonAdminAlbumController {
 		Label label = new Label(editCaptionText.getText());
 		photo.getChildren().set(1, label);
 		captionToBeChanged.setCaption(editCaptionText.getText());
+		displayCaptionText.setText(editCaptionText.getText());
 		editCaptionText.setText("");
 	}
 	public void movePhoto() {
@@ -388,17 +398,20 @@ public class NonAdminAlbumController {
 		String imagePath = (((Label) photo.getChildren().get(2)).getText());
 		Image image = new Image(new File(imagePath).toURI().toString());
 		enlargeDisplay.setImage(image);
+		String time = toBeDisplayed.getCalendar().getTime().toString();
+		displayTimeText.setText(time);
 		
 		//displayTimeText.setText(getPicTime());
 		//displayTagsText.setText(photo.getTags());
 	}
-	public void emptyAddEditAndInitialInfo() {
+	public void clearInfo() {
 		editTagNameText.setText("");
 		editTagValueText.setText("");
 		editCaptionText.setText("");
 		displayCaptionText.setText("");
 		displayTimeText.setText("");
-		displayTagsText.setText("");
+		tagsObs.clear();
+		enlargeDisplay.setImage(null);
 	}
 
 	
