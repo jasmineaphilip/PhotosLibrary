@@ -360,11 +360,45 @@ public class NonAdminAlbumController {
 		editCaptionText.setText("");
 	}
 	public void movePhoto() {
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		Photo photoToBeMoved = null;
+		if(photo == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		for(Photo p: currentAlbum.getPhotos()) {
+			if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+				photoToBeMoved = p;
+			}
+		}
 		
+		Album albumToBeMovedIn = null;
+		String destinationAlbum = destinationAlbumText.getText();
+		for(Album a: currentUser.getAlbums()) {
+			if(a.getName().equals(destinationAlbum)) {
+				albumToBeMovedIn = a;
+			}
+		}
+		if(albumToBeMovedIn == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Destination album does not exist.", ButtonType.OK);
+			destinationAlbumText.setText("");
+			alert.show();
+			return;
+		}
+		int i = currentUser.getAlbums().indexOf(albumToBeMovedIn);
+		currentUser.getAlbums().get(i).getPhotos().add(photoToBeMoved);
+		deletePhoto();
+//		currentAlbum.getPhotos().remove(photoToBeMoved);
+//		photoListView.setItems(photosObs);
 	}
+	
 	public void copyPhoto() {
 		
 	}
+	
 	public boolean isImage(File file) {
 		try {
 		    BufferedImage image = ImageIO.read(file);
