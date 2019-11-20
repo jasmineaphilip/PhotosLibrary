@@ -40,7 +40,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">
                <children>
-                  <TabPane layoutX="386.0" layoutY="8.0" prefHeight="280.0" prefWidth="317.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane layoutX="351.0" layoutY="8.0" prefHeight="280.0" prefWidth="352.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab text="Add Photo">
                           <content>
@@ -54,12 +54,12 @@
                               </AnchorPane>
                           </content>
                         </Tab>
-                      <Tab text="Edit Photo">
+                      <Tab text="Edit Tag/Caption">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="342.0">
                                  <children>
-                                    <TextField fx:id="editTagNameText" layoutX="14.0" layoutY="27.0" prefHeight="27.0" prefWidth="161.0" promptText="New Tag Name" />
-                                    <TextField fx:id="editTagValueText" layoutX="14.0" layoutY="63.0" prefHeight="27.0" prefWidth="161.0" promptText="New Tag Value" />
+                                    <TextField fx:id="editTagNameText" layoutX="14.0" layoutY="27.0" prefHeight="27.0" prefWidth="161.0" promptText="Updated Tag Name" />
+                                    <TextField fx:id="editTagValueText" layoutX="14.0" layoutY="63.0" prefHeight="27.0" prefWidth="161.0" promptText="Updated Tag Value" />
                                     <TextField fx:id="editCaptionText" layoutX="14.0" layoutY="154.0" prefHeight="27.0" prefWidth="161.0" promptText="New Caption" />
                                     <Button fx:id="editTagNameButton" layoutX="214.0" layoutY="50.0" mnemonicParsing="false" onAction="#editTag" text="Edit Tag" />
                                     <Button fx:id="editCaptionButton" layoutX="203.0" layoutY="154.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
@@ -77,11 +77,11 @@
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Move Photo">
+                        <Tab text="Move/Copy">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="destinationAlbumText1" layoutX="63.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
+                                    <TextField fx:id="destinationAlbumText" layoutX="63.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
                                     <Button fx:id="movePhotoButton" layoutX="74.0" layoutY="117.0" mnemonicParsing="false" onAction="#movePhoto" text="Move to..." />
                                     <Button fx:id="copyPhotoButton" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#copyPhoto" text="Copy to..." />
                                  </children>
@@ -90,7 +90,7 @@
                         </Tab>
                     </tabs>
                   </TabPane>
-                  <ImageView fx:id="enlargeDisplay" fitHeight="218.0" fitWidth="328.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="enlargeDisplay" fitHeight="218.0" fitWidth="305.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="deletePhotoButton" layoutX="133.0" layoutY="241.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete Photo" />
                </children>
             </AnchorPane>
