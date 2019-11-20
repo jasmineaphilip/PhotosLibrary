@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -20,7 +19,6 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="285.0" prefWidth="717.0">
                <children>
-                  <ScrollBar layoutX="461.0" layoutY="44.0" orientation="VERTICAL" prefHeight="296.0" prefWidth="17.0" />
                   <MenuButton layoutX="8.0" layoutY="7.0" mnemonicParsing="false" text="Menu">
                     <items>
                       <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
@@ -28,7 +26,7 @@
                     </items>
                   </MenuButton>
                   <Text fx:id="albumNameText" layoutX="345.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="296.0" prefWidth="447.0" />
+                  <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="265.0" prefWidth="471.0" />
                   <TextField fx:id="displayCaptionText" editable="false" layoutX="502.0" layoutY="238.0" promptText="Caption" />
                   <TextField fx:id="displayTimeText" editable="false" layoutX="502.0" layoutY="295.0" promptText="Autofilled Date/Time" />
                   <Label layoutX="502.0" layoutY="219.0" text="Caption" />
@@ -36,6 +34,8 @@
                   <ListView fx:id="tagsListView" layoutX="502.0" layoutY="56.0" prefHeight="105.0" prefWidth="154.0" />
                   <Label layoutX="502.0" layoutY="276.0" text="Time of Capture" />
                   <Button fx:id="deleteTagButton" layoutX="580.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
+                  <Button fx:id="previousButton" layoutX="157.0" layoutY="313.0" mnemonicParsing="false" onAction="#previousPhoto" text="&lt;&lt;" />
+                  <Button fx:id="nextButton" layoutX="284.0" layoutY="313.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">
@@ -82,8 +82,8 @@
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <TextField fx:id="destinationAlbumText1" layoutX="63.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
-                                    <Button fx:id="movePhotoButton1" layoutX="74.0" layoutY="117.0" mnemonicParsing="false" onAction="#movePhoto" text="Move to..." />
-                                    <Button fx:id="copyPhotoButton1" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#copyPhoto" text="Copy to..." />
+                                    <Button fx:id="movePhotoButton" layoutX="74.0" layoutY="117.0" mnemonicParsing="false" onAction="#movePhoto" text="Move to..." />
+                                    <Button fx:id="copyPhotoButton" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#copyPhoto" text="Copy to..." />
                                  </children>
                               </AnchorPane>
                            </content>
