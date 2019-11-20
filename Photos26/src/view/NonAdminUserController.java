@@ -291,6 +291,9 @@ public class NonAdminUserController {
 		int year = 0;
 		int day = 0;
 		
+		boolean foundTag1 = false;
+		boolean foundTag2 = false;
+		
 		if (fromDate.getValue() == null && toDate.getValue() == null && tagName1.equals("") && tagValue1.equals("") && tagName2.equals("") && tagValue2.equals("")) {
 			Alert a = new Alert(AlertType.ERROR, "Select a date range and/or fill in tag fields in order to search.", ButtonType.OK);
 			a.show();	
@@ -402,24 +405,30 @@ public class NonAdminUserController {
 					for (int i = 0; i < user.getAllPhotos().size(); i++) {
 						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
 							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) && 
-									(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
-										searchResults.add(user.getAllPhotos().get(i));	
-								}
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
+								foundTag1 = true;
+							}
+							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
+								foundTag2 = true;
+							}
 						}
+						if (foundTag1 && foundTag2) searchResults.add(user.getAllPhotos().get(i));
 					}
 				}
 			} else { //tagOr
 				for (int i = 0; i < user.getAllPhotos().size(); i++) {
 					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
 						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
-							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
-								searchResults.add(user.getAllPhotos().get(i));	
+								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
+							foundTag1 = true;
+						}
+						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
+							foundTag2 = true;
 						}
 					}
+					if (foundTag1 || foundTag2) searchResults.add(user.getAllPhotos().get(i));
 				}
 			}
 		}
@@ -523,19 +532,21 @@ public class NonAdminUserController {
 				if (!tagName1.equals("") && !tagName2.equals("")) {
 					for (int i = 0; i < user.getAllPhotos().size(); i++) {
 						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
-									if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
-										if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
-											year = user.getAllPhotos().get(i).getYear(); 
-											day = user.getAllPhotos().get(i).getDay();
-											if (year >= fromDateYear && year<= toDateYear) {
-												if (day >= fromDateDay && day<= toDateDay) {
-													searchResults.add(user.getAllPhotos().get(i));
-												}
-											}
-										}
-									}
+							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
+								foundTag1 = true;
+							}
+							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
+								foundTag2 = true;
+							}
+						}
+						if (foundTag1 && foundTag2) {
+							year = user.getAllPhotos().get(i).getYear(); 
+							day = user.getAllPhotos().get(i).getDay();
+							if (year >= fromDateYear && year<= toDateYear) {
+								if (day >= fromDateDay && day<= toDateDay) {
+									searchResults.add(user.getAllPhotos().get(i));
 								}
 							}
 						}
@@ -545,15 +556,20 @@ public class NonAdminUserController {
 				for (int i = 0; i < user.getAllPhotos().size(); i++) {
 					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
 						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
-							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
-							year = user.getAllPhotos().get(i).getYear(); 
-							day = user.getAllPhotos().get(i).getDay();
-							if (year >= fromDateYear && year<= toDateYear) {
-								if (day >= fromDateDay && day<= toDateDay) {
-									searchResults.add(user.getAllPhotos().get(i));
-								}
+								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
+							foundTag1 = true;
+						}
+						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
+							foundTag2 = true;
+						}
+					}
+					if (foundTag1 || foundTag2) {
+						year = user.getAllPhotos().get(i).getYear(); 
+						day = user.getAllPhotos().get(i).getDay();
+						if (year >= fromDateYear && year<= toDateYear) {
+							if (day >= fromDateDay && day<= toDateDay) {
+								searchResults.add(user.getAllPhotos().get(i));
 							}
 						}
 					}
