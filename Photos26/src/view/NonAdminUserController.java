@@ -418,8 +418,13 @@ public class NonAdminUserController {
 									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
 								foundTag2 = true;
 							}
+							if (foundTag1 && foundTag2) {
+								searchResults.add(user.getAllPhotos().get(i));
+								//System.out.println(user.getAllPhotos().get(i).getPath());
+							}
 						}
-						if (foundTag1 && foundTag2) searchResults.add(user.getAllPhotos().get(i));
+						
+						
 					}
 				}
 			} else { //tagOr
@@ -433,8 +438,12 @@ public class NonAdminUserController {
 								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
 							foundTag2 = true;
 						}
+						if (foundTag1 || foundTag2) {
+							searchResults.add(user.getAllPhotos().get(i));
+							//System.out.println(user.getAllPhotos().get(i).getPath());
+						}
 					}
-					if (foundTag1 || foundTag2) searchResults.add(user.getAllPhotos().get(i));
+					
 				}
 			}
 		}
