@@ -14,7 +14,7 @@ public class Tag implements Serializable{
 	}
 	
 	public String toString() {
-		return name + ":" + value;
+		return name + ": " + value;
 	}
 	
 	public String getName() {
@@ -22,7 +22,7 @@ public class Tag implements Serializable{
 	}
 	
 	public void setName(String name) {
-		name = this.name;
+		this.name = name;
 	}
 	
 	public String getValue() {
@@ -30,7 +30,7 @@ public class Tag implements Serializable{
 	}
 	
 	public void setValue(String value) {
-		value = this.value;
+		this.value = value;
 	}
 	
 }

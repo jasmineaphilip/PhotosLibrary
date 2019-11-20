@@ -71,10 +71,11 @@ public class Photo implements Serializable {
 		tags.add(new Tag(name, value));
 	}
 	
-	public void editTag(int index, String name, String value) {
-		tags.get(index).setName(name);
-		tags.get(index).setValue(value);
+	public void editTag(Tag t, String newName, String newValue) {
+		t.setName(newName);
+		t.setValue(newValue);
 	}
+
 	
 	public void removeTag(int index) {
 		tags.remove(index);
