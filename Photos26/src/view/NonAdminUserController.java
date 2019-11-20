@@ -49,7 +49,6 @@ public class NonAdminUserController {
 	public void start(Stage mainStage, User user) {
 		welcomeText.setText("Welcome, "  + user.getUsername() + "!");
 		this.user = user;
-		//System.out.println(user.getAlbums());
 		for(int i=0;i<user.getAlbums().size();i++) {
 			albums.add(user.getAlbums().get(i));
 		}
@@ -74,11 +73,9 @@ public class NonAdminUserController {
 	}
 	
 	public void logOut() throws IOException {
-		//Stage stage = (Stage) logOutButton.getScene().getWindow();
 		Stage stage = (Stage) root.getScene().getWindow();
 		Parent loginParent = FXMLLoader.load(getClass().getResource("Photos.fxml"));
 		Scene home = new Scene(loginParent);
-		//Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.setScene(home);
 		stage.show();
 	}
@@ -105,10 +102,6 @@ public class NonAdminUserController {
 			Album newAlbum = new Album(albumName);
 			user.getAlbums().add(newAlbum);
 			albums.add(newAlbum);
-			//if (user.getAlbum(); == null) System.out.println("why null");
-			//int index = Controller.allUsers.indexOf(user);
-			//System.out.println(index);
-			//Controller.allUsers.get(index).albums.add(newAlbum);
 			listView.setItems(albums);
 			listView.getSelectionModel().select(albums.indexOf(newAlbum));
 			
@@ -184,17 +177,7 @@ public class NonAdminUserController {
 	}
 	
 	public void openAlbum(ActionEvent event) throws IOException {
-//		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
-//		AnchorPane root = (AnchorPane) loader.load();
-//		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
-////		AlbumDisplayController controller = loader.getController();
-////		controller.start(stage);
-//
-//		Scene scene = new Scene(root, 719, 651);
-//		stage.setScene(scene);
-//		stage.show();
+
 		Album album = listView.getSelectionModel().getSelectedItem();
 		if(album == null) {
 			Alert a = new Alert(AlertType.ERROR, "Please select an album.", ButtonType.OK);
@@ -215,17 +198,7 @@ public class NonAdminUserController {
 	}
 	
 	public void openAllPhotosAlbum(ActionEvent event) throws IOException {
-//		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
-//		AnchorPane root = (AnchorPane) loader.load();
-//		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
-////		AlbumDisplayController controller = loader.getController();
-////		controller.start(stage);
-//
-//		Scene scene = new Scene(root, 719, 651);
-//		stage.setScene(scene);
-//		stage.show();
+
 		Album album = user.getAllPhotos();
 		
 		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
