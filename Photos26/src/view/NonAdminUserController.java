@@ -214,7 +214,32 @@ public class NonAdminUserController {
 		window.show();
 	}
 	
-	
+	public void openAllPhotosAlbum(ActionEvent event) throws IOException {
+//		Stage stage = (Stage)openAlbumButton.getScene().getWindow();
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setLocation(getClass().getResource("/view/NonAdminAlbum.fxml"));
+//		AnchorPane root = (AnchorPane) loader.load();
+//		//Album selectedAlbum = obsAlbums.get(albumList.getSelectionModel().getSelectedIndex());
+////		AlbumDisplayController controller = loader.getController();
+////		controller.start(stage);
+//
+//		Scene scene = new Scene(root, 719, 651);
+//		stage.setScene(scene);
+//		stage.show();
+		Album album = user.getAllPhotos();
+		
+		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
+		Parent parent = (Parent) loader.load();
+		
+		NonAdminAlbumController ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+		
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		ctrl.start(window, album);
+		
+		window.setScene(scene);
+		window.show();
+	}
 	
 	
 	

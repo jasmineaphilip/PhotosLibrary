@@ -10,12 +10,13 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 2818796451511130119L;
 	private String username;
 	private ArrayList<Album> albums;
-	private ArrayList<Photo> allPhotos;
+	private Album allPhotos;
 	 
 	
 	public User(String username) {
 		this.username = username;
 		albums = new ArrayList<Album>();
+		setAllPhotos(new ArrayList<Photo>());
 		
 	}
 	
@@ -33,6 +34,18 @@ public class User implements Serializable{
 	
 	public ArrayList<Album> getAlbums() {
 		return albums;
+	}
+	
+	public void setAlbums(ArrayList<Album> albums) {
+		this.albums = albums;
+	}
+
+	public Album getAllPhotos() {
+		return allPhotos;
+	}
+
+	public void setAllPhotos(Album allPhotos) {
+		this.allPhotos = allPhotos;
 	}
 
 }

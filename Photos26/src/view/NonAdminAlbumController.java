@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Album;
 import model.Photo;
 import model.SerializablePhoto;
@@ -136,19 +138,28 @@ public class NonAdminAlbumController {
 		Image image = new Image(new File(imagePath).toURI().toString());
 	    //Image image = new Image(imagePath);
 
+		photoListView.setCellFactory(param -> new ListCell<Photo>());
 	    ImageView imageView = new ImageView(image);
+	    VBox bro = new VBox(imageView);
+	    //photos.add(bro);
+	    photoListView.setItems(photos);
+	    imageView.setFitHeight(30.0);
+	    imageView.setFitWidth(30.0);
+	    
+//	    photos.add(bro);
 	    SerializablePhoto tempImage = new SerializablePhoto();
 	    tempImage.setPhoto(image);
-	    for (Photo p: album.getPhotos()) {
-        	if (tempImage.equals(p.getSerializableImage())) {
-        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
-    			alert.show();
-    			return;
-        	}
-        }
-	    //photos.add(tempImage);
+//	    for (Photo p: album.getPhotos()) {
+//        	if (tempImage.equals(p.getSerializableImage())) {
+//        		Alert alert = new Alert(AlertType.ERROR, "Photo already exists in album.", ButtonType.OK);
+//    			alert.show();
+//    			return;
+//        	}
+//        }
+//	    photos.add(tempImage);
 	    
-	    VBox root = new VBox(10, imageView, addPhotoButton);
+	    VBox root = new VBox(10, imageView, addPhotoButton, browseButton);
+	    photos.add(root);
 	    Scene scene = new Scene(root);
 	    stage.setScene(scene);
 	    stage.setTitle("");
