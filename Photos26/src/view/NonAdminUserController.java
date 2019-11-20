@@ -278,15 +278,28 @@ public class NonAdminUserController {
 	 * @throws IOException
 	 */
 	public void search(ActionEvent event) throws IOException {
-		int toDateYear = toDate.getValue().getYear();
-		int toDateDay = toDate.getValue().getDayOfYear();
-		int fromDateYear = fromDate.getValue().getYear();
-		int fromDateDay = fromDate.getValue().getDayOfYear();
+		int toDateYear = 0;
+		int toDateDay = 0;
+		int fromDateYear = 0;
+		int fromDateDay = 0;
 		
 		String tagName1 = tagName1Text.getText();
 		String tagValue1 = tagValue1Text.getText();
 		String tagName2 = tagName2Text.getText();
 		String tagValue2 = tagValue2Text.getText();
+		
+		int year = 0;
+		int day = 0;
+		
+		if (user.getAllPhotos() == null) {
+			System.out.println("bleh");
+		}
+		
+		if (user.getAllPhotos().size() == 0) {
+			Alert a = new Alert(AlertType.ERROR, "Add photos in order to search.", ButtonType.OK);
+			a.show();	
+			return;
+		}
 		
 		if (fromDate.getValue() == null && toDate.getValue() != null) {
 			Alert a = new Alert(AlertType.ERROR, "Please enter a From Date.", ButtonType.OK);
@@ -309,32 +322,32 @@ public class NonAdminUserController {
 			return;
 		}
 		
+		//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
+		if (!tagName1.equals("") && tagValue1.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 1 field.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		if (!tagName2.equals("") && tagValue2.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 2 field.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+
+		//if tagval1 but not tagname1 or tagval2 but not tag name 2, ERROR
+		if (!tagValue1.equals("") && tagName1.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 1 field.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		if (!tagValue2.equals("") && tagName2.equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 2 field.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		
 		if (fromDate.getValue() == null && toDate.getValue() == null) {
 			//just search on tags
-			
-			//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
-			if (!tagName1.equals("") && tagValue1.equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 1 field.", ButtonType.OK);
-				a.show();	
-				return;
-			}
-			if (!tagName2.equals("") && tagValue2.equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 2 field.", ButtonType.OK);
-				a.show();	
-				return;
-			}
-
-			//if tagval1 but not tagname1 or tagval2 but not tag name 2, ERROR
-			if (!tagValue1.equals("") && tagName1.equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 1 field.", ButtonType.OK);
-				a.show();	
-				return;
-			}
-			if (!tagValue2.equals("") && tagName2.equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Name 2 field.", ButtonType.OK);
-				a.show();	
-				return;
-			}
 			
 			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) { //neither toggle
 				//if tag1 && tag2, ERROR 
@@ -422,53 +435,43 @@ public class NonAdminUserController {
 			}
 		}
 		
+		
 		if (fromDate.getValue() != null && toDate.getValue() != null) {
 			//search on tags and date
+			toDateYear = toDate.getValue().getYear();
+			toDateDay = toDate.getValue().getDayOfYear();
+			fromDateYear = fromDate.getValue().getYear();
+			fromDateDay = fromDate.getValue().getDayOfYear();
 			
-			//if tagname1 but not tagval1, or tagnam2 but not tagval2, ERROR
-			if (!tagName1.equals("") && tagValue1.equals("")) {
-				Alert a = new Alert(AlertType.ERROR, "Please fill Tag Value 1 field.", ButtonType.OK);
-				a.show();	
-				return;
-			}
-			
-			//if tagval1 but not tagname1 or tagval2 but not tag name 2, ERROR
-			
-			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) {
+			if (group.getSelectedToggle() != tagAnd && group.getSelectedToggle() != tagOr) { //no toggle selected
 				//if tag1 && tag2, ERROR
-				//if neither tag1 nor tag2, ERROR
-				//if just tag1, do search on tag1 + date
-				//if just tag2, do search on tag2 + date
-			} else if (group.getSelectedToggle() == tagAnd) {
+				if (!tagName1.equals("") && !tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please select 'And' or 'Or' Tag toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
 				
-			} else { //tagOr
-				for (int i = 0; i < user.getAllPhotos().size(); i++) {
-					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
-							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+				//if neither tag1 nor tag2, just search on date
+				if (tagName1.equals("") && tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						year = user.getAllPhotos().get(i).getYear(); 
+						day = user.getAllPhotos().get(i).getDay();
+						if (year >= fromDateYear && year<= toDateYear) {
+							if (day >= fromDateDay && day<= toDateDay) {
 								searchResults.add(user.getAllPhotos().get(i));
+							}
 						}
 					}
 				}
-			}
-		}
-		
-		
-		if (group.getSelectedToggle() == tagAnd) {
-			for (int i = 0; i < user.getAllPhotos().size(); i++) {
-				for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-					if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
-						if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
-									if (fromDateYear == -1 && toDateYear == -1) {
-										searchResults.add(user.getAllPhotos().get(i));
-									}
-									
-									int year = user.getAllPhotos().get(i).getYear(); 
-									int day = user.getAllPhotos().get(i).getDay();
+				
+				//if just tag1, do search on tag1 + date
+				if (!tagName1.equals("") && tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
+									year = user.getAllPhotos().get(i).getYear(); 
+									day = user.getAllPhotos().get(i).getDay();
 									if (year >= fromDateYear && year<= toDateYear) {
 										if (day >= fromDateDay && day<= toDateDay) {
 											searchResults.add(user.getAllPhotos().get(i));
@@ -479,21 +482,77 @@ public class NonAdminUserController {
 						}
 					}
 				}
-			}
-		} else if (group.getSelectedToggle() == tagOr) {
-			for (int i = 0; i < user.getAllPhotos().size(); i++) {
-				for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-					if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-						user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
-						(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-						user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
-							int year = user.getAllPhotos().get(i).getYear(); 
-							int day = user.getAllPhotos().get(i).getDay();
+				
+				//if just tag2, do search on tag2 + date
+				if (tagName1.equals("") && !tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+									year = user.getAllPhotos().get(i).getYear(); 
+									day = user.getAllPhotos().get(i).getDay();
+									if (year >= fromDateYear && year<= toDateYear) {
+										if (day >= fromDateDay && day<= toDateDay) {
+											searchResults.add(user.getAllPhotos().get(i));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} else if (group.getSelectedToggle() == tagAnd) {
+				//if tag1 but no tag2, ERROR
+				if (!tagName1.equals("") && tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please enter Tag 2 fields or select 'Or' toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if tag2 but no tag1, ERROR
+				if (tagName1.equals("") && !tagName2.equals("")) {
+					Alert a = new Alert(AlertType.ERROR, "Please enter Tag 1 fields or select 'Or' toggle.", ButtonType.OK);
+					a.show();	
+					return;
+				}
+				
+				//if tag1 and tag2, search on them + date
+				if (!tagName1.equals("") && !tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagValue1)) {
+									if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+										if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+											year = user.getAllPhotos().get(i).getYear(); 
+											day = user.getAllPhotos().get(i).getDay();
+											if (year >= fromDateYear && year<= toDateYear) {
+												if (day >= fromDateDay && day<= toDateDay) {
+													searchResults.add(user.getAllPhotos().get(i));
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} else { //tagOr
+				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) || 
+							(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+							user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+							year = user.getAllPhotos().get(i).getYear(); 
+							day = user.getAllPhotos().get(i).getDay();
 							if (year >= fromDateYear && year<= toDateYear) {
 								if (day >= fromDateDay && day<= toDateDay) {
 									searchResults.add(user.getAllPhotos().get(i));
 								}
-							}	
+							}
+						}
 					}
 				}
 			}
