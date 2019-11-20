@@ -97,7 +97,7 @@ public class NonAdminUserController {
 			albumDetailsName.setText(album.getName());
 			albumDetailsNumPhotos.setText(Integer.toString(album.getPhotos().size()));
 			albumDetailsDateRange.setText(album.getDateRange());
-			
+			System.out.print(album.getDateRange());
 		}
 	}
 	
