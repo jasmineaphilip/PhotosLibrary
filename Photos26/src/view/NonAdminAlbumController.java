@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -398,7 +399,36 @@ public class NonAdminAlbumController {
 	}
 	
 	public void copyPhoto() {
+		HBox photo = photoListView.getSelectionModel().getSelectedItem();
+		Photo photoToBeMoved = null;
+		if(photo == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Please select a photo.", ButtonType.OK);
+			addTagNameText.setText("");
+			addTagValueText.setText("");
+			alert.show();
+			return;
+		}
+		for(Photo p: currentAlbum.getPhotos()) {
+			if(p.getPath().equals((((Label) photo.getChildren().get(2)).getText()))) {
+				photoToBeMoved = p;
+			}
+		}
 		
+		Album albumToBeMovedIn = null;
+		String destinationAlbum = destinationAlbumText.getText();
+		for(Album a: currentUser.getAlbums()) {
+			if(a.getName().equals(destinationAlbum)) {
+				albumToBeMovedIn = a;
+			}
+		}
+		if(albumToBeMovedIn == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Destination album does not exist.", ButtonType.OK);
+			destinationAlbumText.setText("");
+			alert.show();
+			return;
+		}
+		int i = currentUser.getAlbums().indexOf(albumToBeMovedIn);
+		currentUser.getAlbums().get(i).getPhotos().add(photoToBeMoved);
 	}
 	
 	public boolean isImage(File file) {
@@ -450,6 +480,18 @@ public class NonAdminAlbumController {
 		enlargeDisplay.setImage(null);
 	}
 
-	
+	public void back(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminUser.fxml"));
+		Parent parent = (Parent) loader.load();
+		
+		NonAdminUserController ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+		
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		ctrl.start(window, currentUser);
+		
+		window.setScene(scene);
+		window.show();
+	}
 }
 
