@@ -12,10 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -51,22 +54,22 @@ public class SearchController {
 	public void start(Stage mainStage, User user, ArrayList<Photo> searchResults) {
 		searchAlbum = new Album("albumName");
 		user1 = user;
-		System.out.println(searchResults.size());
 		for (int i = 0; i < searchResults.size(); i++) {
 			Photo photo = searchResults.get(i);
 			String imagePath = photo.getPath();
 			Image image = new Image(new File(imagePath).toURI().toString());
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(50.0);
-		    imageView.setFitWidth(50.0);
-		    HBox hbox = new HBox(5);
-		    Label l = new Label("gibber");
-		    Label path = new Label(imagePath);
-		    hbox.getChildren().addAll(imageView, l, path);
-		    photosBox.add(hbox);
-		    searchResultsListView.setItems(photosBox);
-		    searchAlbum.addPhoto(searchResults.get(i));
+			imageView.setFitWidth(50.0);
+			HBox hbox = new HBox(5);
+			Label l = new Label("gibber");
+			Label path = new Label(imagePath);
+			hbox.getChildren().addAll(imageView, l, path);
+			photosBox.add(hbox);
+			searchResultsListView.setItems(photosBox);
+			searchAlbum.addPhoto(searchResults.get(i));
 		}
+		
 	}
 	
 	/**

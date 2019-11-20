@@ -401,15 +401,12 @@ public class NonAdminUserController {
 				if (!tagName1.equals("") && !tagName2.equals("")) {
 					for (int i = 0; i < user.getAllPhotos().size(); i++) {
 						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagName1)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagValue1)) {
-									if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
-										if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
-											searchResults.add(user.getAllPhotos().get(i));
-										}
-									}
+							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) && 
+									(user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))	) {
+										searchResults.add(user.getAllPhotos().get(i));	
 								}
-							}
 						}
 					}
 				}
@@ -526,8 +523,8 @@ public class NonAdminUserController {
 				if (!tagName1.equals("") && !tagName2.equals("")) {
 					for (int i = 0; i < user.getAllPhotos().size(); i++) {
 						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagName1)) {
-								if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagValue1)) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
 									if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
 										if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
 											year = user.getAllPhotos().get(i).getYear(); 
@@ -564,17 +561,19 @@ public class NonAdminUserController {
 			}
 		}
 		
-		FXMLLoader loader = new FXMLLoader (getClass().getResource("SearchResults.fxml"));
-		Parent parent = (Parent) loader.load();
-		
-		SearchController ctrl = loader.getController();
-		Scene scene = new Scene(parent);
-		
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
-		ctrl.start(window, user, searchResults);
-		
-		window.setScene(scene);
-		window.show();
+		if (searchResults.size() == 0) {
+			Alert a = new Alert(AlertType.INFORMATION, "No photos matched your seach.", ButtonType.OK);
+			a.show();	
+			return;
+		} else {
+			FXMLLoader loader = new FXMLLoader (getClass().getResource("SearchResults.fxml"));
+			Parent parent = (Parent) loader.load();
+			SearchController ctrl = loader.getController();
+			Scene scene = new Scene(parent);
+			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+			ctrl.start(window, user, searchResults);
+			window.setScene(scene);
+			window.show();
+		}
 	}
 }
