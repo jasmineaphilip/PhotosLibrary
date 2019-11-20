@@ -41,8 +41,8 @@ public class Photo implements Serializable {
 		return caption;
 	}
 	
-	public void editCaption(String newCaption) {
-		caption = newCaption;
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
 	public Image getImage() {
@@ -61,16 +61,19 @@ public class Photo implements Serializable {
 		return null;
 	}
 	
-	public void addTag() {
-		
+	public void addTag(String name, String value) {
+		tags.add(new Tag(name, value));
 	}
 	
-	public void editTag() {
-		
+	public void editTag(int index, String name, String value) {
+		tags.get(index).setName(name);
+		tags.get(index).setValue(value);
 	}
-	public void removeTag() {
-		
+	
+	public void removeTag(int index) {
+		tags.remove(index);
 	}
+	
 	public List<Tag> getTags() {
 		return tags;
 	}

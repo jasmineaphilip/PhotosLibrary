@@ -6,16 +6,18 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.NonAdminUserController">
    <children>
       <SplitPane dividerPositions="0.4729241877256318" layoutX="-7.0" layoutY="-5.0" prefHeight="622.0" prefWidth="556.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="277.0">
                <children>
                   <MenuButton layoutX="8.0" layoutY="6.0" mnemonicParsing="false" text="Menu">
                     <items>
@@ -23,7 +25,6 @@
                       <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
                     </items>
                   </MenuButton>
-                  <TextField layoutX="46.0" layoutY="359.0" promptText="Search" />
                   <Label layoutX="79.0" layoutY="123.0" text="Create New Album" />
                   <TextField fx:id="addAlbumText" layoutX="46.0" layoutY="142.0" promptText="Album Name" />
                   <Label layoutX="87.0" layoutY="243.0" text="Rename Album" />
@@ -31,9 +32,24 @@
                   <Button fx:id="addAlbumButton" layoutX="96.0" layoutY="176.0" mnemonicParsing="false" onAction="#addAlbum" prefHeight="27.0" prefWidth="68.0" text="Add" />
                   <Button fx:id="renameAlbumButton" layoutX="99.0" layoutY="296.0" mnemonicParsing="false" onAction="#renameAlbum" text="Rename" />
                   <Text fx:id="welcomeText" layoutX="125.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <DatePicker layoutX="14.0" layoutY="395.0" prefHeight="27.0" prefWidth="107.0" promptText="From date" />
-                  <DatePicker layoutX="140.0" layoutY="395.0" prefHeight="27.0" prefWidth="107.0" promptText="To date" />
-                  <Button fx:id="viewAllPhotosButton" layoutX="80.0" layoutY="66.0" mnemonicParsing="false" onAction="#renameAlbum" text="View All Photos" />
+                  <DatePicker fx:id="fromDate" layoutX="14.0" layoutY="388.0" prefHeight="27.0" prefWidth="107.0" promptText="From date" />
+                  <DatePicker fx:id="toDate" layoutX="147.0" layoutY="388.0" prefHeight="27.0" prefWidth="107.0" promptText="To date" />
+                  <Button fx:id="searchButton" layoutX="103.0" layoutY="493.0" mnemonicParsing="false" onAction="#search" text="Search" />
+                  <TextField fx:id="tagName1Text" layoutX="14.0" layoutY="425.0" prefHeight="27.0" prefWidth="93.0" promptText="Tag Name 1" />
+                  <TextField fx:id="tagValue1Text" layoutX="14.0" layoutY="459.0" prefHeight="27.0" prefWidth="93.0" promptText="Tag Value 1" />
+                  <TextField fx:id="tagName2Text" layoutX="160.0" layoutY="425.0" prefHeight="27.0" prefWidth="93.0" promptText="Tag Name 2" />
+                  <TextField fx:id="tagValue2Text" layoutX="160.0" layoutY="459.0" prefHeight="27.0" prefWidth="93.0" promptText="Tag Value 2" />
+                  <RadioButton fx:id="tagAnd" layoutX="118.0" layoutY="439.0" mnemonicParsing="false" text="And">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="tagOr" layoutX="118.0" layoutY="459.0" mnemonicParsing="false" text="Or">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </RadioButton>
+                  <Label layoutX="68.0" layoutY="363.0" text="Photo Search Filters" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="278.0">

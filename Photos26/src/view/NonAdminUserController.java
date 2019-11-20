@@ -19,8 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -41,11 +43,19 @@ public class NonAdminUserController {
 	@FXML Button deleteAlbumButton;
 	@FXML Button openAlbumButton;
 	@FXML Text welcomeText;
+	@FXML Button searchButton;
+	@FXML DatePicker fromDate;
+	@FXML DatePicker toDate;
+	@FXML TextField tagName1Text;
+	@FXML TextField tagValue1Text;
+	@FXML TextField tagName2Text;
+	@FXML TextField tagValue2Text;
+	@FXML RadioButton tagAnd;
+	@FXML RadioButton tagOr;
 	
 	ObservableList<Album> albums = FXCollections.observableArrayList();
 	private User user;
 	
-
 	public void start(Stage mainStage, User user) {
 		welcomeText.setText("Welcome, "  + user.getUsername() + "!");
 		this.user = user;
@@ -104,8 +114,6 @@ public class NonAdminUserController {
 			albums.add(newAlbum);
 			listView.setItems(albums);
 			listView.getSelectionModel().select(albums.indexOf(newAlbum));
-			
-			
 			
 			displayEditInfo();
 		} else {
@@ -197,22 +205,38 @@ public class NonAdminUserController {
 		window.show();
 	}
 	
-	public void openAllPhotosAlbum(ActionEvent event) throws IOException {
-
-		Album album = user.getAllPhotos();
-		
-		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
+//	public void openAllPhotosAlbum(ActionEvent event) throws IOException {
+//
+//		Album album = user.getAllPhotos();
+//		
+//		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
+//		Parent parent = (Parent) loader.load();
+//		
+//		NonAdminAlbumController ctrl = loader.getController();
+//		Scene scene = new Scene(parent);
+//		
+//		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+//		ctrl.start(window, album);
+//		
+//		window.setScene(scene);
+//		window.show();
+//	}
+	
+	public void search(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader (getClass().getResource("SearchResults.fxml"));
 		Parent parent = (Parent) loader.load();
 		
-		NonAdminAlbumController ctrl = loader.getController();
+		SearchController ctrl = loader.getController();
 		Scene scene = new Scene(parent);
 		
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		ctrl.start(window, album);
+		
+		ctrl.start(window, user);
 		
 		window.setScene(scene);
 		window.show();
 	}
+	
 	
 	
 	
