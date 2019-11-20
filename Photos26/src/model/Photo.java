@@ -25,7 +25,6 @@ public class Photo implements Serializable {
 		caption = "";
 		tags = new ArrayList<Tag>();
 		setPath("");
-		
 	}
 	
 	public Calendar getCalendar() {
@@ -82,4 +81,5 @@ public class Photo implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
+
 }
