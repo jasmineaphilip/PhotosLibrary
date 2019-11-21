@@ -101,8 +101,8 @@ public class SearchController {
 	
 	/**
 	 * Returns from the search results scene to the user's Non-Admin home page
-	 * @param event
-	 * @throws IOException
+	 * @param event button press of back button
+	 * @throws IOException throws exception
 	 */
 	public void back(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminUser.fxml"));

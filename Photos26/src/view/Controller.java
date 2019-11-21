@@ -20,7 +20,7 @@ import model.Photo;
 import model.User;
 
 /**
- * Main controller for the first scene, involving signing in to a certain account.
+ * Main controller for the first scene, involving signing in to a certain account, loading stock photos, serialziing and deserializing users in order to preserve user data between sessions.
  * @author Jasmine Philip
  * @author Radhe Bangad
  *
@@ -37,26 +37,11 @@ public class Controller {
 	/**
 	 * Based on inputted username, logs a user into their specific photo library.
 	 * @param event button press on the login button
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void login(ActionEvent event) throws IOException {
 		String username = usernameField.getText();
 		boolean userExists = false;
-//		if(username.equals("stock")) {
-//			FXMLLoader loader = new FXMLLoader (getClass().getResource("StockUser.fxml"));
-//			Parent parent = (Parent) loader.load();
-//			
-//			StockUserController ctrl = loader.getController();
-//			Scene scene = new Scene(parent);
-//			
-//			Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//			
-//			ctrl.start(window);
-//			
-//			window.setScene(scene);
-//			window.show();
-//		}
-		
 		 if(username.equals("admin")) {
 			FXMLLoader loader = new FXMLLoader (getClass().getResource("AdminUser.fxml"));
 			Parent parent = (Parent) loader.load();
@@ -112,8 +97,8 @@ public class Controller {
 	}
 
 	/**
-	 * On start, deserializers the users. 
-	 * @param mainStage
+	 * On start, deserializes the users so they can be read from the data.dat file. Also creates a stock album containing pre-loaded images
+	 * @param mainStage first scene of this controller
 	 */
 	public void start(Stage mainStage) {
 		deserializeUsers();
@@ -135,7 +120,7 @@ public class Controller {
 	}
 	
 	/**
-	 * 
+	 * Contains all users of the application created by admin.
 	 */
 	public static ArrayList<User> allUsers = new ArrayList<User>();
 	/**
