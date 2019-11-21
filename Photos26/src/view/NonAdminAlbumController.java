@@ -220,6 +220,8 @@ public class NonAdminAlbumController {
 		Photo photo = new Photo();
 		photo.setPath(imagePath);
 		currentAlbum.getPhotos().add(photo);
+		currentAlbum.setOldestPhoto(currentAlbum.getOldestPhoto());
+		currentAlbum.setNewestPhoto(currentAlbum.getNewestPhoto());
 		Image image = new Image(new File(imagePath).toURI().toString());
 
 	    ImageView imageView = new ImageView(image);
