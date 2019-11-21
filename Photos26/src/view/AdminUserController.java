@@ -117,8 +117,6 @@ public class AdminUserController {
 			emptyCreateAndDeleteInfo();
 			listView.setItems(users);
 		}
-		
-		
 	}
 	
 	/**
