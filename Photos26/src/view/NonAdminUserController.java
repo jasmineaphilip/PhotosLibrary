@@ -428,23 +428,58 @@ public class NonAdminUserController {
 					}
 				}
 			} else { //tagOr
-				for (int i = 0; i < user.getAllPhotos().size(); i++) {
-					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
-							foundTag1 = true;
-						}
-						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
-							foundTag2 = true;
-						}
-						if (foundTag1 || foundTag2) {
-							searchResults.add(user.getAllPhotos().get(i));
-							//System.out.println(user.getAllPhotos().get(i).getPath());
+				
+				//if just tag1, do search on tag1
+//				if (!tagName1.equals("") && tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
+									if(!searchResults.contains(user.getAllPhotos().get(i))) {
+										searchResults.add(user.getAllPhotos().get(i));
+									}	
+								}
+							}
 						}
 					}
-					
-				}
+//				}
+				
+				//if just tag2, do search on tag2
+//				if (tagName1.equals("") && !tagName2.equals("")) {
+					for (int i = 0; i < user.getAllPhotos().size(); i++) {
+						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+							if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2)) {
+								if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2)) {
+									if(!searchResults.contains(user.getAllPhotos().get(i))) {
+										searchResults.add(user.getAllPhotos().get(i));
+									}
+								}
+							}
+						}
+					}
+//				}
+				
+				
+				
+				
+				
+//				for (int i = 0; i < user.getAllPhotos().size(); i++) {
+//					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
+//						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
+//								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
+//							foundTag1 = true;
+//						}
+//						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
+//								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
+//							foundTag2 = true;
+//						}
+//						if (foundTag1 || foundTag2) {
+//							searchResults.add(user.getAllPhotos().get(i));
+//							//System.out.println(user.getAllPhotos().get(i).getPath());
+//						}
+//					}
+//					
+//				}
 			}
 		}
 		
