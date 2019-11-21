@@ -412,8 +412,14 @@ public class NonAdminUserController {
 					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
 						if (user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1)) {
 							if (user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1)) {
-								if(!searchResults.contains(user.getAllPhotos().get(i))) {
-									searchResults.add(user.getAllPhotos().get(i));
+								for (int k = 0; k < user.getAllPhotos().get(i).getTags().size(); k++) {
+									if (user.getAllPhotos().get(i).getTags().get(k).getName().equals(tagName2)) {
+										if (user.getAllPhotos().get(i).getTags().get(k).getValue().equals(tagValue2)) {
+											if(!searchResults.contains(user.getAllPhotos().get(i))) {
+												searchResults.add(user.getAllPhotos().get(i));
+											}	
+										}
+									}
 								}	
 							}
 						}
