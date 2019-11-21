@@ -478,6 +478,9 @@ public class NonAdminAlbumController {
 	
 	public void displayInfo() {
 		//if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
+		if(photoListView.getSelectionModel().getSelectedIndex()==-1) {
+			return;
+		}
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		Photo toBeDisplayed = null;
 		if(!photosObs.isEmpty()) {	
