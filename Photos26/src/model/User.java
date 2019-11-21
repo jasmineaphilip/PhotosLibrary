@@ -24,6 +24,14 @@ public class User implements Serializable{
 	public String toString() {
 		return getUsername();
 	}
+	public boolean equals(Object user) {
+		if(user instanceof User) {
+			if(this.username.equals(((User)user).getUsername())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public String getUsername() {
 		return username;
