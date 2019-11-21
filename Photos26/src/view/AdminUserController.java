@@ -54,6 +54,9 @@ public class AdminUserController {
 	 * Sets the text field for deleting user's to the username of the user selected from the listview
 	 */
 	public void displayDeleteInfo() {
+		if(listView.getSelectionModel().getSelectedIndex()==-1) {
+			return;
+		}
 		if(users.isEmpty()) {emptyCreateAndDeleteInfo(); return;}
 		User user = listView.getSelectionModel().getSelectedItem();
 		deleteUsernameField.setText(user.getUsername());
@@ -100,6 +103,9 @@ public class AdminUserController {
 	 * @param event button press of "Delete User" button
 	 */
 	public void deleteUser(ActionEvent event) {
+		if(listView.getSelectionModel().getSelectedIndex()==-1) {
+			return;
+		}
 		if (users.isEmpty()) {
 			Alert a = new Alert(AlertType.ERROR, "There are no users on file. Add users to proceed.", ButtonType.OK);
 			a.show();	
