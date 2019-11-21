@@ -81,10 +81,18 @@ public class AdminUserController {
 			return;
 		}
 		User user = listView.getSelectionModel().getSelectedItem();
-		users.remove(users.indexOf(user));
-		Controller.allUsers.remove(user);
-		emptyCreateAndDeleteInfo();
-		listView.setItems(users);
+		if (user.getUsername().equals("stock")) {
+			Alert a = new Alert(AlertType.ERROR, "Cannot delete stock user.", ButtonType.OK);
+			a.show();	
+			return;
+		}
+		else {
+			users.remove(users.indexOf(user));
+			Controller.allUsers.remove(user);
+			emptyCreateAndDeleteInfo();
+			listView.setItems(users);
+		}
+		
 		
 	}
 	
