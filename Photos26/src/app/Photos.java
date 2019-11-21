@@ -33,18 +33,8 @@ public class Photos extends Application implements Serializable {
 		loader.setLocation(
 				getClass().getResource("/view/Photos.fxml"));
 		AnchorPane root = (AnchorPane)loader.load();
-
 		Controller controller = loader.getController();
 		controller.start(primaryStage);
-		
-		//Image image = new Image(new FileInputStream("/Desktop/testImage.jpg"));
-//		ImageView imageView = new ImageView(image);
-//		imageView.setX(50);;
-//		imageView.setY(25);
-//		imageView.setFitHeight(455); 
-//	    imageView.setFitWidth(500); 
-//	    imageView.setPreserveRatio(true);
-
 		Scene scene = new Scene(root, 600, 600); //width, length
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Photos Library");

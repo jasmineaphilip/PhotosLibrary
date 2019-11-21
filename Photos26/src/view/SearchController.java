@@ -79,6 +79,11 @@ public class SearchController {
 	 */
 	public void createSearchAlbum() {
 		searchAlbum.setName(searchAlbumNameText.getText());
+		if (searchAlbum.getName().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR, "Enter an album name.", ButtonType.OK);
+			alert.show();
+			return;
+		}
 		searchAlbum.setOldestPhoto(searchAlbum.getOldestPhoto());
 		searchAlbum.setNewestPhoto(searchAlbum.getNewestPhoto());
 		for(Album a:user1.getAlbums()) {

@@ -5,18 +5,23 @@ import java.util.*;
 
 import javafx.scene.image.Image;
 
+/**
+ * 
+ * @author Jasmine Philip
+ * @author Radhe Bangad
+ * Provides getters, setters, and toString for album objects
+ */
 public class Album implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6258723435304989168L;
 	private String name;
 	private List<Photo> photos;
 	private Photo oldestPhoto;
 	private Photo newestPhoto;
 	
-	
+	/**
+	 * 
+	 * @param name
+	 */
 	public Album(String name) {
 		this.name = name;
 		photos = new ArrayList<Photo>();
