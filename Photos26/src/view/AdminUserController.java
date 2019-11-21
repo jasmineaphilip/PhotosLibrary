@@ -75,7 +75,7 @@ public class AdminUserController {
 		String username = createUsernameField.getText();
 		
 		if (username.equals("")) {
-			Alert a = new Alert(AlertType.ERROR, "Please fill out both fields", ButtonType.OK);
+			Alert a = new Alert(AlertType.ERROR, "Please enter new username.", ButtonType.OK);
 			a.show();	
 			return;
 		}

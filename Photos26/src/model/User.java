@@ -14,6 +14,10 @@ public class User implements Serializable{
 	private String username;
 	private ArrayList<Album> albums;
 	private ArrayList<Photo> allPhotos;
+
+	private ArrayList<String> existingTags;
+	//private Album allPhotos;
+
 	 
 	/**
 	 * Constructor for Users
@@ -23,7 +27,9 @@ public class User implements Serializable{
 		this.username = username;
 		albums = new ArrayList<Album>();
 		allPhotos = new ArrayList<Photo>();
-		
+		existingTags = new ArrayList<String>();
+		existingTags.add("location");
+		existingTags.add("person");
 	}
 	
 	/**
@@ -93,6 +99,14 @@ public class User implements Serializable{
 	 */
 	public void setAllPhotos(ArrayList<Photo> allPhotos) {
 		this.allPhotos = allPhotos;
+	}
+
+	public ArrayList<String> getExistingTags() {
+		return existingTags;
+	}
+
+	public void setExistingTags(ArrayList<String> existingTags) {
+		this.existingTags = existingTags;
 	}
 
 }

@@ -43,6 +43,7 @@ import model.User;
 public class NonAdminAlbumController {
 	@FXML ListView<HBox> photoListView;
 	@FXML ListView<Tag> tagsListView;
+	@FXML ListView<String> existingTagsListView;
 	@FXML MenuItem quitButton;
 	@FXML MenuItem logOutButton;
 	@FXML Parent root;
@@ -71,6 +72,7 @@ public class NonAdminAlbumController {
 	Album currentAlbum;
 	User currentUser;
 	ObservableList<Tag> tagsObs = FXCollections.observableArrayList();
+	ObservableList<String> existingTagsObs = FXCollections.observableArrayList();
 
 	/**
 	 * Start method for NonAdminAlbum Controller 
@@ -98,6 +100,10 @@ public class NonAdminAlbumController {
 //		    ((Label)(hbox.getChildren().get(2))).setPrefWidth(0);
 		    photosObs.add(hbox);
 		    photoListView.setItems(photosObs);
+		}
+		for(String t:currentUser.getExistingTags()) {
+			existingTagsObs.add(t);
+			existingTagsListView.setItems(existingTagsObs);
 		}
 		
 	}
@@ -341,8 +347,19 @@ public class NonAdminAlbumController {
 				}
 			}
 		}
+		if(t.getName().equalsIgnoreCase("location")) {
+			for(Tag r: tagToBeAdded.getTags()) {
+				if(r.getName().equalsIgnoreCase("location")){
+					Alert alert = new Alert(AlertType.ERROR, "Location tag already exists.", ButtonType.OK);
+					addTagNameText.setText("");
+					addTagValueText.setText("");
+					alert.show();
+					return;
+				}
+			}
+		}
 		for(Tag r: tagToBeAdded.getTags()) {
-			if(r.getName().contentEquals(t.getName())
+			if(r.getName().equals(t.getName())
 					&& r.getValue().equals(t.getValue())){
 				Alert alert = new Alert(AlertType.ERROR, "This is a duplicate tag.", ButtonType.OK);
 				addTagNameText.setText("");
@@ -351,13 +368,33 @@ public class NonAdminAlbumController {
 				return;
 					}
 		}
-		
+		boolean exists = false;
+		for(String s: currentUser.getExistingTags()) {
+			if(s.equals(t.getName())) {
+				exists = true;
+				break;
+			}
+		}
+		if(!exists) {
+			currentUser.getExistingTags().add(t.getName());
+			existingTagsObs.add(t.getName());
+		}
+		existingTagsListView.setItems(existingTagsObs);
 		tagToBeAdded.getTags().add(t);
 		tagsObs.add(t);
 		tagsListView.setItems(tagsObs);
 		displayInfo();
 		addTagNameText.setText("");
 		addTagValueText.setText("");
+	}
+	
+
+	/**
+	 * Populates the Tag Name filed with options of tag names that already exist in the library
+	 */
+	public void populateTagNameField() {
+		String tagName = existingTagsListView.getSelectionModel().getSelectedItem();
+		addTagNameText.setText(tagName);
 	}
 	
 	/**
@@ -541,6 +578,9 @@ public class NonAdminAlbumController {
 	 */
 	public void displayInfo() {
 		//if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
+		if(photoListView.getSelectionModel().getSelectedIndex()==-1) {
+			return;
+		}
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		Photo toBeDisplayed = null;
 		if(!photosObs.isEmpty()) {	

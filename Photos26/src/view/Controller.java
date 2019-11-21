@@ -109,7 +109,6 @@ public class Controller {
 			File file = new File("Stock"+i+".jpg");
 			Photo photo = new Photo();
 			photo.setPath(file.getAbsolutePath());
-			System.out.println(file.getAbsolutePath());
 			photo.setCaption("Stock Photo #"+i);
 			stockAlbum.addPhoto(photo);
 			stockPhotos.add(photo);
