@@ -131,6 +131,7 @@ public class Controller {
 		}
 		stockAlbums.add(stockAlbum);
 		allUsers.get(allUsers.indexOf(new User("stock"))).setAlbums(stockAlbums);
+		allUsers.get(allUsers.indexOf(new User("stock"))).setAllPhotos(stockPhotos);
 		
 	}
 	
