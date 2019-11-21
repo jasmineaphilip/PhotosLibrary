@@ -72,8 +72,8 @@ public class NonAdminUserController {
 	
 	/**
 	 * Populates the listview with the specific user's albums
-	 * @param mainStage
-	 * @param user
+	 * @param mainStage mainStage of this controller
+	 * @param user current session user
 	 */
 	public void start(Stage mainStage, User user) {
 		welcomeText.setText("Welcome, "  + user.getUsername() + "!");
@@ -110,8 +110,8 @@ public class NonAdminUserController {
 	
 	/**
 	 * Exits the program while saving the user's updates, due to serialization
-	 * @param event
-	 * @throws IOException
+	 * @param event MenuItem press of "Quit"
+	 * @throws IOException throws exception
 	 */
 	public void quitApp(ActionEvent event) throws IOException {
 		Controller.serializeUsers();
@@ -121,7 +121,7 @@ public class NonAdminUserController {
 	
 	/**
 	 * Logsout of the current user's home page, bringing user back to the main sign-in page
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void logOut() throws IOException {
 		Stage stage = (Stage) root.getScene().getWindow();
@@ -133,7 +133,7 @@ public class NonAdminUserController {
 	
 	/**
 	 * Adds an album to the current user's list of albums and observeable list
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void addAlbum() throws IOException {
 		String albumName = addAlbumText.getText();
@@ -167,9 +167,14 @@ public class NonAdminUserController {
 	
 	/**
 	 * Renames an album base don user input and updates user's list of albums and observeable list with new name
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void renameAlbum() throws IOException {
+		if (editAlbumText.getText().equals("")) {
+			Alert a = new Alert(AlertType.ERROR, "Enter new Album Name.", ButtonType.CANCEL);
+			a.show();	
+			return;
+		}
 		while (user.getAlbums().isEmpty()) {
 			Alert a = new Alert(AlertType.ERROR, "Library is empty. Add albums to proceed.", ButtonType.CANCEL);
 			a.show();	
@@ -207,7 +212,7 @@ public class NonAdminUserController {
 	
 	/**
 	 * Deletes an album from the current user's list of albums and observeable list
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void deleteAlbum() throws IOException {
 		while (albums.isEmpty()) {
@@ -238,7 +243,7 @@ public class NonAdminUserController {
 	/**
 	 * Opens the selected album to show the composite photos
 	 * @param event button press that triggers this method
-	 * @throws IOException
+	 * @throws IOException throws exception
 	 */
 	public void openAlbum(ActionEvent event) throws IOException {
 
@@ -261,27 +266,10 @@ public class NonAdminUserController {
 		window.show();
 	}
 	
-//	public void openAllPhotosAlbum(ActionEvent event) throws IOException {
-//
-//		Album album = user.getAllPhotos();
-//		
-//		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminAlbum.fxml"));
-//		Parent parent = (Parent) loader.load();
-//		
-//		NonAdminAlbumController ctrl = loader.getController();
-//		Scene scene = new Scene(parent);
-//		
-//		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		ctrl.start(window, album);
-//		
-//		window.setScene(scene);
-//		window.show();
-//	}
-	
 	/**
 	 * Searches for photos in the user's specific library based on the inputted tag names/value pairs and range of dates
-	 * @param event 
-	 * @throws IOException
+	 * @param event button press of "Search"
+	 * @throws IOException throws exception
 	 */
 	public void search(ActionEvent event) throws IOException {
 		int toDateYear = 0;
@@ -427,30 +415,6 @@ public class NonAdminUserController {
 				}
 				
 				
-				
-				
-				
-				
-//				if (!tagName1.equals("") && !tagName2.equals("")) {
-//					for (int i = 0; i < user.getAllPhotos().size(); i++) {
-//						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-//							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-//									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
-//								foundTag1 = true;
-//							}
-//							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-//									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
-//								foundTag2 = true;
-//							}
-//							if (foundTag1 && foundTag2) {
-//								searchResults.add(user.getAllPhotos().get(i));
-//								//System.out.println(user.getAllPhotos().get(i).getPath());
-//							}
-//						}
-//						
-//						
-//					}
-//				}
 			} else { //tagOr
 				
 				//if just tag1, do search on tag1
@@ -481,29 +445,6 @@ public class NonAdminUserController {
 							}
 						}
 					}
-//				}
-				
-				
-				
-				
-				
-//				for (int i = 0; i < user.getAllPhotos().size(); i++) {
-//					for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-//						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-//								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
-//							foundTag1 = true;
-//						}
-//						if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-//								user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
-//							foundTag2 = true;
-//						}
-//						if (foundTag1 || foundTag2) {
-//							searchResults.add(user.getAllPhotos().get(i));
-//							//System.out.println(user.getAllPhotos().get(i).getPath());
-//						}
-//					}
-//					
-//				}
 			}
 		}
 		
@@ -625,31 +566,7 @@ public class NonAdminUserController {
 						}
 					}
 				}
-				
-				
-//				if (!tagName1.equals("") && !tagName2.equals("")) {
-//					for (int i = 0; i < user.getAllPhotos().size(); i++) {
-//						for (int j = 0; j < user.getAllPhotos().get(i).getTags().size(); j++) {
-//							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName1) && 
-//									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue1))) {
-//								foundTag1 = true;
-//							}
-//							if ((user.getAllPhotos().get(i).getTags().get(j).getName().equals(tagName2) && 
-//									user.getAllPhotos().get(i).getTags().get(j).getValue().equals(tagValue2))) {
-//								foundTag2 = true;
-//							}
-//						}
-//						if (foundTag1 && foundTag2) {
-//							year = user.getAllPhotos().get(i).getYear(); 
-//							day = user.getAllPhotos().get(i).getDay();
-//							if (year >= fromDateYear && year<= toDateYear) {
-//								if (day >= fromDateDay && day<= toDateDay) {
-//									searchResults.add(user.getAllPhotos().get(i));
-//								}
-//							}
-//						}
-//					}
-//				}
+
 			} else { //tagOr + date
 				//if just tag1, do search on tag1
 //				if (!tagName1.equals("") && tagName2.equals("")) {

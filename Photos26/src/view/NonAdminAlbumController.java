@@ -31,10 +31,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
-import model.SerializablePhoto;
 import model.Tag;
 import model.User;
 
+/**
+ * Controller to handle all functionality for a non admin user, including deleting and adding photos, adding and editing photo tags, moving or copying the photo to other albums
+ * @author Jasmine Philip
+ * @author Radhe Bangad
+ *
+ */
 public class NonAdminAlbumController {
 	@FXML ListView<HBox> photoListView;
 	@FXML ListView<Tag> tagsListView;
@@ -67,6 +72,12 @@ public class NonAdminAlbumController {
 	User currentUser;
 	ObservableList<Tag> tagsObs = FXCollections.observableArrayList();
 
+	/**
+	 * Start method for NonAdminAlbum Controller 
+	 * @param mainStage sent in from NonAdminUserController's openAlbum method populates the imageview which displays all the photos in the selected album
+	 * @param album the album to be opened
+	 * @param user the current session's user
+	 */
 	public void start(Stage mainStage, Album album, User user) {
 		currentAlbum = album;
 		currentUser = user;
@@ -91,12 +102,20 @@ public class NonAdminAlbumController {
 		
 	}
 	
+	/**
+	 * Serializes the users before quitting the application, so user data is saved across sessions
+	 * @param event pressing the MenuItem "Quit"
+	 */
 	public void quitApp(ActionEvent event){
 		Controller.serializeUsers();
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
 	}
 	
+	/**
+	 * Logs out the current user by bringing them back to the first login scene
+	 * @throws IOException throws exception
+	 */
 	public void logOut() throws IOException {
 		//Stage stage = (Stage) logOutButton.getScene().getWindow();
 		Stage stage = (Stage) root.getScene().getWindow();
@@ -107,6 +126,9 @@ public class NonAdminAlbumController {
 		stage.show();
 	}
 	
+	/**
+	 * Deletes a photo from the current album, also removing it from the album listview. If the photo is not duplicated in other albums, it will be deleted from the arraylist allPhotos as well
+	 */
 	public void deletePhoto() {
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		photosObs.remove(photo);
@@ -145,6 +167,10 @@ public class NonAdminAlbumController {
 		}
 	}
 	
+	/**
+	 * Deletes all instances of a photo, across all albums
+	 * @param path file path of the photo to be deleted, used to compare it with other photos to find all instances of that photo
+	 */
 	public void deleteAllInstances(String path) {
 		for(Album a:currentUser.getAlbums()) {
 			for(Photo p:a.getPhotos()) {
@@ -156,6 +182,9 @@ public class NonAdminAlbumController {
 		}
 	}
 	
+	/**
+	 * Allows user to browse their local file directory and pick an image to add to the album (as long as it is an image)
+	 */
 	public void browse() {
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
@@ -171,10 +200,16 @@ public class NonAdminAlbumController {
 		 
 	}
 	
+	/**
+	 * If an add is cancelled, clears the file path in the Add Photo field to
+	 */
 	public void cancelAdd() {
 		photoPathText.setText("");
 	}
 	
+	/**
+	 * Allows user to do a manual slide show of photos in the album, by selecting the previous photo
+	 */
 	public void previousPhoto() {
 		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
 		if(currentPhoto == null) {
@@ -188,6 +223,9 @@ public class NonAdminAlbumController {
 		displayInfo();
 	}
 	
+	/**
+	 * Allows user to do a manual slide show of photos in the album, by selecting the next photo
+	 */
 	public void nextPhoto() {
 		HBox currentPhoto = photoListView.getSelectionModel().getSelectedItem();
 		if(currentPhoto == null) {
@@ -201,6 +239,9 @@ public class NonAdminAlbumController {
 		displayInfo();
 	}
 	
+	/**
+	 * Allows user to add a photo to their album libary, after it was selected using the browse method. The photo will also be added to the allPhotos arraylist and the album's listview.
+	 */
 	public void addPhoto() {
 		if (photoPathText.getText().contentEquals("")) {
 			Alert alert = new Alert(AlertType.ERROR, "No image is selected. Please select an image file.", ButtonType.OK);
@@ -242,6 +283,9 @@ public class NonAdminAlbumController {
 
 	}
 	
+	/**
+	 * Deletes a tag (name value/pair) of a photo
+	 */
 	public void deleteTag() {
 		Tag selectedTag = tagsListView.getSelectionModel().getSelectedItem();
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
@@ -269,6 +313,9 @@ public class NonAdminAlbumController {
 		
 	}
 	
+	/**
+	 * Adds a tag (name value/pair) to a photo
+	 */
 	public void addTag() {
 		String name = addTagNameText.getText();
 		String value = addTagValueText.getText();
@@ -313,7 +360,9 @@ public class NonAdminAlbumController {
 		addTagValueText.setText("");
 	}
 	
-	
+	/**
+	 * Edits a selected photo's tag
+	 */
 	public void editTag() {
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		Photo tagToBeChanged = null;
@@ -370,6 +419,9 @@ public class NonAdminAlbumController {
 		
 	}
 	
+	/**
+	 * Edits a selected photo's caption
+	 */
 	public void editCaption() {
 		//replace child in Hbox. hbox.getchildren.set(i,label)
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
@@ -428,6 +480,9 @@ public class NonAdminAlbumController {
 //		photoListView.setItems(photosObs);
 	}
 	
+	/**
+	 * Copies a photo from the current album to another. Doesn't create another photo object, rather assigns the selected photo to another album as well as the current one
+	 */
 	public void copyPhoto() {
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
 		Photo photoToBeMoved = null;
@@ -464,6 +519,11 @@ public class NonAdminAlbumController {
 		return;
 	}
 	
+	/**
+	 * Checks if the file chosen by the user in the browse method is an image, as only images are allowed in the photo library
+	 * @param file file chosed by user in browse method
+	 * @return true if the file is an image
+	 */
 	public boolean isImage(File file) {
 		try {
 		    BufferedImage image = ImageIO.read(file);
@@ -476,6 +536,9 @@ public class NonAdminAlbumController {
 		return true;
 	}
 	
+	/**
+	 * Displays the photo's details, including caption, tag, and time of capture/upload
+	 */
 	public void displayInfo() {
 		//if(photosObs.isEmpty()) {emptyAddEditAndInitialInfo(); return;}
 		HBox photo = photoListView.getSelectionModel().getSelectedItem();
@@ -503,6 +566,10 @@ public class NonAdminAlbumController {
 		//displayTimeText.setText(getPicTime());
 		//displayTagsText.setText(photo.getTags());
 	}
+	
+	/**
+	 * Clears the fields that populate with the photo's details in order to edit
+	 */
 	public void clearInfo() {
 		editTagNameText.setText("");
 		editTagValueText.setText("");
@@ -512,7 +579,12 @@ public class NonAdminAlbumController {
 		tagsObs.clear();
 		enlargeDisplay.setImage(null);
 	}
-
+	
+	/**
+	 * Allows the user to go to the previous scene (NonAdminUserController) so they can select other albums
+	 * @param event button press of "Back" button
+	 * @throws IOException throws exception
+	 */
 	public void back(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader (getClass().getResource("NonAdminUser.fxml"));
 		Parent parent = (Parent) loader.load();
