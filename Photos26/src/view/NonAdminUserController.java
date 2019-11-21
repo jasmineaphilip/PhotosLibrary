@@ -532,13 +532,9 @@ public class NonAdminUserController {
 				for (int i = 0; i < user.getAllPhotos().size(); i++) {
 					year = user.getAllPhotos().get(i).getYear(); 
 					day = user.getAllPhotos().get(i).getDay();
-					if (year >= fromDateYear && year<= toDateYear) {
-						if (day >= fromDateDay && day<= toDateDay) {
+					if (year >= fromDateYear && year<= toDateYear && day >= fromDateDay && day<= toDateDay) {
 							searchResults.add(user.getAllPhotos().get(i));
-							for (int j = 0; j < user.getAllPhotos().size(); j++) {
-								System.out.println(user.getAllPhotos().get(i).getPath());
-							}
-						}
+							
 					}
 				}
 			}
