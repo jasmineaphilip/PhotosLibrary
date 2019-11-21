@@ -15,6 +15,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.Album;
+import model.Photo;
 import model.User;
 
 /**
@@ -115,6 +117,21 @@ public class Controller {
 	 */
 	public void start(Stage mainStage) {
 		deserializeUsers();
+		ArrayList<Album> stockAlbums = new ArrayList<Album>();
+		ArrayList<Photo> stockPhotos = new ArrayList<Photo>();
+		Album stockAlbum = new Album("stock");
+		for(int i=1;i<=5;i++) {
+			File file = new File("Stock"+i+".jpg");
+			Photo photo = new Photo();
+			photo.setPath(file.getAbsolutePath());
+			System.out.println(file.getAbsolutePath());
+			photo.setCaption("Stock Photo #"+i);
+			stockAlbum.addPhoto(photo);
+			stockPhotos.add(photo);
+		}
+		stockAlbums.add(stockAlbum);
+		allUsers.get(allUsers.indexOf(new User("stock"))).setAlbums(stockAlbums);
+		
 	}
 	
 	/**
