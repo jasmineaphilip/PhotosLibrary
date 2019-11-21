@@ -90,9 +90,11 @@ public class NonAdminAlbumController {
 		    photosObs.add(hbox);
 		    photoListView.setItems(photosObs);
 		}
-		for(String t:currentUser.getExistingTags()) {
-			existingTagsObs.add(t);
-			existingTagsListView.setItems(existingTagsObs);
+		if(!currentUser.getUsername().equals("stock")) {
+			for(String t:currentUser.getExistingTags()) {
+				existingTagsObs.add(t);
+				existingTagsListView.setItems(existingTagsObs);
+			}
 		}
 		
 	}
