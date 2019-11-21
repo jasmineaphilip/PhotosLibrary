@@ -72,9 +72,11 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="addTagNameText" layoutX="82.0" layoutY="54.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Name" />
-                                    <TextField fx:id="addTagValueText" layoutX="82.0" layoutY="97.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Value" />
-                                    <Button fx:id="addTagButton" layoutX="127.0" layoutY="155.0" mnemonicParsing="false" onAction="#addTag" text="Add Tag" />
+                                    <TextField fx:id="addTagNameText" layoutX="184.0" layoutY="53.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Name" />
+                                    <TextField fx:id="addTagValueText" layoutX="184.0" layoutY="96.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Value" />
+                                    <Button fx:id="addTagButton" layoutX="229.0" layoutY="154.0" mnemonicParsing="false" onAction="#addTag" text="Add Tag" />
+                                    <ListView fx:id="existingTagsListView" layoutX="19.0" layoutY="49.0" onMouseClicked="#populateTagNameField" prefHeight="175.0" prefWidth="148.0" />
+                                    <Label layoutX="19.0" layoutY="32.0" text="Existing Tag Names:" />
                                  </children></AnchorPane>
                         </content>
                       </Tab>

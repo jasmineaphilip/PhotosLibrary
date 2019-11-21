@@ -229,7 +229,12 @@ public class NonAdminUserController {
 			albums.remove(index);
 			user.getAlbums().remove(index);
 			listView.getSelectionModel().select(index);
-			displayEditInfo();
+			if(listView.getSelectionModel().getSelectedItem()!=null) {
+				displayEditInfo();
+			}
+			else {
+				editAlbumText.setText("");
+			}
 		} else {
 			return;
 		}
