@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.NonAdminAlbumController">
+   <children>
+      <SplitPane dividerPositions="0.5377503852080123" layoutX="-6.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="651.0" prefWidth="719.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="285.0" prefWidth="717.0">
+               <children>
+                  <MenuButton layoutX="8.0" layoutY="7.0" mnemonicParsing="false" text="Menu">
+                    <items>
+                      <MenuItem fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
+                      <MenuItem fx:id="quitButton" mnemonicParsing="false" onAction="#quitApp" text="Quit" />
+                    </items>
+                  </MenuButton>
+                  <Text fx:id="albumNameText" layoutX="345.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <ListView fx:id="photoListView" layoutX="14.0" layoutY="44.0" onMouseClicked="#displayInfo" prefHeight="265.0" prefWidth="427.0" />
+                  <TextField fx:id="displayCaptionText" editable="false" layoutX="455.0" layoutY="238.0" prefHeight="27.0" prefWidth="240.0" promptText="Caption" />
+                  <TextField fx:id="displayTimeText" editable="false" layoutX="455.0" layoutY="295.0" prefHeight="27.0" prefWidth="240.0" promptText="Autofilled Date/Time" />
+                  <Label layoutX="454.0" layoutY="219.0" text="Caption" />
+                  <Label layoutX="454.0" layoutY="36.0" text="Tags" />
+                  <ListView fx:id="tagsListView" layoutX="455.0" layoutY="56.0" prefHeight="105.0" prefWidth="240.0" />
+                  <Label layoutX="454.0" layoutY="276.0" text="Time of Capture" />
+                  <Button fx:id="deleteTagButton" layoutX="617.0" layoutY="163.0" mnemonicParsing="false" onAction="#deleteTag" text="Delete Tag" />
+                  <Button fx:id="previousButton" layoutX="147.0" layoutY="311.0" mnemonicParsing="false" onAction="#previousPhoto" text="&lt;&lt;" />
+                  <Button fx:id="nextButton" layoutX="274.0" layoutY="311.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;&gt;" />
+                  <Button fx:id="backButton" layoutX="85.0" layoutY="7.0" mnemonicParsing="false" onAction="#back" text="Back" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="717.0">
+               <children>
+                  <TabPane layoutX="351.0" layoutY="8.0" prefHeight="280.0" prefWidth="352.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Add Photo">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="298.0">
+                                 <children>
+                                    <Button fx:id="browseButton" layoutX="51.0" layoutY="51.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
+                                    <TextField fx:id="photoPathText" layoutX="132.0" layoutY="51.0" promptText="Selected Photo Path" />
+                                    <Button fx:id="addPhotoButton" layoutX="83.0" layoutY="110.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
+                                    <Button fx:id="cancelAddButton" layoutX="185.0" layoutY="110.0" mnemonicParsing="false" onAction="#cancelAdd" text="Cancel" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                      <Tab text="Edit Tag/Caption">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="342.0">
+                                 <children>
+                                    <TextField fx:id="editTagNameText" layoutX="14.0" layoutY="27.0" prefHeight="27.0" prefWidth="161.0" promptText="Updated Tag Name" />
+                                    <TextField fx:id="editTagValueText" layoutX="14.0" layoutY="63.0" prefHeight="27.0" prefWidth="161.0" promptText="Updated Tag Value" />
+                                    <TextField fx:id="editCaptionText" layoutX="14.0" layoutY="154.0" prefHeight="27.0" prefWidth="161.0" promptText="New Caption" />
+                                    <Button fx:id="editTagNameButton" layoutX="214.0" layoutY="50.0" mnemonicParsing="false" onAction="#editTag" text="Edit Tag" />
+                                    <Button fx:id="editCaptionButton" layoutX="203.0" layoutY="154.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Add Tag">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="addTagNameText" layoutX="184.0" layoutY="53.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Name" />
+                                    <TextField fx:id="addTagValueText" layoutX="184.0" layoutY="96.0" prefHeight="27.0" prefWidth="154.0" promptText="Tag Value" />
+                                    <Button fx:id="addTagButton" layoutX="229.0" layoutY="154.0" mnemonicParsing="false" onAction="#addTag" text="Add Tag" />
+                                    <ListView fx:id="existingTagsListView" layoutX="19.0" layoutY="49.0" onMouseClicked="#populateTagNameField" prefHeight="175.0" prefWidth="148.0" />
+                                    <Label layoutX="19.0" layoutY="32.0" text="Existing Tag Names:" />
+                                 </children></AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Move/Copy">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="destinationAlbumText" layoutX="63.0" layoutY="58.0" prefHeight="27.0" prefWidth="205.0" promptText="Destination Album" />
+                                    <Button fx:id="movePhotoButton" layoutX="74.0" layoutY="117.0" mnemonicParsing="false" onAction="#movePhoto" text="Move to..." />
+                                    <Button fx:id="copyPhotoButton" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#copyPhoto" text="Copy to..." />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <ImageView fx:id="enlargeDisplay" fitHeight="218.0" fitWidth="305.0" layoutX="23.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="deletePhotoButton" layoutX="133.0" layoutY="241.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete Photo" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
